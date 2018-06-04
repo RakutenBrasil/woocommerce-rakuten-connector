@@ -63,9 +63,19 @@ if ( ! defined( 'ABSPATH' ) ) {
     <label for="rakuten-pay-card-installments"><?php esc_html_e( 'Installments', 'woocommerce-rakuten-pay' ); ?> <span class="required">*</span></label>
     <select name="rakuten_pay_installments" id="rakuten-pay-card-installments" style="font-size: 1.5em; padding: 8px; width: 100%;">
       <?php
-      foreach ( $installments as $number ) :
+      foreach ( $installments as $installment ) :
+        $installment_number = $installment['quantity'];
+        if ( 1 !== $installment_number && $smallest_installment > $installment['installment_amount'] ) {
+          break;
+        }
+
+        $decimals           = wc_get_price_decimals();
+        $decimal_separator  = wc_get_price_decimal_separator();
+        $thousand_separator = wc_get_price_thousand_separator();
+        $installment_amount = number_format( $installment['installment_amount'], $decimals, $decimal_separator, $thousand_separator );
+        $interest_amount    = number_format( $installment['interest_amount'], $decimals, $decimal_separator, $thousand_separator );
       ?>
-        <option value="<?php echo $number; ?>"><?php echo $number; ?></option>
+      <option value="<?php echo absint( $installment_number ); ?>"><?php printf( esc_html__( '%1$dx of %2$s (increase of %3$s)', 'woocommerce-rakutenpay' ), absint( $installment['quantity'] ), esc_html( $installment_amount ), esc_html( $interest_amount ) ); ?></option>
       <?php endforeach; ?>
     </select>
   </p>

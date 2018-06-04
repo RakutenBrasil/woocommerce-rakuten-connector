@@ -149,12 +149,14 @@ class WC_Rakuten_Pay_API {
   /**
    * Generate the charge data.
    *
-   * @param  WC_Order $order  Order data.
-   * @param  array    $posted Form posted data.
+   * @param  WC_Order $order           Order data.
+   * @param  string   $payment_method  Payment method.
+   * @param  array    $posted          Form posted data.
+   * @param  array    $installment     In case of not free installment
    *
    * @return array            Charge data.
    */
-  public function generate_charge_data( $order, $payment_method, $posted ) {
+  public function generate_charge_data( $order, $payment_method, $posted, $installments ) {
     $customer_name  = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
 
     // Root
@@ -286,6 +288,9 @@ class WC_Rakuten_Pay_API {
           'recurrency'  => false
         )
       );
+      if ( isset( $installments ) ) {
+        $payment['installments'] = $installments;
+      }
     } else {
       $payment = array(
         'method'     => $payment_method,
@@ -605,10 +610,39 @@ class WC_Rakuten_Pay_API {
     }
 
     if ( 'yes' === $this->gateway->debug ) {
-      $this->gateway->log->add( $this->gateway->id, 'Transaction completed successfully! The get_transaction response is: ' . print_r( $response_body, true ) );
+        $this->gateway->log->add( $this->gateway->id, 'Failed to make the get_transaction: ' . print_r( $response, true ) );
     }
 
     return $response_body;
+  }
+
+  /**
+   * Get installments
+   *
+   * @param  float           $amount   Amount
+   * @return array | false   $result   Installments or false for errors
+   */
+  public function get_installments( $amount ) {
+    $headers        = array(
+      'Authorization' => $this->authorization_header(),
+    );
+    $endpoint       = add_query_arg( array(
+      'amount' => $amount
+    ), 'checkout' );
+    $response       = $this->do_get_request( $endpoint, $headers );
+
+    if ( is_wp_error( $response ) ) {
+      if ( 'yes' === $this->gateway->debug ) {
+          $this->gateway->log->add( $this->gateway->id, 'WP_Error in doing the get_installments: ' . $response->get_error_message() );
+      }
+      return false;
+    }
+
+    $response_body = json_decode( $response['body'], true );
+    $installments  = array_filter( $response_body['payments'], function( $p ) {
+      return $p['method'] == 'credit_card';
+    } );
+    return $installments[0]['installments'];
   }
 
   /**
@@ -702,7 +736,26 @@ class WC_Rakuten_Pay_API {
   public function process_regular_payment( $order_id ) {
     $order          = wc_get_order( $order_id );
     $payment_method = $this->get_payment_method( $order );
-    $data           = $this->generate_charge_data( $order, $payment_method, $_POST );
+
+    $installments_qty = (integer) $_POST['rakuten_pay_installments'];
+    $amount           = (float) $order->get_total();
+    $installment      = null;
+    if ( $installments_qty > $this->gateway->free_installments ) {
+      $installments = $this->get_installments( $amount );
+      if ( $installments === false ) {
+        return array(
+          'result' => 'fail'
+        );
+      }
+      foreach ($installments as $i) {
+        if ( $i['quantity'] == $installments_qty ) {
+          $installment = $i;
+          break;
+        }
+      }
+    }
+
+    $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
     $transaction    = $this->charge_transaction( $order, $data );
 
     if ( isset( $transaction['result'] ) && $transaction['result'] === 'fail' ) {

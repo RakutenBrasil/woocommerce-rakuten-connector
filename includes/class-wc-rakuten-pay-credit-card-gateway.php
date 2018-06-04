@@ -43,6 +43,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $this->signature_key        = $this->get_option( 'signature_key' );
     $this->max_installment      = $this->get_option( 'max_installment' );
     $this->smallest_installment = $this->get_option( 'smallest_installment' );
+    $this->free_installments    = $this->get_option( 'free_installments', '1' );
     $this->debug                = $this->get_option( 'debug' );
     $this->environment          = $this->get_option( 'environment' );
 
@@ -172,6 +173,29 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'desc_tip'    => true,
         'default'     => '5',
       ),
+      'free_installments' => array(
+        'title'       => __( 'Free Installments', 'woocommerce-rakuten' ),
+        'type'        => 'select',
+        'class'       => 'wc-enhanced-select',
+        'default'     => '1',
+        'description' => __( 'Number of installments with interest free.', 'woocommerce-rakuten' ),
+        'desc_tip'    => true,
+        'options'     => array(
+          '0'  => _x( 'None', 'no free installments', 'woocommerce-rakuten' ),
+          '1'  => '1',
+          '2'  => '2',
+          '3'  => '3',
+          '4'  => '4',
+          '5'  => '5',
+          '6'  => '6',
+          '7'  => '7',
+          '8'  => '8',
+          '9'  => '9',
+          '10' => '10',
+          '11' => '11',
+          '12' => '12',
+        ),
+      ),
       'testing' => array(
         'title'       => __( 'Gateway Testing', 'woocommerce-rakuten-pay' ),
         'type'        => 'title',
@@ -217,14 +241,14 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       echo wp_kses_post( wpautop( wptexturize( $description ) ) );
     }
 
-    $cart_total = $this->get_order_total();
+    $amount = (float) $this->get_order_total();
 
-    $installments = range(1, 12);
+    $installments = $this->api->get_installments( $amount );
+    $installments = $this->apply_free_installments( $installments );
 
     wc_get_template(
       'credit-card/payment-form.php',
       array(
-        'cart_total'           => $cart_total,
         'max_installment'      => $this->max_installment,
         'smallest_installment' => $this->api->get_smallest_installment(),
         'installments'         => $installments,
@@ -232,6 +256,26 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       'woocommerce/woocommerce-rakuten-pay/',
       WC_Rakuten_Pay::get_templates_path()
     );
+  }
+
+  /**
+   * Apply Free Installments
+   * @param  array $installments Installments from get_installments.
+   * @return array $result       Installments with free installments applied.
+   */
+  private function apply_free_installments( $installments ) {
+    return array_map( function( $inst ) { 
+      if ( $inst['quantity'] > $this->free_installments ) {
+        return $inst;
+      }
+
+      $inst['interest_percent'] = 0.0;
+      $inst['amount'] = 0.0;
+      $inst['total'] = $inst['total'] - $inst['interest_amount'];
+      $inst['interest_amount'] = 0.0;
+      $inst['installment_amount'] = $inst['total'] / $inst['quantity'];
+      return $inst;
+    }, $installments );
   }
 
   /**
