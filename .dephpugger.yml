@@ -1,0 +1,7 @@
+---
+debugger:
+  host: 0.0.0.0
+  port: 9000
+  lineOffset: 10
+  verboseMode: false
+  historyFile: ~/.dephpugger_history

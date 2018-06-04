@@ -235,17 +235,22 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
     $order = wc_get_order( $order_id );
     $data  = get_post_meta( $order_id, '_wc_rakuten_pay_transaction_data', true );
 
-    if ( isset( $data['billet_url'] ) && in_array( $order->get_status(), array( 'processing', 'on-hold' ), true ) ) {
-
-      wc_get_template(
-        'banking-billet/payment-instructions.php',
-        array(
-          'url' => $data['billet_url'],
-        ),
-        'woocommerce/rakuten-pay/',
-        WC_Rakuten_Pay::get_templates_path()
-      );
+    if ( ! isset( $data['billet_url'] ) ) {
+      return;
     }
+
+    if ( ! in_array( $order->get_status(), array( 'pending', 'on-hold' ) ) ) {
+      return;
+    }
+
+    wc_get_template(
+      'banking-billet/payment-instructions.php',
+      array(
+        'url' => $data['billet_url'],
+      ),
+      'woocommerce/rakuten-pay/',
+      WC_Rakuten_Pay::get_templates_path()
+    );
   }
 
   /**

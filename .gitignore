@@ -1,5 +1,6 @@
 .DS_Store
 .html
 .data
+.env
 /node_modules
 tags

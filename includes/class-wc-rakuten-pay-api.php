@@ -22,7 +22,8 @@ class WC_Rakuten_Pay_API {
   /**
    * SANDBOX API URL.
    */
-  const SANDBOX_API_URL = 'http://oneapi-sandbox.rakutenpay.com.br/rpay/v1/';
+  // const SANDBOX_API_URL = 'http://oneapi-sandbox.rakutenpay.com.br/rpay/v1/';
+  const SANDBOX_API_URL = 'http://host.docker.internal:4000/rpay/v1/';
 
   /**
    * Gateway class.
@@ -165,62 +166,79 @@ class WC_Rakuten_Pay_API {
       'fingerprint' => $posted['rakuten_pay_fingerprint'],
       'payments'    => array(),
       'customer'    => array(
-        'remote_ip'  => $this->customer_ip_address( $order ),
-        'document'   => $this->only_numbers($posted['billing_document']),
-        'name'       => $customer_name,
-        'email'      => $order->get_billing_email(),
-        'birth_date' => preg_replace(
+        'document'      => $this->only_numbers($posted['billing_document']),
+        'name'          => $customer_name,
+        'business_name' => $posted['billing_company'] ?: $customer_name,
+        'email'         => $order->get_billing_email(),
+        'birth_date'    => preg_replace(
           '/(\d{2})\/(\d{2})\/(\d{4})/',
           '${3}-${2}-${1}',
           $posted['billing_birthdate']
         ),
-        'gender'     => $posted['billing_gender'],
-        'addresses'  => array(),
-        'phones'     => array(
+        'gender'        => $posted['billing_gender'],
+        'kind'          => 'personal',
+        'addresses'     => array(),
+        'phones'        => array(
           array(
             'kind'         => 'billing',
-            'country_code' => '55',
-            'area_code'    => preg_replace(
-              '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
-              '${1}',
-              $order->get_billing_phone()
-            ),
-            'number' => preg_replace(
-              '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
-              '${2}${3}',
-              $order->get_billing_phone()
+            'reference'    => 'others',
+            'number'       => array(
+              'country_code' => '55',
+              'area_code'    => preg_replace(
+                '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
+                '${1}',
+                $order->get_billing_phone()
+              ),
+              'number' => preg_replace(
+                '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
+                '${2}${3}',
+                $order->get_billing_phone()
+              )
             )
           ),
           array(
             'kind'         => 'shipping',
-            'country_code' => '55',
-            'area_code'    => preg_replace(
-              '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
-              '${1}',
-              $order->get_billing_phone()
-            ),
-            'number' => preg_replace(
-              '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
-              '${2}${3}',
-              $order->get_billing_phone()
+            'reference'    => 'others',
+            'number'       => array(
+              'country_code' => '55',
+              'area_code'    => preg_replace(
+                '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
+                '${1}',
+                $order->get_billing_phone()
+              ),
+              'number' => preg_replace(
+                '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
+                '${2}${3}',
+                $order->get_billing_phone()
+              )
             )
           )
         )
       ),
       'order' => array(
+        'reference'       => (string) $order->get_id(),
+        'payer_ip'        => $this->customer_ip_address( $order ),
         'items_amount'    => (float) $order->get_subtotal(),
         'shipping_amount' => (float) $order->get_shipping_total(),
         'taxes_amount'    => (float) $order->get_total_tax(),
         'discount_amount' => (float) $order->get_total_discount(),
         'items' => array_map(
-          function($item) {
+          function( $item ) {
             $product = $item->get_product();
             return array(
-              'reference'   => $product->get_sku(),
-              'description' => substr( $product->get_description(), 0, 255 ),
-              'amount'      => (float) $product->get_price(),
-              'quantity'    => $item->get_quantity(),
-              'total'       => (float) $item->get_total()
+              'reference'     => $product->get_sku(),
+              'description'   => substr( $product->get_description(), 0, 255 ),
+              'amount'        => (float) $product->get_price(),
+              'quantity'      => $item->get_quantity(),
+              'total_amount'  => (float) $item->get_total(),
+              'categories'    => array_map(
+                function( $term ) {
+                  return array(
+                    'id'   => (string) $term->term_id,
+                    'name' => $term->name
+                  );
+                }, wp_get_post_terms( $product->get_id(), 'product_cat' )
+              )
             );
           }, array_values( $order->get_items() )
         )
@@ -253,17 +271,19 @@ class WC_Rakuten_Pay_API {
 
     if ( $payment_method == 'credit_card' ) {
       $payment = array(
-        'method'          => $payment_method,
-        'amount'          => (float) $order->get_total(),
-        'installments'    => (integer) $posted['rakuten_pay_installments'],
-        'brand'           => strtolower( $posted['rakuten_pay_card_brand'] ),
-        'token'           => $posted['rakuten_pay_token'],
-        'cvv'             => $posted['rakuten_pay_card_cvc'],
-        'holder_name'     => $posted['rakuten_pay_card_holder_name'],
-        'holder_document' => $posted['rakuten_pay_card_holder_document'],
-        'expires_on'      => trim(
-          $posted['rakuten_pay_card_expiry_year'] . '-' .
-          $posted['rakuten_pay_card_expiry_month'] . '-01'
+        'reference'                => '1',
+        'method'                   => $payment_method,
+        'amount'                   => (float) $order->get_total(),
+        'installments_quantity'    => (integer) $posted['rakuten_pay_installments'],
+        'brand'                    => strtolower( $posted['rakuten_pay_card_brand'] ),
+        'token'                    => $posted['rakuten_pay_token'],
+        'cvv'                      => $posted['rakuten_pay_card_cvc'],
+        'holder_name'              => $posted['rakuten_pay_card_holder_name'],
+        'holder_document'          => $posted['rakuten_pay_card_holder_document'],
+        'options'                  => array(
+          'save_card'   => true,
+          'new_card'    => true,
+          'recurrency'  => false
         )
       );
     } else {
@@ -314,7 +334,7 @@ class WC_Rakuten_Pay_API {
    * @param  array    $posted            Form posted data.
    * @param  array    $transaction_data  Transaction data.
    *
-   * @return array            Charge data.
+   * @return array                       [kind: total|partial, Charge data].
    */
   public function generate_refund_data( $order, $payment_method, $posted, $transaction_data ) {
     $customer_name  = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
@@ -331,12 +351,12 @@ class WC_Rakuten_Pay_API {
 
     // Root
     $data = array(
+      'requesters'  => 'merchant',
       'reason'      => $refund_reason,
-      'kind'        => $kind,
       'amount'      => $refund_value,
       'payments'    => array(
         array(
-          'id'     => $transaction_data['charge']['payments'][0]['id'],
+          'id'     => $transaction_data['payments'][0]['id'],
           'amount' => (float) $refund_value
         )
       )
@@ -354,7 +374,7 @@ class WC_Rakuten_Pay_API {
       $data['payments'][0]['bank_account'] = $banking_account_data;
     }
 
-    return $data;
+    return [$kind, $data];
   }
 
   /**
@@ -481,14 +501,19 @@ class WC_Rakuten_Pay_API {
    *   array( 'result' => 'failure', 'errors' => errors[] ) for Rakuten Pay errors
    *   array( 'result' => 'authorized', ... ) for authorized Rakuten Pay transactions
    */
-  public function refund_transaction( $order, $refund_data ) {
+  public function refund_transaction( $order, $refund_kind, $refund_data ) {
     $body           = json_encode( $refund_data, JSON_PRESERVE_ZERO_FRACTION );
     $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
     $headers        = array(
       'Authorization' => $this->authorization_header(),
       'Signature'     => $this->get_signature( $body )
     );
-    $endpoint       = 'charges/' . $transaction_id . '/refund';
+    if ( 'total' === $refund_kind ) {
+      $refund_route = '/refund';
+    } else {
+      $refund_route = '/refund_partial';
+    }
+    $endpoint       = 'charges/' . $transaction_id . $refund_route;
     $response       = $this->do_post_request( $endpoint, $body, $headers );
 
     if ( is_wp_error( $response ) ) {
@@ -533,7 +558,7 @@ class WC_Rakuten_Pay_API {
 
     $refunded_ids   = get_post_meta( $order->get_id(), '_wc_rakuten_pay_order_refunded_ids', true );
     $refunded_ids   = $refunded_ids ?: array();
-    $refund_id      = $response_body['refund_id'];
+    $refund_id      = $response_body['refunds'][0]['id'];
     $refunded_ids[] = $refund_id;
 
     update_post_meta( $order->get_id(), '_wc_rakuten_pay_order_refunded_ids', $refunded_ids );
@@ -575,13 +600,6 @@ class WC_Rakuten_Pay_API {
       }
       if ( 'yes' === $this->gateway->debug ) {
         $this->gateway->log->add( $this->gateway->id, 'Fail in doing the get_transaction: \n' . $error_message );
-      }
-      return false;
-    }
-
-    if ( $response_body['result'] == 'failure' ) {
-      if ( 'yes' === $this->gateway->debug ) {
-        $this->gateway->log->add( $this->gateway->id, 'Failed to make the get_transaction: ' . print_r( $response, true ) );
       }
       return false;
     }
@@ -702,7 +720,7 @@ class WC_Rakuten_Pay_API {
       );
     }
 
-    if ( ! isset( $transaction['id'] ) || ! isset( $transaction['links']['charge'] ) ) {
+    if ( ! isset( $transaction['charge_uuid'] ) ) {
       if ( 'yes' === $this->gateway->debug ) {
         $this->gateway->log->add( $this->gateway->id, 'Transaction data does not contain id or charge url for order ' . $order->get_order_number() . '...' );
       }
@@ -713,8 +731,8 @@ class WC_Rakuten_Pay_API {
     }
 
     // Save transaction data.
-    update_post_meta( $order_id, '_wc_rakuten_pay_transaction_id', $transaction['id'] );
-    update_post_meta( $order_id, '_transaction_id', $transaction['id'] );
+    update_post_meta( $order_id, '_wc_rakuten_pay_transaction_id', $transaction['charge_uuid'] );
+    update_post_meta( $order_id, '_transaction_id', $transaction['charge_uuid'] );
 
     if ( $payment_method === 'credit_card' ) {
       $payment_data = array(
@@ -726,7 +744,7 @@ class WC_Rakuten_Pay_API {
     } else {
       $payment_data = array(
         'payment_method'  => $payment_method,
-        'billet_url'      => $this->banking_billet_url( $transaction['id'] ),
+        'billet_url'      => $this->banking_billet_url( $transaction['charge_uuid'] ),
         'amount'          => $data['amount']
       );
     }
@@ -771,8 +789,10 @@ class WC_Rakuten_Pay_API {
       return false;
     }
 
-    $refund_data      = $this->generate_refund_data( $order, $payment_method, $_POST, $transaction_data );
-    $result           = $this->refund_transaction( $order, $refund_data );
+    $refund_result  = $this->generate_refund_data( $order, $payment_method, $_POST, $transaction_data );
+    $refund_kind    = $refund_result[0];
+    $refund_data    = $refund_result[1];
+    $result         = $this->refund_transaction( $order, $refund_kind, $refund_data );
 
     return $result;
   }
@@ -811,13 +831,13 @@ class WC_Rakuten_Pay_API {
   public function process_banking_billet( $billet ) {
     @ob_clean();
 
-    $response = $this->do_get_request( 'charges/' . $billet . '/billet', array(
+    $response = $this->do_get_request( 'charges/' . $billet . '/billet/download', array(
       'Authorization' => $this->authorization_header()
     ) );
 
     $data = json_decode( $response['body'], true );
 
-    echo $data['billet']['html'];
+    echo $data['html'];
     exit;
   }
 
@@ -868,7 +888,7 @@ class WC_Rakuten_Pay_API {
     global $wpdb;
 
     $posted   = wp_unslash( $posted );
-    $order_id = absint( $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wc_rakuten_pay_transaction_id' AND meta_value = %s", $posted['id'] ) ) );
+    $order_id = absint( $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wc_rakuten_pay_transaction_id' AND meta_value = %s", $posted['uuid'] ) ) );
     $order    = wc_get_order( $order_id );
     $status   = $this->normalize_status( $posted['status'] );
 
@@ -925,9 +945,6 @@ class WC_Rakuten_Pay_API {
         if ( in_array( $order->get_status(), array( 'approved', 'completed' ), true ) ) {
           break;
         }
-        if ( ! $this->is_banking_billet_payment_method( $order ) ) {
-          break;
-        }
         if ( get_post_meta( $order->get_id(), '_wc_rakuten_pay_order_cancelled', true ) ) {
           break;
         }
@@ -955,10 +972,11 @@ class WC_Rakuten_Pay_API {
           break;
         }
 
+        $refunded_ids = get_post_meta( $order->get_id(), '_wc_rakuten_pay_order_refunded_ids', true );
+        $refunded_ids = $refunded_ids ?: array();
+
         if ( isset( $data['refunds'] ) ) {
           foreach ( $data['refunds'] as $refund_data ) {
-            $refunded_ids = get_post_meta( $order->get_id(), '_wc_rakuten_pay_order_refunded_ids', true );
-            $refunded_ids = $refunded_ids ?: array();
 
             $next_refund = false;
             foreach ( $refunded_ids as $refunded_id ) {
