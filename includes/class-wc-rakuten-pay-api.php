@@ -22,8 +22,7 @@ class WC_Rakuten_Pay_API {
   /**
    * SANDBOX API URL.
    */
-  // const SANDBOX_API_URL = 'http://oneapi-sandbox.rakutenpay.com.br/rpay/v1/';
-  const SANDBOX_API_URL = 'http://host.docker.internal:4000/rpay/v1/';
+   const SANDBOX_API_URL = 'http://oneapi-sandbox.rakutenpay.com.br/rpay/v1/';
 
   /**
    * Gateway class.
