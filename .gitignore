@@ -4,3 +4,5 @@
 .env
 /node_modules
 tags
+.idea
+vendor
