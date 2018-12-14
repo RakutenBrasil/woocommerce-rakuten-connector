@@ -401,7 +401,8 @@ class WC_Rakuten_Pay_API {
     $body     = json_encode( $charge_data, JSON_PRESERVE_ZERO_FRACTION );
     $headers  = array(
       'Authorization' => $this->authorization_header(),
-      'Signature' => $this->get_signature( $body )
+      'Signature' => $this->get_signature( $body ),
+      'Content-Type' => 'application/json'
     );
     $response = $this->do_post_request( $endpoint, $body, $headers );
 
@@ -457,7 +458,8 @@ class WC_Rakuten_Pay_API {
     $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
     $headers        = array(
       'Authorization' => $this->authorization_header(),
-      'Signature'     => $this->get_signature( $body )
+      'Signature'     => $this->get_signature( $body ),
+      'Content-Type' => 'application/json'
     );
     $endpoint       = 'charges/' . $transaction_id . '/cancel';
     $response       = $this->do_post_request( $endpoint, $body, $headers );
@@ -510,7 +512,8 @@ class WC_Rakuten_Pay_API {
     $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
     $headers        = array(
       'Authorization' => $this->authorization_header(),
-      'Signature'     => $this->get_signature( $body )
+      'Signature'     => $this->get_signature( $body ),
+      'Content-Type' => 'application/json'
     );
     if ( 'total' === $refund_kind ) {
       $refund_route = '/refund';
@@ -582,6 +585,7 @@ class WC_Rakuten_Pay_API {
     $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
     $headers        = array(
       'Authorization' => $this->authorization_header(),
+      'Content-Type' => 'application/json'
     );
     $endpoint       = 'charges/' . $transaction_id;
     $response       = $this->do_get_request( $endpoint, $headers );
@@ -624,6 +628,7 @@ class WC_Rakuten_Pay_API {
   public function get_installments( $amount ) {
     $headers        = array(
       'Authorization' => $this->authorization_header(),
+      'Content-Type' => 'application/json'
     );
     $endpoint       = add_query_arg( array(
       'amount' => $amount
@@ -884,7 +889,8 @@ class WC_Rakuten_Pay_API {
     @ob_clean();
 
     $response = $this->do_get_request( 'charges/' . $billet . '/billet/download', array(
-      'Authorization' => $this->authorization_header()
+      'Authorization' => $this->authorization_header(),
+      'Content-Type' => 'application/json'
     ) );
 
     $data = json_decode( $response['body'], true );
