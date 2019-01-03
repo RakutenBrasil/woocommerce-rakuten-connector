@@ -604,3 +604,23 @@ msgstr ""
 msgctxt "no free installments"
 msgid "None"
 msgstr ""
+
+#: includes/class-wc-rakuten-pay-api.php:443
+msgid "Credit Card Number"
+msgstr ""
+
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:179
+msgid "Enables the display of the parcel listing on the product preview screen. (You will see the largest installments available for the product in payment by credit card)"
+msgstr ""
+
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:177
+msgid "Buyer Interest"
+msgstr ""
+
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:182
+msgid "No"
+msgstr ""
+
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:183
+msgid "Yes"
+msgstr ""
