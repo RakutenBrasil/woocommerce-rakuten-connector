@@ -728,6 +728,9 @@ class WC_Rakuten_Pay_API {
     if ( ! empty( $data['billet_url'] ) ) {
       update_post_meta( $id, __( 'Banking Ticket URL', 'woocommerce-rakuten-pay' ), sanitize_text_field( $data['billet_url'] ) );
     }
+    if ( ! empty( $transaction['payments'][0]['credit_card']['number'] ) ) {
+      update_post_meta( $id, __( 'Card Number', 'woocommerce-rakuten-pay' ), sanitize_text_field( $transaction['payments'][0]['credit_card']['number'] ) );
+    }
   }
 
   /**
@@ -777,6 +780,10 @@ class WC_Rakuten_Pay_API {
       );
     }
 
+    if ( ! empty($transaction['payments']) ) {
+      $this->gateway->log->add( $this->gateway->id, 'transaction: ' . print_r($transaction['payments'][0]['credit_card']['number'], true) );
+    }
+
     if ( ! isset( $transaction['charge_uuid'] ) ) {
       if ( 'yes' === $this->gateway->debug ) {
         $this->gateway->log->add( $this->gateway->id, 'Transaction data does not contain id or charge url for order ' . $order->get_order_number() . '...' );
@@ -796,7 +803,8 @@ class WC_Rakuten_Pay_API {
         'payment_method'  => $payment_method,
         'installments'    => $_POST['rakuten_pay_installments'],
         'card_brand'      => $this->get_card_brand_name( $_POST['rakuten_pay_card_brand'] ),
-        'amount'          => $data['amount']
+        'amount'          => $data['amount'],
+        'number'          => $transaction['payments'][0]['credit_card']['number']
       );
     } else {
       $payment_data = array(
@@ -812,7 +820,7 @@ class WC_Rakuten_Pay_API {
     );
 
     update_post_meta( $order_id, '_wc_rakuten_pay_transaction_data', $payment_data );
-    $this->save_order_meta_fields( $order_id, $payment_data );
+    $this->save_order_meta_fields( $order_id, $payment_data, $transaction );
 
     // Change the order status.
     $this->process_order_status( $order, $transaction['result'], $transaction );
