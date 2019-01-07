@@ -39,12 +39,6 @@ class WC_Rakuten_Log_Shipping extends WC_Shipping_Method {
     public function init_form_fields()
     {
         $this->instance_form_fields = array(
-            'enabled' => array (
-                'title'   => __('Enable/Disable', 'woocommerce-rakuten-log'),
-                'type'    => 'checkbox',
-                'label'   => __('Enable this shipping method', 'woocommerce-rakuten-log'),
-                'default' => 'yes'
-            ),
             'title' => array (
                 'title'    => __('Title', 'woocommerce-rakuten-log'),
                 'type'     => 'text',

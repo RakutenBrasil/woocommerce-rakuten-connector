@@ -76,7 +76,7 @@ class WC_Rakuten_Log_Admin_Orders{
             $where .= $GLOBALS['wpdb']->prepare( 'AND ID
                 IN (
                     SELECT order_id
-                    FROM wp_woocommerce_order_items
+                    FROM {$GLOBALS["wpdb"]->prefix}woocommerce_order_items
                     WHERE order_item_id IN (
                         SELECT order_item_id
                         FROM wp_woocommerce_order_itemmeta
