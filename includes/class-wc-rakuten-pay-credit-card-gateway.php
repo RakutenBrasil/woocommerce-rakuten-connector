@@ -173,15 +173,25 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'desc_tip'    => true,
         'default'     => '5',
       ),
+      'buyer_interest' => array(
+        'title'       => __( 'Buyer Interest', 'woocommerce-rakuten-pay' ),
+        'type'        => 'select',
+        'description' => __( 'Enables the display of the parcel listing on the product preview screen. (You will see the largest installments available for the product in payment by credit card)', 'woocommerce-rakuten-pay' ),
+        'default'     => 'no',
+        'options'     => array(
+          'no'  => __( 'No', 'woocommerce-raktuten-pay'),
+          'yes'     => __( 'Yes', 'woocommerce-raktuten-pay' ),
+        ),
+      ),
       'free_installments' => array(
-        'title'       => __( 'Free Installments', 'woocommerce-rakuten' ),
+        'title'       => __( 'Free Installments', 'woocommerce-rakuten-pay' ),
         'type'        => 'select',
         'class'       => 'wc-enhanced-select',
         'default'     => '1',
-        'description' => __( 'Number of installments with interest free.', 'woocommerce-rakuten' ),
+        'description' => __( 'Number of installments with interest free.', 'woocommerce-rakuten-pay' ),
         'desc_tip'    => true,
         'options'     => array(
-          '0'  => _x( 'None', 'no free installments', 'woocommerce-rakuten' ),
+          '0'  => _x( 'None', 'no free installments', 'woocommerce-rakuten-pay' ),
           '1'  => '1',
           '2'  => '2',
           '3'  => '3',
