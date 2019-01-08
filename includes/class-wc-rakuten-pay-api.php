@@ -716,6 +716,8 @@ class WC_Rakuten_Pay_API {
    * @param array  $data Order data.
    */
   protected function save_order_meta_fields( $id, $data, $transaction ) {
+    $payments = array_shift($transaction['payments']);
+
     if ( ! empty( $data['card_brand'] ) ) {
       update_post_meta( $id, __( 'Credit Card', 'woocommerce-rakuten-pay' ), $this->get_card_brand_name( sanitize_text_field( $data['card_brand'] ) ) );
     }
@@ -728,8 +730,8 @@ class WC_Rakuten_Pay_API {
     if ( ! empty( $data['billet_url'] ) ) {
       update_post_meta( $id, __( 'Banking Ticket URL', 'woocommerce-rakuten-pay' ), sanitize_text_field( $data['billet_url'] ) );
     }
-    if ( ! empty( $transaction['payments'][0]['credit_card']['number'] ) ) {
-      update_post_meta( $id, __( 'Card Number', 'woocommerce-rakuten-pay' ), sanitize_text_field( $transaction['payments'][0]['credit_card']['number'] ) );
+    if ( ! empty( $payments['credit_card']['number'] ) ) {
+      update_post_meta( $id, __( 'Card Number', 'woocommerce-rakuten-pay' ), sanitize_text_field( $payments['credit_card']['number'] ) );
     }
   }
 
@@ -764,6 +766,7 @@ class WC_Rakuten_Pay_API {
 
     $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
     $transaction    = $this->charge_transaction( $order, $data );
+    $payments = array_shift($transaction['payments']);
 
     if ( isset( $transaction['result'] ) && $transaction['result'] === 'fail' ) {
       return $transaction;
@@ -800,7 +803,7 @@ class WC_Rakuten_Pay_API {
         'installments'    => $_POST['rakuten_pay_installments'],
         'card_brand'      => $this->get_card_brand_name( $_POST['rakuten_pay_card_brand'] ),
         'amount'          => $data['amount'],
-        'number'          => $transaction['payments'][0]['credit_card']['number']
+        'number'          => $payments['credit_card']['number']
       );
     } else {
       $payment_data = array(
