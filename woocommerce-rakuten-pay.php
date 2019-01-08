@@ -29,7 +29,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
      *
      * @var string
      */
-    const VERSION = '1.0.0';
+    const VERSION = '1.1.2';
 
     /**
      * Instance of this class.
@@ -44,6 +44,94 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
     private function __construct() {
       // Load plugin text domain.
       add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+      add_action('admin_menu','rakuten_connector_menu');
+
+      function rakuten_connector_menu() {
+        add_menu_page( 'Rakuten Connector Plugin','Rakuten Connector','manage_options','rakuten_connector','rakuten_connector_page_menu',plugins_url('rakuten-favicon.png', __FILE__) );
+        add_submenu_page( 'rakuten_connector', 'Rakuten Connector', 'Configurações','manage_options', 'rakuten_connector' );
+        add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'Rakuten Pay Boleto','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_banking_billet_gateway','rakuten_connector_page_menu' );
+        add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'Rakuten Pay Cartão de Crédito','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_credit_card_gateway','rakuten_connector_page_menu' );
+      }
+
+      function rakuten_connector_page_menu() {
+        echo "
+        <style>
+          a { color: #333; }
+
+          .title {
+            color: #c4c4c4;
+            font-weight: bolder !important;
+            transition: .2s all ease-in-out;
+          }
+
+          .wrap {
+            display: flex;
+            width: 93%;
+            justify-content: center;
+          }
+
+          .box {
+            display: flex-wrap;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            width:30%;
+            height: 170px;
+            padding: 50px;
+            margin: 40px 40px 20px 0;
+            text-align: center;
+            float: left;
+            box-shadow: 2px 2px 10px #c4c4c4;
+            border-radius: 5px;
+            transition: .2s all ease-in-out;
+          }
+          
+          .box:hover {
+            transform: scale(1.1);
+          }
+          .box:hover h1 {
+            color: #bf0000;
+          }
+          .box-full {
+            width: 95%;
+            padding: 20px;
+          }
+          @media screen and (max-width: 479px){
+            .box {
+              width: 72%;
+            }
+          }
+        </style>
+
+        <br />
+        <div class='box-full'>
+          <img src='" . plugins_url('rakuten-connector-logo.png', __FILE__) . "' />
+          <hr>
+        </div>
+        
+        <div class='wrap'>
+          <div class='box'>
+            <h1 class='title'>Rakuten Pay</h1>
+            <hr>
+            <br />
+            <h3><a href='" . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_rakuten_pay_banking_billet_gateway' ) ) . "' >" . __( 'Bank Billet Settings', 'woocommerce-rakuten-pay' ) . "</a></h3>
+            <h3><a href='" . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_rakuten_pay_credit_card_gateway' ) ) . "'>" . __( 'Credit Card Settings', 'woocommerce-rakuten-pay' ) . "</a></h3>
+          </div>
+        ";
+        $query = $GLOBALS['wpdb']->get_results( "SELECT instance_id,method_id FROM {$GLOBALS['wpdb']->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'rakuten-log' " );
+        // get the Rakuten Log id 
+        foreach ($query as $dado) {
+          echo "
+            <div class='box'>
+              <h1 class='title'>Rakuten Log</h1>
+              <hr>
+              <br />
+              <h3><a href='admin.php?page=wc-settings&tab=shipping&instance_id={$dado->instance_id}' >Configurações de Entrega</a></h3>
+            </div>
+          </div>
+          ";
+        }
+      }
 
       // Checks with WooCommerce is installed.
       if ( class_exists( 'WC_Payment_Gateway' ) ) {
