@@ -715,9 +715,7 @@ class WC_Rakuten_Pay_API {
    * @param int    $id Order ID.
    * @param array  $data Order data.
    */
-  protected function save_order_meta_fields( $id, $data, $transaction ) {
-    $payments = array_shift($transaction['payments']);
-
+  protected function save_order_meta_fields( $id, $data, $payments ) {
     if ( ! empty( $data['card_brand'] ) ) {
       update_post_meta( $id, __( 'Credit Card', 'woocommerce-rakuten-pay' ), $this->get_card_brand_name( sanitize_text_field( $data['card_brand'] ) ) );
     }
@@ -766,7 +764,7 @@ class WC_Rakuten_Pay_API {
 
     $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
     $transaction    = $this->charge_transaction( $order, $data );
-    $payments = array_shift($transaction['payments']);
+    $payments = reset($transaction['payments']);
 
     if ( isset( $transaction['result'] ) && $transaction['result'] === 'fail' ) {
       return $transaction;
@@ -819,7 +817,7 @@ class WC_Rakuten_Pay_API {
     );
 
     update_post_meta( $order_id, '_wc_rakuten_pay_transaction_data', $payment_data );
-    $this->save_order_meta_fields( $order_id, $payment_data, $transaction );
+    $this->save_order_meta_fields( $order_id, $payment_data, $payments );
 
     // Change the order status.
     $this->process_order_status( $order, $transaction['result'], $transaction );

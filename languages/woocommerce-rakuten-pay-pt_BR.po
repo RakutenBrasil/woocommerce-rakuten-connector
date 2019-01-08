@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-01-03 14:02-0200\n"
+"PO-Revision-Date: 2019-01-08 18:23-0200\n"
 "Language-Team: \n"
 "X-Generator: Poedit 2.2\n"
 "Last-Translator: \n"
@@ -35,7 +35,8 @@ msgstr "depende da última versão do WooCommerce para funcionar!"
 msgid "Active WooCommerce"
 msgstr "Ativar WooCommerce"
 
-#: includes/admin/views/html-notice-missing-woocommerce.php:28 includes/admin/views/html-notice-missing-woocommerce.php:30
+#: includes/admin/views/html-notice-missing-woocommerce.php:28
+#: includes/admin/views/html-notice-missing-woocommerce.php:30
 msgid "Install WooCommerce"
 msgstr "Instalar WooCommerce"
 
@@ -43,7 +44,9 @@ msgstr "Instalar WooCommerce"
 msgid "The cancel transaction for order %s has failed."
 msgstr "Falha na transação de cancelamento para ordem %s."
 
-#: includes/class-wc-rakuten-pay-api.php:448 includes/class-wc-rakuten-pay-api.php:501 includes/class-wc-rakuten-pay-api.php:942
+#: includes/class-wc-rakuten-pay-api.php:448
+#: includes/class-wc-rakuten-pay-api.php:501
+#: includes/class-wc-rakuten-pay-api.php:942
 msgid "Transaction failed"
 msgstr "Falha na transação"
 
@@ -107,7 +110,9 @@ msgstr ""
 msgid "Credit Card"
 msgstr "Cartão de Crédito"
 
-#: includes/class-wc-rakuten-pay-api.php:667 includes/class-wc-rakuten-pay-credit-card-gateway.php:158 templates/credit-card/payment-form.php:63
+#: includes/class-wc-rakuten-pay-api.php:667
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:158
+#: templates/credit-card/payment-form.php:63
 msgid "Installments"
 msgstr "Parcelas"
 
@@ -171,7 +176,8 @@ msgstr "Transação estornada"
 msgid "Order %1$s has been marked as refunded by Rakuten Pay, for more details, see %2$s."
 msgstr "O pedido %1$s foi marcado como estornado pelo Rakuten Pay, para maiores detalhes, acesse %2$s."
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:26 includes/class-wc-rakuten-pay-banking-billet-gateway.php:98
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:26
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:98
 msgid "Rakuten Pay - Banking Billet"
 msgstr "Rakuten Pay - Boleto"
 
@@ -179,7 +185,8 @@ msgstr "Rakuten Pay - Boleto"
 msgid "Accept banking billet payments using Rakuten Pay."
 msgstr "Aceite pagamentos via boleto usando o Rakuten Pay."
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:88 includes/class-wc-rakuten-pay-credit-card-gateway.php:96
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:88
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:96
 msgid "Enable/Disable"
 msgstr "Habilitar/Desabilitar"
 
@@ -187,19 +194,23 @@ msgstr "Habilitar/Desabilitar"
 msgid "Enable Rakuten Pay Banking Billet"
 msgstr "Habilitar pagamentos de boletos via Rakuten Pay"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:94 includes/class-wc-rakuten-pay-credit-card-gateway.php:102
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:94
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:102
 msgid "Title"
 msgstr "Titúlo"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:96 includes/class-wc-rakuten-pay-credit-card-gateway.php:104
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:96
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:104
 msgid "This controls the title which the user sees during checkout."
 msgstr "Texto de título que aparecerá para o usuário durante o checkout."
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:101 includes/class-wc-rakuten-pay-credit-card-gateway.php:109
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:101
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:109
 msgid "Description"
 msgstr "Descrição"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:103 includes/class-wc-rakuten-pay-credit-card-gateway.php:111
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:103
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:111
 msgid "This controls the description which the user sees during checkout."
 msgstr "Texto de descrição que o usuário verá durante o checkout."
 
@@ -207,77 +218,97 @@ msgstr "Texto de descrição que o usuário verá durante o checkout."
 msgid "Pay with Banking Billet"
 msgstr "Pague via Boleto"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:108 includes/class-wc-rakuten-pay-credit-card-gateway.php:116
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:108
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:116
 msgid "Integration Settings"
 msgstr "Configurações de Integração"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:113 includes/class-wc-rakuten-pay-credit-card-gateway.php:121
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:113
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:121
 msgid "Rakuten Pay Document"
 msgstr "Rakuten Pay Documento"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:115 includes/class-wc-rakuten-pay-credit-card-gateway.php:123
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:115
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:123
 msgid "Please enter the document of your store."
 msgstr "Por favor entre o documento (cnpj) de sua loja."
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:115 includes/class-wc-rakuten-pay-banking-billet-gateway.php:124
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:133 includes/class-wc-rakuten-pay-credit-card-gateway.php:123 includes/class-wc-rakuten-pay-credit-card-gateway.php:132
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:115
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:124
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:133
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:123
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:132
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:141
 msgid "Rakuten Pay Dashboard > My Account page"
 msgstr "Rakuten Pay Dashboard > Minha Conta"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:122 includes/class-wc-rakuten-pay-credit-card-gateway.php:130
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:122
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:130
 msgid "Rakuten Pay API Key"
 msgstr "Rakuten Pay, Chave de API"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:124 includes/class-wc-rakuten-pay-credit-card-gateway.php:132
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:124
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:132
 msgid "Please enter your Rakuten Pay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s."
 msgstr "Por favor entre com a sua chave de API. Isso é necessário para processar os seus pagamentos via Rakuten Pay e receber notificações. É possível pegar essa Chave em %s."
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:131 includes/class-wc-rakuten-pay-credit-card-gateway.php:139
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:131
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:139
 msgid "Rakuten Pay Signature Key"
 msgstr "Rakuten Pay, Chave de assinatura"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:133 includes/class-wc-rakuten-pay-credit-card-gateway.php:141
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:133
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:141
 msgid "Please enter your Rakuten Pay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s."
 msgstr "Por favor entre com a sua chave de API. Isso é necessário para processar os seus pagamentos via Rakuten Pay e receber notificações. É possível pegar essa Chave em %s."
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:140 includes/class-wc-rakuten-pay-credit-card-gateway.php:148
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:140
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:148
 msgid "Environment"
 msgstr "Ambiente"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:142 includes/class-wc-rakuten-pay-credit-card-gateway.php:150
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:142
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:150
 msgid "Rakuten Pay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions."
 msgstr "Rakuten Pay tem dois ambientes, o ambiente de Homologação usado para fazer transações de testes e o ambiente de Produção usado para transações reais."
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:145 includes/class-wc-rakuten-pay-credit-card-gateway.php:153
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:145
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:153
 msgid "Production"
 msgstr "Produção"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:146 includes/class-wc-rakuten-pay-credit-card-gateway.php:154
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:146
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:154
 msgid "Sandbox"
 msgstr "Homologação"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:150 includes/class-wc-rakuten-pay-credit-card-gateway.php:222
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:150
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:222
 msgid "Gateway Testing"
 msgstr "Gateway de Teste"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:155 includes/class-wc-rakuten-pay-credit-card-gateway.php:227
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:155
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:227
 msgid "Debug Log"
 msgstr "Log de depuração"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:157 includes/class-wc-rakuten-pay-credit-card-gateway.php:229
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:157
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:229
 msgid "Enable logging"
 msgstr "Habilitar Log de depuração"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:159 includes/class-wc-rakuten-pay-credit-card-gateway.php:231
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:159
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:231
 msgid "Log Rakuten Pay events, such as API requests. You can check the log in %s"
 msgstr "Logar eventos do Rakuten Pay, tais como chamadas de API, você pode verificar estes logo posteriormente em %s"
 
-#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:159 includes/class-wc-rakuten-pay-credit-card-gateway.php:231
+#: includes/class-wc-rakuten-pay-banking-billet-gateway.php:159
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:231
 msgid "System Status &gt; Logs"
 msgstr ""
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:26 includes/class-wc-rakuten-pay-credit-card-gateway.php:106
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:26
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:106
 msgid "Rakuten Pay - Credit Card"
 msgstr "Rakuten Pay - Cartão de Crédito"
 
@@ -325,35 +356,50 @@ msgstr "Parcelas sem juros"
 msgid "Number of installments with interest free."
 msgstr "Número de parcelas sem juros."
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:397 includes/class-wc-rakuten-pay-credit-card-gateway.php:398 includes/class-wc-rakuten-pay-credit-card-gateway.php:502
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:397
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:398
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:502
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:503
 msgid "Birthdate"
 msgstr "Data de nascimento"
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:405 includes/class-wc-rakuten-pay-credit-card-gateway.php:406 includes/class-wc-rakuten-pay-credit-card-gateway.php:510
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:405
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:406
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:510
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:511
 msgid "Gender"
 msgstr "Gênero"
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:412 includes/class-wc-rakuten-pay-credit-card-gateway.php:517
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:412
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:517
 msgid "Male"
 msgstr "Masculino"
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:413 includes/class-wc-rakuten-pay-credit-card-gateway.php:518
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:413
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:518
 msgid "Female"
 msgstr "Feminino"
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:417 includes/class-wc-rakuten-pay-credit-card-gateway.php:418 includes/class-wc-rakuten-pay-credit-card-gateway.php:522
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:523 templates/banking-billet/refund-banking-data.php:35
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:417
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:418
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:522
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:523
+#: templates/banking-billet/refund-banking-data.php:35
 msgid "Document"
 msgstr "Documento"
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:424 includes/class-wc-rakuten-pay-credit-card-gateway.php:425 includes/class-wc-rakuten-pay-credit-card-gateway.php:462
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:463 includes/class-wc-rakuten-pay-credit-card-gateway.php:540 includes/class-wc-rakuten-pay-credit-card-gateway.php:541
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:424
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:425
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:462
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:463
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:540
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:541
 msgid "Number"
 msgstr "Número"
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:431 includes/class-wc-rakuten-pay-credit-card-gateway.php:432 includes/class-wc-rakuten-pay-credit-card-gateway.php:547
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:431
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:432
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:547
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:548
 msgid "District"
 msgstr "Bairro"
@@ -382,20 +428,26 @@ msgstr "Depois de clicar em “Finalizar Compra”, você terá acesso ao boleto
 msgid "Note: The order will be confirmed only after the payment approval."
 msgstr "Nota: O pedido será confirmado apenas depois da aprovação do pagamento."
 
-#: templates/banking-billet/emails/html-instructions.php:15 templates/banking-billet/emails/plain-instructions.php:14 templates/credit-card/emails/html-instructions.php:15
+#: templates/banking-billet/emails/html-instructions.php:15
+#: templates/banking-billet/emails/plain-instructions.php:14
+#: templates/credit-card/emails/html-instructions.php:15
 #: templates/credit-card/emails/plain-instructions.php:14
 msgid "Payment"
 msgstr "Pagamento"
 
-#: templates/banking-billet/emails/html-instructions.php:17 templates/banking-billet/emails/plain-instructions.php:18
+#: templates/banking-billet/emails/html-instructions.php:17
+#: templates/banking-billet/emails/plain-instructions.php:18
 msgid "Please use the link below to view your banking billet, you can print and pay in your internet banking or in a lottery retailer:"
 msgstr "Por valor use o link abaixo para acessar o seu boleto, você deve imprimi-lo e pagá-lo em bancos e casas lotéricas até a data do vencimento:"
 
-#: templates/banking-billet/emails/html-instructions.php:17 templates/banking-billet/payment-instructions.php:16
+#: templates/banking-billet/emails/html-instructions.php:17
+#: templates/banking-billet/payment-instructions.php:16
 msgid "Pay the banking billet"
 msgstr "Pague o boleto"
 
-#: templates/banking-billet/emails/html-instructions.php:17 templates/banking-billet/emails/plain-instructions.php:26 templates/banking-billet/payment-instructions.php:16
+#: templates/banking-billet/emails/html-instructions.php:17
+#: templates/banking-billet/emails/plain-instructions.php:26
+#: templates/banking-billet/payment-instructions.php:16
 msgid "After we receive the banking billet payment confirmation, your order will be processed."
 msgstr "O seu pedido será processado depois da confirmação de pagamento do boleto."
 
@@ -407,39 +459,48 @@ msgstr "Por favor clique no botão ao lado para acessar o boleto para pagamento.
 msgid "You can print and pay in your internet banking or in a lottery retailer."
 msgstr "Você pode imprimir e pagar esse boleto em qualquer banco ou casa lotérica até a data de vencimento."
 
-#: templates/banking-billet/refund-banking-data.php:3 templates/credit-card/refund-banking-data.php:3
+#: templates/banking-billet/refund-banking-data.php:3
+#: templates/credit-card/refund-banking-data.php:3
 msgid "Reason"
 msgstr "Razão"
 
-#: templates/banking-billet/refund-banking-data.php:7 templates/credit-card/refund-banking-data.php:7
+#: templates/banking-billet/refund-banking-data.php:7
+#: templates/credit-card/refund-banking-data.php:7
 msgid "Select a Reason"
 msgstr "Selecione uma razão"
 
-#: templates/banking-billet/refund-banking-data.php:10 templates/credit-card/refund-banking-data.php:10
+#: templates/banking-billet/refund-banking-data.php:10
+#: templates/credit-card/refund-banking-data.php:10
 msgid "Buyer returned the order"
 msgstr "Comprador devolveu o pedido"
 
-#: templates/banking-billet/refund-banking-data.php:13 templates/credit-card/refund-banking-data.php:13
+#: templates/banking-billet/refund-banking-data.php:13
+#: templates/credit-card/refund-banking-data.php:13
 msgid "Buyer returned an item"
 msgstr "Comprador devolveu um item"
 
-#: templates/banking-billet/refund-banking-data.php:16 templates/credit-card/refund-banking-data.php:16
+#: templates/banking-billet/refund-banking-data.php:16
+#: templates/credit-card/refund-banking-data.php:16
 msgid "Buyer requested to change order"
 msgstr "Comprador solicitou a troca do pedido"
 
-#: templates/banking-billet/refund-banking-data.php:19 templates/credit-card/refund-banking-data.php:19
+#: templates/banking-billet/refund-banking-data.php:19
+#: templates/credit-card/refund-banking-data.php:19
 msgid "Buyer requested to exchange an item"
 msgstr "Comprador solicitou a troca de um item"
 
-#: templates/banking-billet/refund-banking-data.php:22 templates/credit-card/refund-banking-data.php:22
+#: templates/banking-billet/refund-banking-data.php:22
+#: templates/credit-card/refund-banking-data.php:22
 msgid "Other buyer related issue"
 msgstr "Outro motivo do comprador"
 
-#: templates/banking-billet/refund-banking-data.php:25 templates/credit-card/refund-banking-data.php:25
+#: templates/banking-billet/refund-banking-data.php:25
+#: templates/credit-card/refund-banking-data.php:25
 msgid "Merchant without items in stock"
 msgstr "Lojista sem produto em estoque"
 
-#: templates/banking-billet/refund-banking-data.php:28 templates/credit-card/refund-banking-data.php:28
+#: templates/banking-billet/refund-banking-data.php:28
+#: templates/credit-card/refund-banking-data.php:28
 msgid "Other merchant related issue"
 msgstr "Outro motivo do lojista"
 
@@ -455,7 +516,9 @@ msgstr "Número do Agência"
 msgid "Bank number"
 msgstr "Número da Conta"
 
-#: templates/credit-card/emails/html-instructions.php:17 templates/credit-card/emails/plain-instructions.php:18 templates/credit-card/payment-instructions.php:17
+#: templates/credit-card/emails/html-instructions.php:17
+#: templates/credit-card/emails/plain-instructions.php:18
+#: templates/credit-card/payment-instructions.php:17
 msgid "Payment successfully made using %1$s credit card in %2$s."
 msgstr "Pagamento efetuado com sucesso usando cartão de crédito %1$s em %2$s."
 
