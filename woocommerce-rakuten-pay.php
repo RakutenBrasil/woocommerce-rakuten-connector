@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WooCommerce Rakuten Pay
  * Plugin URI: http://github.com/RakutenBrasil/woocommerce-rakuten-pay
- * Description: Gateway de pagamento Rakuten Pay para WooCommerce.
+ * Description: Gateway de pagamento Rakuten Pay e Rakuten Logistics para WooCommerce.
  * Author: Rakuten Pay
  * Author URI: https://rakuten.com.br/
- * Version: 1.0.0
+ * Version: 1.1.2
  * License: GPLv2 or later
  * Text Domain: woocommerce-rakuten-pay
  * Domain Path: /languages/
@@ -155,7 +155,11 @@ define('WC_RAKUTEN_LOG_SANDBOX_API_URL', 'https://oneapi-sandbox.rakutenpay.com.
 define('WC_RAKUTEN_LOG_PRODUCTION_API_URL', 'https://api.rakuten.com.br/logistics/');
 
 if (!class_exists('WC_Rakuten_Log')) {
+<<<<<<< HEAD
     include_once dirname(__FILE__) . 'woocommerce-rakuten-log/includes/class-wc-rakuten-log.php';
+=======
+    include_once dirname(__FILE__) . '/woocommerce-rakuten-log/includes/class-wc-rakuten-log.php';
+>>>>>>> master
 
     add_action('plugins_loaded', array('WC_Rakuten_Log', 'init'));
 }

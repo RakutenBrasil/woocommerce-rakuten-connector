@@ -263,11 +263,11 @@ msgstr "Gateway de Teste"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:155 includes/class-wc-rakuten-pay-credit-card-gateway.php:227
 msgid "Debug Log"
-msgstr "Logo de depuração"
+msgstr "Log de depuração"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:157 includes/class-wc-rakuten-pay-credit-card-gateway.php:229
 msgid "Enable logging"
-msgstr "Habilitar Logo de depuração"
+msgstr "Habilitar Log de depuração"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:159 includes/class-wc-rakuten-pay-credit-card-gateway.php:231
 msgid "Log Rakuten Pay events, such as API requests. You can check the log in %s"
@@ -283,7 +283,7 @@ msgstr "Rakuten Pay - Cartão de Crédito"
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:27
 msgid "Accept credit card payments using Rakuten Pay."
-msgstr "Aceite pagamentos via boleto usando o Rakuten Pay."
+msgstr "Aceite pagamentos via cartão de crédito usando o Rakuten Pay."
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:98
 msgid "Enable Rakuten Pay Credit Card"
@@ -319,11 +319,11 @@ msgstr ""
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:199
 msgid "Free Installments"
-msgstr ""
+msgstr "Parcelas sem juros"
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:203
 msgid "Number of installments with interest free."
-msgstr ""
+msgstr "Número de parcelas sem juros."
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:397 includes/class-wc-rakuten-pay-credit-card-gateway.php:398 includes/class-wc-rakuten-pay-credit-card-gateway.php:502
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:503
@@ -481,7 +481,7 @@ msgstr "Ano de Validade"
 
 #: templates/credit-card/payment-form.php:59
 msgid "Card Code"
-msgstr ""
+msgstr "Código do Cartão"
 
 #: templates/credit-card/payment-form.php:60
 msgid "CVC"
