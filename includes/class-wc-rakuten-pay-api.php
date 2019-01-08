@@ -783,6 +783,10 @@ class WC_Rakuten_Pay_API {
       );
     }
 
+    if ( ! empty($transaction['payments']) ) {
+      $this->gateway->log->add( $this->gateway->id, 'transaction: ' . print_r($transaction['payments'][0]['credit_card']['number'], true) );
+    }
+
     if ( ! isset( $transaction['charge_uuid'] ) ) {
       if ( 'yes' === $this->gateway->debug ) {
         $this->gateway->log->add( $this->gateway->id, 'Transaction data does not contain id or charge url for order ' . $order->get_order_number() . '...' );
