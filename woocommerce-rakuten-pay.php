@@ -155,11 +155,7 @@ define('WC_RAKUTEN_LOG_SANDBOX_API_URL', 'https://oneapi-sandbox.rakutenpay.com.
 define('WC_RAKUTEN_LOG_PRODUCTION_API_URL', 'https://api.rakuten.com.br/logistics/');
 
 if (!class_exists('WC_Rakuten_Log')) {
-<<<<<<< HEAD
-    include_once dirname(__FILE__) . 'woocommerce-rakuten-log/includes/class-wc-rakuten-log.php';
-=======
     include_once dirname(__FILE__) . '/woocommerce-rakuten-log/includes/class-wc-rakuten-log.php';
->>>>>>> master
 
     add_action('plugins_loaded', array('WC_Rakuten_Log', 'init'));
 }
