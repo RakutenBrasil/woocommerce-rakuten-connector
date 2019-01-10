@@ -247,25 +247,46 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
    * Payment fields.
    */
   public function payment_fields() {
-    if ( $description = $this->get_description() ) {
-      echo wp_kses_post( wpautop( wptexturize( $description ) ) );
+
+    $buyer_interest = $this->api->get_buyer_interest();
+    $installments = $this->api->get_installments_buyer_interest();
+    $installment = $this->max_installment;
+
+    if ( $buyer_interest == 'yes' ) {
+
+      wc_get_template(
+        'credit-card/payment-form.php',
+        array(
+          'max_installment'      => $this->max_installment,
+          'smallest_installment' => $this->api->get_smallest_installment(),
+          'installments'         => $installments,
+          'buyer_interest'       => $buyer_interest,
+        ),
+        'woocommerce/woocommerce-rakuten-pay/',
+        WC_Rakuten_Pay::get_templates_path()
+      );
+
+    } else {
+      if ( $description = $this->get_description() ) {
+        echo wp_kses_post( wpautop( wptexturize( $description ) ) );
+      }
+
+      $amount = (float) $this->get_order_total();
+
+      $installments = $this->api->get_installments( $amount );
+      $installments = $this->apply_free_installments( $installments );
+
+      wc_get_template(
+        'credit-card/payment-form.php',
+        array(
+          'max_installment'      => $this->max_installment,
+          'smallest_installment' => $this->api->get_smallest_installment(),
+          'installments'         => $installments,
+        ),
+        'woocommerce/woocommerce-rakuten-pay/',
+        WC_Rakuten_Pay::get_templates_path()
+      );
     }
-
-    $amount = (float) $this->get_order_total();
-
-    $installments = $this->api->get_installments( $amount );
-    $installments = $this->apply_free_installments( $installments );
-
-    wc_get_template(
-      'credit-card/payment-form.php',
-      array(
-        'max_installment'      => $this->max_installment,
-        'smallest_installment' => $this->api->get_smallest_installment(),
-        'installments'         => $installments,
-      ),
-      'woocommerce/woocommerce-rakuten-pay/',
-      WC_Rakuten_Pay::get_templates_path()
-    );
   }
 
   /**

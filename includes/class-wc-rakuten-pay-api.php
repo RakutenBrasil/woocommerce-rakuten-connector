@@ -1223,5 +1223,16 @@ class WC_Rakuten_Pay_API {
     $user_pass = $document . ':' . $api_key;
     return 'Basic ' . base64_encode( $user_pass );
   }
-}
 
+  public function get_buyer_interest() {
+    $buyer_interest   = $this->gateway->settings['buyer_interest'];
+    return $buyer_interest;
+  }
+
+  public function get_installments_buyer_interest() {
+    $free_installments = $this->gateway->free_installments;
+    if ( $free_installments == 12 ) {
+      return $free_installments;
+    }
+  }
+}
