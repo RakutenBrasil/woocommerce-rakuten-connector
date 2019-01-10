@@ -587,7 +587,7 @@ msgstr "Número do Cartão de Crédito"
 msgid "Enables the display of the parcel listing on the product preview screen. (You will see the largest installments available for the product in payment by credit card)"
 msgstr "Habilita a exibição da listagem de parcelas na tela de visualização do produto. (Irá exibir o maior parcelamento disponível para o produto no pagamento com cartão de crédito)"
 
-#: includes/class-wc-rakuten-pay-credit-card-gateway.php:177
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:184
 msgid "Buyer Interest"
 msgstr "Juros Comprador"
 
@@ -598,3 +598,7 @@ msgstr "Não"
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:183
 msgid "Yes"
 msgstr "Sim"
+
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:177
+msgid "Buyer Interest Confoguration"
+msgstr "Configuração do Juros Comprador"

@@ -173,6 +173,11 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'desc_tip'    => true,
         'default'     => '5',
       ),
+      'buyer_interest_conf' => array(
+        'title'       => __( 'Buyer Interest Confoguration', 'woocommerce-rakuten-pay' ),
+        'type'        => 'title',
+        'description' => '',
+      ),
       'buyer_interest' => array(
         'title'       => __( 'Buyer Interest', 'woocommerce-rakuten-pay' ),
         'type'        => 'select',
