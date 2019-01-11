@@ -806,7 +806,7 @@ class WC_Rakuten_Pay_API {
     } else {
       $payment_data = array(
         'payment_method'  => $payment_method,
-        'billet_url'      => $this->banking_billet_url( $transaction['charge_uuid'] ),
+        'billet_url'      => $payments['billet']['url'],
         'amount'          => $data['amount']
       );
     }
