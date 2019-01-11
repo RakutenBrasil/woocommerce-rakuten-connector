@@ -1026,7 +1026,11 @@ class WC_Rakuten_Pay_API {
         $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled.', 'woocommerce-rakuten-pay' ) );
 
         break;
+      case 'declined' :
+        update_post_meta( $order->get_id(), '_wc_rakuten_pay_order_cancelled', 'yes' );
+        $order->update_status( 'failed' );
 
+        break;
       case 'refunded' :
         if ( in_array( $order->get_status(), array( 'on-hold' ), true ) ) {
           break;
