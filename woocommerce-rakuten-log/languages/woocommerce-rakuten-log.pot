@@ -1,0 +1,310 @@
+# Copyright (C) 2018 Rakuten Log
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Rakuten Log 1.0.0\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/woocommerce-rakuten-log\n"
+"POT-Creation-Date: 2018-07-11 13:08:37+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
+
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:65
+msgid "Show all shipping methods"
+msgstr ""
+
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:102
+msgid "Create Rakuten Log batch"
+msgstr ""
+
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:210
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:229
+#: includes/admin/views/html-metabox-shop-order.php:50
+msgid "Tracking Code"
+msgstr ""
+
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:261
+msgid "Invalid shipping method"
+msgstr ""
+
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:267
+msgid "Batch already created for order"
+msgstr ""
+
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:281
+msgid "There has been an error creating a Rakuten Log Batch!"
+msgstr ""
+
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:296
+msgid "Batch successfully created"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:25
+#: includes/admin/views/html-metabox-shop-order.php:59
+msgid "Invoice Series"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:29
+#: includes/admin/views/html-metabox-shop-order.php:65
+msgid "Invoice Number"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:33
+#: includes/admin/views/html-metabox-shop-order.php:71
+msgid "Invoice Key"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:37
+#: includes/admin/views/html-metabox-shop-order.php:77
+msgid "Invoice CFOP"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:41
+#: includes/admin/views/html-metabox-shop-order.php:83
+msgid "Invoice Date"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:46
+msgid "Batch Code"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:47
+msgid " Batch code"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:51
+msgid " Tracking code"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:54
+#: includes/admin/views/html-metabox-shop-order.php:55
+msgid "Volume"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:89
+msgid "Rakuten Log actions"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:90
+msgid "Print tag"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:91
+msgid "Print batch tag"
+msgstr ""
+
+#: includes/admin/views/html-metabox-shop-order.php:92
+msgid "Follow order"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Rakuten Log"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:27
+msgid "%s is a shipping method from Rakuten Log."
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:51
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:45
+#: tests/test-wc-rakuten-log-shipping.php:142
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:53
+#: tests/test-wc-rakuten-log-shipping.php:144
+msgid "Enable this shipping method"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:57
+#: tests/test-wc-rakuten-log-shipping.php:148
+msgid "Title"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:59
+#: tests/test-wc-rakuten-log-shipping.php:150
+msgid "This option controls what the customer will see during checkout"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:64
+#: tests/test-wc-rakuten-log-shipping.php:155
+msgid "Owner Document"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:66
+#: tests/test-wc-rakuten-log-shipping.php:157
+msgid "Document of the owner registered on Rakuten"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:71
+#: tests/test-wc-rakuten-log-shipping.php:162
+msgid "API key"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:73
+#: tests/test-wc-rakuten-log-shipping.php:164
+msgid "API key registered on Rakuten"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:78
+#: tests/test-wc-rakuten-log-shipping.php:169
+msgid "Signature Key"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:80
+#: tests/test-wc-rakuten-log-shipping.php:171
+msgid "Signature key registered on Rakuten"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:85
+msgid "Environment"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:87
+msgid ""
+"Rakuten Log has two environments, the Sandbox used to make test "
+"transactions, and Production used for real transactions."
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:90
+msgid "Production"
+msgstr ""
+
+#: includes/class-wc-rakuten-log-shipping.php:91
+msgid "Sandbox"
+msgstr ""
+
+#: includes/class-wc-rakuten-log.php:131 includes/class-wc-rakuten-log.php:139
+msgid "Number"
+msgstr ""
+
+#: includes/class-wc-rakuten-log.php:146 includes/class-wc-rakuten-log.php:148
+msgid "Complement"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:24
+msgid "Rakuten Log Tracking Code"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:26
+msgid "This email is sent when a batch is created for the order."
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:27
+msgid "Your order has been sent"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:28
+msgid "[{site_title}]] Your order {order_number} has been sent"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:29
+msgid "Hi there. Your recent order on {site_title} has been sent by Rakuten Log."
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:31
+msgid ""
+"To track your delivery, use this <a href=\"{tracking_url}\">tracking "
+"link</a>."
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:47
+msgid "Enable this email notification"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:51
+msgid "Subject"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:53
+msgid ""
+"This controls the email subject line. Leave blank to use the default "
+"subject: <code>%s</code>."
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:59
+msgid "Email Heading"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:61
+msgid ""
+"This controls the main heading contained within the email. Leave blank to "
+"use the default heading: <code>%s</code>."
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:67
+msgid "Email Content"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:69
+msgid ""
+"This controls the initial content of the email. Leave blank to use the "
+"default content: <code>%s</code>."
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:75
+msgid "Email type"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:77
+msgid "Choose which format of email to send."
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:90
+msgid "Plain text"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:92
+msgid "HTML"
+msgstr ""
+
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:93
+msgid "Multipart"
+msgstr ""
+
+#: templates/emails/plain/rakuten-log-tracking-code.php:21
+#: templates/emails/rakuten-log-tracking-code.php:25
+msgid "For your reference, your order details are shown below."
+msgstr ""
+
+#: templates/myaccount/tracking_link.php:21
+msgid "Rakuten Log delivery tracking"
+msgstr ""
+
+#: templates/myaccount/tracking_link.php:23
+msgid "Tracking Code:"
+msgstr ""
+
+#: templates/myaccount/tracking_link.php:27
+msgid "Tracking Url:"
+msgstr ""
+
+#: templates/myaccount/tracking_link.php:28
+msgid "Link"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WooCommerce Rakuten Log"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/RakutenBrasil/woocommerce-rakuten-log"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Gateway de logística Rakuten Log para WooCommerce."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://rakuten.com.br/"
+msgstr ""
+
+#: includes/class-wc-rakuten-log.php:132 includes/class-wc-rakuten-log.php:140
+msgctxt "placeholder"
+msgid "Number"
+msgstr ""
