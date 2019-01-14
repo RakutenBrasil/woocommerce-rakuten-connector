@@ -173,6 +173,11 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'desc_tip'    => true,
         'default'     => '5',
       ),
+      'buyer_interest_conf' => array(
+        'title'       => __( 'Buyer Interest Confoguration', 'woocommerce-rakuten-pay' ),
+        'type'        => 'title',
+        'description' => '',
+      ),
       'buyer_interest' => array(
         'title'       => __( 'Buyer Interest', 'woocommerce-rakuten-pay' ),
         'type'        => 'select',
@@ -247,25 +252,46 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
    * Payment fields.
    */
   public function payment_fields() {
-    if ( $description = $this->get_description() ) {
-      echo wp_kses_post( wpautop( wptexturize( $description ) ) );
+
+    $buyer_interest = $this->api->get_buyer_interest();
+    $installments = $this->api->get_installments_buyer_interest();
+    $installment = $this->max_installment;
+
+    if ( $buyer_interest == 'yes' ) {
+
+      wc_get_template(
+        'credit-card/payment-form.php',
+        array(
+          'max_installment'      => $this->max_installment,
+          'smallest_installment' => $this->api->get_smallest_installment(),
+          'installments'         => $installments,
+          'buyer_interest'       => $buyer_interest,
+        ),
+        'woocommerce/woocommerce-rakuten-pay/',
+        WC_Rakuten_Pay::get_templates_path()
+      );
+
+    } else {
+      if ( $description = $this->get_description() ) {
+        echo wp_kses_post( wpautop( wptexturize( $description ) ) );
+      }
+
+      $amount = (float) $this->get_order_total();
+
+      $installments = $this->api->get_installments( $amount );
+      $installments = $this->apply_free_installments( $installments );
+
+      wc_get_template(
+        'credit-card/payment-form.php',
+        array(
+          'max_installment'      => $this->max_installment,
+          'smallest_installment' => $this->api->get_smallest_installment(),
+          'installments'         => $installments,
+        ),
+        'woocommerce/woocommerce-rakuten-pay/',
+        WC_Rakuten_Pay::get_templates_path()
+      );
     }
-
-    $amount = (float) $this->get_order_total();
-
-    $installments = $this->api->get_installments( $amount );
-    $installments = $this->apply_free_installments( $installments );
-
-    wc_get_template(
-      'credit-card/payment-form.php',
-      array(
-        'max_installment'      => $this->max_installment,
-        'smallest_installment' => $this->api->get_smallest_installment(),
-        'installments'         => $installments,
-      ),
-      'woocommerce/woocommerce-rakuten-pay/',
-      WC_Rakuten_Pay::get_templates_path()
-    );
   }
 
   /**
@@ -409,18 +435,6 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
         ),
-        'billing_gender'    => array(
-          'label'           => __( 'Gender', 'woocommerce-rakuten-pay' ),
-          'placeholder'     => __( 'Gender', 'placeholder', 'woocommerce-rakuten-pay' ),
-          'required'        => true,
-          'type'            => 'select',
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true,
-          'options'         => array(
-            'm'  => __( 'Male', 'woocommerce-rakuten-pay' ),
-            'f'  => __( 'Female', 'woocommerce-rakuten-pay' )
-          )
-        ),
         'billing_document'  => array(
           'label'           => __( 'Document', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Document', 'placeholder', 'woocommerce-rakuten-pay' ),
@@ -446,7 +460,6 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     );
 
     $billing_fields['billing_birthdate']['priority'] = 40;
-    $billing_fields['billing_gender']['priority'] = 40;
     $billing_fields['billing_phone']['priority'] = 50;
     $billing_fields['billing_email']['priority'] = 50;
     $billing_fields['billing_document']['priority'] = 60;
@@ -513,18 +526,6 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
           'foo-bar-baz'     => 'hei-how',
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
-        ),
-        'shipping_gender'    => array(
-          'label'           => __( 'Gender', 'woocommerce' ),
-          'placeholder'     => __( 'Gender', 'placeholder', 'woocommerce' ),
-          'required'        => true,
-          'type'            => 'select',
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true,
-          'options'         => array(
-            'm'  => __( 'Male', 'woocommerce' ),
-            'f'  => __( 'Female', 'woocommerce' )
-          )
         ),
         'shipping_document'  => array(
           'label'           => __( 'Document', 'woocommerce' ),

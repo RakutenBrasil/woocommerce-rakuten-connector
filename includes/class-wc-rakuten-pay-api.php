@@ -810,7 +810,7 @@ class WC_Rakuten_Pay_API {
     } else {
       $payment_data = array(
         'payment_method'  => $payment_method,
-        'billet_url'      => $this->banking_billet_url( $transaction['charge_uuid'] ),
+        'billet_url'      => $payments['billet']['url'],
         'amount'          => $data['amount']
       );
     }
@@ -1030,7 +1030,11 @@ class WC_Rakuten_Pay_API {
         $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled.', 'woocommerce-rakuten-pay' ) );
 
         break;
+      case 'declined' :
+        update_post_meta( $order->get_id(), '_wc_rakuten_pay_order_cancelled', 'yes' );
+        $order->update_status( 'failed' );
 
+        break;
       case 'refunded' :
         if ( in_array( $order->get_status(), array( 'on-hold' ), true ) ) {
           break;
@@ -1227,5 +1231,16 @@ class WC_Rakuten_Pay_API {
     $user_pass = $document . ':' . $api_key;
     return 'Basic ' . base64_encode( $user_pass );
   }
-}
 
+  public function get_buyer_interest() {
+    $buyer_interest   = $this->gateway->settings['buyer_interest'];
+    return $buyer_interest;
+  }
+
+  public function get_installments_buyer_interest() {
+    $free_installments = $this->gateway->free_installments;
+    if ( $free_installments == 12 ) {
+      return $free_installments;
+    }
+  }
+}
