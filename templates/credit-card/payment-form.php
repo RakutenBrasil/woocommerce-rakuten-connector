@@ -65,35 +65,36 @@ if ( ! defined( 'ABSPATH' ) ) {
       <?php
       $price = WC()->cart->total;
       $price_installment = WC()->cart->total;
-      $installment = 1;
+
       if ( $buyer_interest == 'yes' ) {
 
-        for ( $max = 1 ; $max <= $max_installment ; $max++ ) {
-          $price_installment = $price / $max;
-          echo "<option value='${max}'>${installment}x de " . number_format($price_installment, 2) . "</option>";
-          
-          $installment++;
+          foreach ( $installments as $installment ) :
+              $installment_number = $installment['quantity'];
 
-        }
+              if ( 1 !== $installment_number && $smallest_installment > $installment['installment_amount'] ) {
+                  break;
+              }
 
-      } else {
-
-        foreach ( $installments as $installment ) :
-          $installment_number = $installment['quantity'];
-
-          if ( 1 !== $installment_number && $smallest_installment > $installment['installment_amount'] ) {
-            break;
-          }
-
-          $decimals           = wc_get_price_decimals();
-          $decimal_separator  = wc_get_price_decimal_separator();
-          $thousand_separator = wc_get_price_thousand_separator();
-          $installment_amount = number_format( $installment['installment_amount'], $decimals, $decimal_separator, $thousand_separator );
-          $interest_amount    = number_format( $installment['interest_amount'], $decimals, $decimal_separator, $thousand_separator );
-        ?>
-        <option value="<?php echo absint( $installment_number ); ?>"><?php printf( esc_html__( '%1$dx of %2$s (increase of %3$s)', 'woocommerce-rakutenpay' ), absint( $installment['quantity'] ), esc_html( $installment_amount ), esc_html( $interest_amount ) ); ?></option>
-        <?php endforeach; }?>
+              $decimals           = wc_get_price_decimals();
+              $decimal_separator  = wc_get_price_decimal_separator();
+              $thousand_separator = wc_get_price_thousand_separator();
+              $installment_amount = number_format( $installment['installment_amount'], $decimals, $decimal_separator, $thousand_separator );
+              $interest_amount    = number_format( $installment['interest_amount'], $decimals, $decimal_separator, $thousand_separator );
+              ?>
+              <option value="<?php echo absint( $installment_number ); ?>"><?php printf( esc_html__( '%1$dx of %2$s (increase of %3$s)', 'woocommerce-rakutenpay' ), absint( $installment['quantity'] ), esc_html( $installment_amount ), esc_html( $interest_amount ) ); ?></option>
+          <?php endforeach; ?>
 
     </select>
   </p>
 </fieldset>
+        <?php
+        } else {
+          $installment = 1;
+          for ($max = 1; $max <= $max_installment; $max++) {
+              $price_installment = $price / $max;
+              echo "<option value='${max}'>${installment}x de " . number_format($price_installment, 2) . " (sem juros)</option>";
+
+              $installment++;
+
+          }
+      }
