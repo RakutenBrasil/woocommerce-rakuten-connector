@@ -538,9 +538,6 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $fields['billing']['billing_country']['priority'] = 150;
 
     // Shipping Fields
-    $fields['shipping']['shipping_company']['priority'] = 10;
-    $fields['shipping']['shipping_first_name']['priority'] = 20;
-    $fields['shipping']['shipping_last_name']['priority'] = 25;
     $fields['shipping']['shipping_phone']['priority'] = 50;
     $fields['shipping']['shipping_address_1']['priority'] = 70;
     $fields['shipping']['shipping_address_2']['priority'] = 90;
@@ -554,67 +551,67 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     return $fields;
   }
 
-  public function checkout_shipping_document_fields( $fields ) {
-    $shipping_fields = $fields['shipping'];
-
-    $new_shipping_fields = array(
-      $this->array_slice( $shipping_fields,
-        array(
-          'shipping_first_name', 'shipping_last_name', 'shipping_company'
-        )
-      ) +
-      array(
-        'shipping_birthdate' => array(
-          'label'           => __( 'Birthdate', 'woocommerce' ),
-          'placeholder'     => __( 'Birthdate', 'placeholder', 'woocommerce' ),
-          'required'        => true,
-          'foo-bar-baz'     => 'hei-how',
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true
-        ),
-      ) +
-      $this->array_slice(
-        $shipping_fields, array( 'shipping_company' )
-      ) +
-      $this->array_slice(
-        $shipping_fields,
-        array(
-          'shipping_address_1', 'shipping_address_2'
-        )
-      ) +
-      array(
-        'shipping_number'    => array(
-          'label'           => __( 'Number', 'woocommerce-rakuten-log' ),
-          'placeholder'     => __( 'Number', 'placeholder', 'woocommerce' ),
-          'required'        => true,
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true
-        ),
-        'shipping_district'  => array(
-          'label'           => __( 'District', 'woocommerce-rakuten-log' ),
-          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-log' ),
-          'required'        => true,
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true
-        )
-      ) +
-      $this->array_slice(
-        $shipping_fields,
-        array(
-          'shipping_city',
-          'shipping_postcode',
-          'shipping_country',
-          'shipping_state',
-          'shipping_email',
-          'shipping_phone'
-        )
-      ),
-    );
-
-    $fields['shipping'] = $new_shipping_fields;
-
-    return $fields;
-  }
+//  public function checkout_shipping_document_fields( $fields ) {
+//    $shipping_fields = $fields['shipping'];
+//
+//    $new_shipping_fields = array(
+//      $this->array_slice( $shipping_fields,
+//        array(
+//          'shipping_first_name', 'shipping_last_name', 'shipping_company'
+//        )
+//      ) +
+//      array(
+//        'shipping_birthdate' => array(
+//          'label'           => __( 'Birthdate', 'woocommerce' ),
+//          'placeholder'     => __( 'Birthdate', 'placeholder', 'woocommerce' ),
+//          'required'        => true,
+//          'foo-bar-baz'     => 'hei-how',
+//          'class'           => array( 'form-row-wide' ),
+//          'clear'           => true
+//        ),
+//      ) +
+//      $this->array_slice(
+//        $shipping_fields, array( 'shipping_company' )
+//      ) +
+//      $this->array_slice(
+//        $shipping_fields,
+//        array(
+//          'shipping_address_1', 'shipping_address_2'
+//        )
+//      ) +
+//      array(
+//        'shipping_address_number'    => array(
+//          'label'           => __( 'Number', 'woocommerce-rakuten-log' ),
+//          'placeholder'     => __( 'Number', 'placeholder', 'woocommerce' ),
+//          'required'        => true,
+//          'class'           => array( 'form-row-wide' ),
+//          'clear'           => true
+//        ),
+//        'shipping_district'  => array(
+//          'label'           => __( 'District', 'woocommerce-rakuten-log' ),
+//          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-log' ),
+//          'required'        => true,
+//          'class'           => array( 'form-row-wide' ),
+//          'clear'           => true
+//        )
+//      ) +
+//      $this->array_slice(
+//        $shipping_fields,
+//        array(
+//          'shipping_city',
+//          'shipping_postcode',
+//          'shipping_country',
+//          'shipping_state',
+//          'shipping_email',
+//          'shipping_phone'
+//        )
+//      ),
+//    );
+//
+//    $fields['shipping'] = $new_shipping_fields;
+//
+//    return $fields;
+//  }
 
   /**
    * Cancels Credit Card transaction.

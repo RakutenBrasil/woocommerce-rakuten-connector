@@ -302,7 +302,7 @@ class WC_Rakuten_Pay_API {
     $data['payments'][] = $payment;
 
     // Shipping Address
-    if ( ! empty( $posted['ship_to_different_address'] ) ) {
+    if ( ! empty( $posted['ship-to-different-address-checkbox'] ) ) {
       $shipping_address = array(
         'kind'       => 'shipping',
         'contact'    => $customer_name,
