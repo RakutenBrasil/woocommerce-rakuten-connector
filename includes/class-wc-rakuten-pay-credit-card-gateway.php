@@ -419,6 +419,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
   public function custom_checkout_fields( $fields ) {
     $fields = $this->custom_billing_checkout_fields( $fields );
     $fields = $this->custom_shipping_checkout_fields( $fields );
+    $fields = $this->reorder_all_fields( $fields );
     return $fields;
   }
 
@@ -443,7 +444,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
         ),
-        'billing_number'    => array(
+        'billing_address_number'    => array(
           'label'           => __( 'Number', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Number', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
@@ -464,7 +465,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $billing_fields['billing_phone']['priority'] = 50;
     $billing_fields['billing_email']['priority'] = 50;
     $billing_fields['billing_document']['priority'] = 60;
-    $billing_fields['billing_number']['priority'] = 80;
+    $billing_fields['billing_address_number']['priority'] = 80;
     $billing_fields['billing_district']['priority'] = 100;
 
     $billing_fields['billing_phone']['required'] = true;
@@ -480,9 +481,9 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $shipping_fields = array_merge(
       $shipping_fields,
       array(
-        'shipping_number'    => array(
-          'label'           => __( 'Number', 'woocommerce' ),
-          'placeholder'     => __( 'Number', 'placeholder', 'woocommerce' ),
+        'shipping_address_number'    => array(
+          'label'           => __( 'Number', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Number', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
@@ -509,6 +510,27 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     return $fields;
   }
+
+    public function reorder_all_fields( array $fields ) {
+
+        $fields['billing']['billing_company']['priority'] = 10;
+        $fields['billing']['billing_first_name']['priority'] = 20;
+        $fields['billing']['billing_last_name']['priority'] = 25;
+        $fields['billing']['billing_birthdate']['priority'] = 30;
+        $fields['billing']['billing_document']['priority'] = 30;
+        $fields['billing']['billing_email']['priority'] = 50;
+        $fields['billing']['billing_phone']['priority'] = 50;
+        $fields['billing']['billing_address_1']['priority'] = 70;
+        $fields['billing']['billing_address_2']['priority'] = 90;
+        $fields['billing']['billing_address_number']['priority'] = 100;
+        $fields['billing']['billing_district']['priority'] = 110;
+        $fields['billing']['billing_postcode']['priority'] = 120;
+        $fields['billing']['billing_city']['priority'] = 130;
+        $fields['billing']['billing_state']['priority'] = 140;
+        $fields['billing']['billing_country']['priority'] = 150;
+
+        return $fields;
+    }
 
   public function checkout_shipping_document_fields( $fields ) {
     $shipping_fields = $fields['shipping'];

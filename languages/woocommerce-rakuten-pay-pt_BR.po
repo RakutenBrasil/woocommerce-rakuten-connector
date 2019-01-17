@@ -603,6 +603,6 @@ msgstr "Sim"
 msgid "Buyer Interest Configuration"
 msgstr "Configuração do Juros Comprador"
 
-#: templates/credit-card/payment-form.php:84
+#: templates/credit-card/payment-form.php:94
 msgid "%1$dx of %2$s (increase of %3$s)"
-msgstr "%1$dx de %2$s (aumento de %3$s)"
+msgstr "%1$dx of %2$s (acréscimo de %3$s)"
