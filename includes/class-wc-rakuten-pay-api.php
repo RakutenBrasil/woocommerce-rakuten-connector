@@ -151,7 +151,7 @@ class WC_Rakuten_Pay_API {
    * @param  WC_Order $order           Order data.
    * @param  string   $payment_method  Payment method.
    * @param  array    $posted          Form posted data.
-   * @param  array    $installment     In case of not free installment
+   * @param  array    $installments     In case of not free installment
    *
    * @return array            Charge data.
    */
@@ -176,7 +176,7 @@ class WC_Rakuten_Pay_API {
           '${3}-${2}-${1}',
           $posted['billing_birthdate']
         ),
-        'gender'        => $posted['billing_gender'],
+//        'gender'        => $posted['billing_gender'],
         'kind'          => 'personal',
         'addresses'     => array(),
         'phones'        => array(
@@ -257,11 +257,13 @@ class WC_Rakuten_Pay_API {
         'state'         => $order->get_billing_state(),
         'country'       => $order->get_billing_country(),
         'zipcode'       => $this->only_numbers( $order->get_billing_postcode() ),
+        'number'        => $data['customer']['addresses'][0]['number'],
+        'distric'       => $data['customer']['addresses'][0]['district']
       );
 
       // Non-WooCommerce default address fields.
-      if ( ! empty( $posted['billing_number'] ) ) {
-        $billing_address['number'] = $posted['billing_number'];
+      if ( ! empty( $posted['billing_address_number'] ) ) {
+        $billing_address['number'] = $posted['billing_address_number'];
       }
       if ( ! empty( $posted['billing_district'] ) ) {
         $billing_address['district'] = $posted['billing_district'];
@@ -763,6 +765,16 @@ class WC_Rakuten_Pay_API {
     }
 
     $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
+
+
+
+
+    $this->gateway->log->add(' ERRO: ', 'data: ' . print_r( $data, true ) );
+
+
+
+
+
     $transaction    = $this->charge_transaction( $order, $data );
     $payments = reset($transaction['payments']);
 
