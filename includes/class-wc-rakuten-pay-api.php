@@ -764,16 +764,6 @@ class WC_Rakuten_Pay_API {
     }
 
     $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
-
-
-
-
-    $this->gateway->log->add(' ERRO: ', 'data: ' . print_r( $data, true ) );
-
-
-
-
-
     $transaction    = $this->charge_transaction( $order, $data );
     $payments = reset($transaction['payments']);
 
@@ -790,10 +780,6 @@ class WC_Rakuten_Pay_API {
       return array(
         'result' => 'fail',
       );
-    }
-
-    if ( ! empty($transaction['payments']) ) {
-      $this->gateway->log->add( $this->gateway->id, 'transaction: ' . print_r($transaction['payments'][0]['credit_card']['number'], true) );
     }
 
     if ( ! isset( $transaction['charge_uuid'] ) ) {
