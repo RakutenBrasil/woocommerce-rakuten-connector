@@ -63,8 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <label for="rakuten-pay-card-installments"><?php esc_html_e( 'Installments', 'woocommerce-rakuten-pay' ); ?> <span class="required">*</span></label>
     <select name="rakuten_pay_installments" id="rakuten-pay-card-installments" style="font-size: 1.5em; padding: 8px; width: 100%;">
       <?php
-      $price = WC()->cart->total;
-      $price_installment = WC()->cart->total;
+
 
       if ( $buyer_interest == 'yes' ) {
 
@@ -89,6 +88,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 </fieldset>
         <?php
         } else {
+          $price = WC()->cart->total;
+          $price_installment = WC()->cart->total;
           $installment = 1;
           for ($max = 1; $max <= $max_installment; $max++) {
               $price_installment = $price / $max;
@@ -98,3 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
           }
       }
+      ?>
+      </select>
+  </p>
+</fieldset>
