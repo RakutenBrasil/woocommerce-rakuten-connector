@@ -176,7 +176,6 @@ class WC_Rakuten_Pay_API {
           '${3}-${2}-${1}',
           $posted['billing_birthdate']
         ),
-//        'gender'        => $posted['billing_gender'],
         'kind'          => 'personal',
         'addresses'     => array(),
         'phones'        => array(
