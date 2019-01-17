@@ -174,7 +174,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'default'     => '5',
       ),
       'buyer_interest_conf' => array(
-        'title'       => __( 'Buyer Interest Confoguration', 'woocommerce-rakuten-pay' ),
+        'title'       => __( 'Buyer Interest Configuration', 'woocommerce-rakuten-pay' ),
         'type'        => 'title',
         'description' => '',
       ),
@@ -184,8 +184,8 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'description' => __( 'Enables the display of the parcel listing on the product preview screen. (You will see the largest installments available for the product in payment by credit card)', 'woocommerce-rakuten-pay' ),
         'default'     => 'no',
         'options'     => array(
-          'no'  => __( 'No', 'woocommerce-raktuten-pay'),
-          'yes'     => __( 'Yes', 'woocommerce-raktuten-pay' ),
+          'no'        => __( 'No', 'woocommerce-raktuten-pay'),
+          'yes'       => __( 'Yes', 'woocommerce-raktuten-pay' ),
         ),
       ),
       'free_installments' => array(
@@ -255,42 +255,43 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     $buyer_interest = $this->api->get_buyer_interest();
     $installments = $this->api->get_installments_buyer_interest();
-    $installment = $this->max_installment;
 
     if ( $buyer_interest == 'yes' ) {
 
-      wc_get_template(
-        'credit-card/payment-form.php',
-        array(
-          'max_installment'      => $this->max_installment,
-          'smallest_installment' => $this->api->get_smallest_installment(),
-          'installments'         => $installments,
-          'buyer_interest'       => $buyer_interest,
-        ),
-        'woocommerce/woocommerce-rakuten-pay/',
-        WC_Rakuten_Pay::get_templates_path()
-      );
+        if ( $description = $this->get_description() ) {
+            echo wp_kses_post( wpautop( wptexturize( $description ) ) );
+        }
+
+        $amount = (float) $this->get_order_total();
+
+        $installments = $this->api->get_installments( $amount );
+        $installments = $this->apply_free_installments( $installments );
+
+        wc_get_template(
+            'credit-card/payment-form.php',
+            array(
+                'max_installment'      => $this->max_installment,
+                'smallest_installment' => $this->api->get_smallest_installment(),
+                'installments'         => $installments,
+                'buyer_interest'       => $buyer_interest,
+            ),
+            'woocommerce/woocommerce-rakuten-pay/',
+            WC_Rakuten_Pay::get_templates_path()
+        );
 
     } else {
-      if ( $description = $this->get_description() ) {
-        echo wp_kses_post( wpautop( wptexturize( $description ) ) );
-      }
-
-      $amount = (float) $this->get_order_total();
-
-      $installments = $this->api->get_installments( $amount );
-      $installments = $this->apply_free_installments( $installments );
-
-      wc_get_template(
-        'credit-card/payment-form.php',
-        array(
-          'max_installment'      => $this->max_installment,
-          'smallest_installment' => $this->api->get_smallest_installment(),
-          'installments'         => $installments,
-        ),
-        'woocommerce/woocommerce-rakuten-pay/',
-        WC_Rakuten_Pay::get_templates_path()
-      );
+        $buyer_interest = 'no';
+        wc_get_template(
+            'credit-card/payment-form.php',
+            array(
+                'max_installment'      => $this->max_installment,
+                'smallest_installment' => $this->api->get_smallest_installment(),
+                'installments'         => $installments,
+                'buyer_interest'       => $buyer_interest,
+            ),
+            'woocommerce/woocommerce-rakuten-pay/',
+            WC_Rakuten_Pay::get_templates_path()
+        );
     }
   }
 
