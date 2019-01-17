@@ -256,8 +256,8 @@ class WC_Rakuten_Pay_API {
         'state'         => $order->get_billing_state(),
         'country'       => $order->get_billing_country(),
         'zipcode'       => $this->only_numbers( $order->get_billing_postcode() ),
-        'number'        => $data['customer']['addresses'][0]['number'],
-        'distric'       => $data['customer']['addresses'][0]['district']
+        'number'        => $billing_address_new_fields['number'],
+        'distric'       => $billing_address_new_fields['district']
       );
 
       // Non-WooCommerce default address fields.
