@@ -317,8 +317,8 @@ class WC_Rakuten_Pay_API {
       );
 
       // Non-WooCommerce default address fields.
-      if ( ! empty( $posted['shipping_number'] ) ) {
-        $shipping_address['number'] = $posted['shipping_number'];
+      if ( ! empty( $posted['shipping_address_number'] ) ) {
+        $shipping_address['number'] = $posted['shipping_address_number'];
       }
       if ( ! empty( $posted['shipping_district'] ) ) {
         $shipping_address['district'] = $posted['shipping_district'];

@@ -485,12 +485,19 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
           'label'           => __( 'Number', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Number', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
-          'class'           => array( 'form-row-wide' ),
+          'class'           => array( 'form-row-first' ),
           'clear'           => true
         ),
         'shipping_district'    => array(
-          'label'           => __( 'DIstrict', 'woocommerce-rakuten-log' ),
-          'placeholder'     => __( 'DIstrict', 'placeholder', 'woocommerce-rakuten-log' ),
+          'label'           => __( 'District', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'required'        => true,
+          'class'           => array( 'form-row-wide' ),
+          'clear'           => true
+        ),
+        'shipping_phone_number'    => array(
+          'label'           => __( 'Phone number' , 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Número de telefone' , 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
@@ -500,6 +507,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     $shipping_fields['shipping_address_number']['priority'] = 100;
     $shipping_fields['shipping_district']['priority'] = 110;
+    $shipping_fields['shipping_phone_number']['priority'] = 55;
 
     $fields['shipping'] = $shipping_fields;
 
@@ -538,10 +546,10 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $fields['billing']['billing_country']['priority'] = 150;
 
     // Shipping Fields
-    $fields['shipping']['shipping_phone']['priority'] = 50;
     $fields['shipping']['shipping_address_1']['priority'] = 70;
     $fields['shipping']['shipping_address_2']['priority'] = 90;
     $fields['shipping']['shipping_address_number']['priority'] = 100;
+    $fields['shipping_phone_number']['priority'] = 105;
     $fields['shipping']['shipping_district']['priority'] = 110;
     $fields['shipping']['shipping_postcode']['priority'] = 120;
     $fields['shipping']['shipping_city']['priority'] = 130;

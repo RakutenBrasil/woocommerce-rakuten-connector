@@ -80,7 +80,7 @@ if ( ! defined( 'ABSPATH' ) ) {
               $installment_amount = number_format( $installment['installment_amount'], $decimals, $decimal_separator, $thousand_separator );
               $interest_amount    = number_format( $installment['interest_amount'], $decimals, $decimal_separator, $thousand_separator );
               ?>
-              <option value="<?php echo absint( $installment_number ); ?>"><?php printf( esc_html__( '%1$dx of %2$s (increase of %3$s)', 'woocommerce-rakutenpay' ), absint( $installment['quantity'] ), esc_html( $installment_amount ), esc_html( $interest_amount ) ); ?></option>
+              <option value="<?php echo absint( $installment_number ); ?>"><?php printf( esc_html__( '%1$dx of %2$s (increase of %3$s)', 'woocommerce-rakuten-pay' ), absint( $installment['quantity'] ), esc_html( $installment_amount ), esc_html( $interest_amount ) ); ?></option>
           <?php endforeach; ?>
 
     </select>
