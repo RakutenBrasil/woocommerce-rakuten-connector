@@ -209,7 +209,7 @@ class WC_Rakuten_Pay_API {
               'number' => preg_replace(
                 '/\((\d{2})\)\s(\d{4,5})-(\d{4})/',
                 '${2}${3}',
-                $order->get_billing_phone()
+                $_POST['shipping_phone_number']
               )
             )
           )
@@ -256,8 +256,6 @@ class WC_Rakuten_Pay_API {
         'state'         => $order->get_billing_state(),
         'country'       => $order->get_billing_country(),
         'zipcode'       => $this->only_numbers( $order->get_billing_postcode() ),
-        'number'        => $billing_address_new_fields['number'],
-        'distric'       => $billing_address_new_fields['district']
       );
 
       // Non-WooCommerce default address fields.
@@ -302,7 +300,8 @@ class WC_Rakuten_Pay_API {
     $data['payments'][] = $payment;
 
     // Shipping Address
-    if ( ! empty( $posted['ship-to-different-address-checkbox'] ) ) {
+    if ( ! empty( $_POST['ship_to_different_address'] ) ) {
+        $this->gateway->log->add( 'ERRRRR:', ' checked ' . print_r($_POST['ship_to_different_address'], true));
       $shipping_address = array(
         'kind'       => 'shipping',
         'contact'    => $customer_name,
@@ -312,8 +311,8 @@ class WC_Rakuten_Pay_API {
         'city'       => $order->get_shipping_city(),
         'state'      => $order->get_shipping_state(),
         'country'    => $order->get_shipping_country(),
-        'number'     => $billing_address_new_fields['number'],
-        'district'    => $billing_address_new_fields['district']
+//        'number'     => $_POST['shipping_address_number'],
+//        'district'    => $_POST['shipping_district']
       );
 
       // Non-WooCommerce default address fields.
@@ -326,6 +325,7 @@ class WC_Rakuten_Pay_API {
 
       $data['customer']['addresses'][] = $shipping_address;
     } else {
+        $this->gateway->log->add( 'ERRRRR:', ' NON checked ' . print_r($posted['ship_to_different_address'], true));
       $shipping_address                = $billing_address;
       $shipping_address['kind']        = 'shipping';
       $data['customer']['addresses'][] = $shipping_address;
