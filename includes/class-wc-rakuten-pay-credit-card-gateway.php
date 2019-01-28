@@ -431,7 +431,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       array(
         'billing_birthdate' => array(
           'label'           => __( 'Birthdate', 'woocommerce-rakuten-pay' ),
-          'placeholder'     => __( 'Birthdate', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Data de nascimento', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'foo-bar-baz'     => 'hei-how',
           'class'           => array( 'form-row-wide' ),
@@ -439,7 +439,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         ),
         'billing_document'  => array(
           'label'           => __( 'Document', 'woocommerce-rakuten-pay' ),
-          'placeholder'     => __( 'Document', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Informe seu CPF', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
@@ -453,7 +453,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         ),
         'billing_district'  => array(
           'label'           => __( 'District', 'woocommerce-rakuten-pay' ),
-          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Bairro', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
@@ -485,12 +485,19 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
           'label'           => __( 'Number', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Number', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
-          'class'           => array( 'form-row-wide' ),
+          'class'           => array( 'form-row-first' ),
           'clear'           => true
         ),
         'shipping_district'    => array(
-          'label'           => __( 'DIstrict', 'woocommerce-rakuten-log' ),
-          'placeholder'     => __( 'DIstrict', 'placeholder', 'woocommerce-rakuten-log' ),
+          'label'           => __( 'District', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'required'        => true,
+          'class'           => array( 'form-row-wide' ),
+          'clear'           => true
+        ),
+        'shipping_phone_number'    => array(
+          'label'           => __( 'Phone number' , 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Número de telefone' , 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
@@ -500,6 +507,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     $shipping_fields['shipping_address_number']['priority'] = 100;
     $shipping_fields['shipping_district']['priority'] = 110;
+    $shipping_fields['shipping_phone_number']['priority'] = 55;
 
     $fields['shipping'] = $shipping_fields;
 
@@ -538,13 +546,10 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $fields['billing']['billing_country']['priority'] = 150;
 
     // Shipping Fields
-    $fields['shipping']['shipping_company']['priority'] = 10;
-    $fields['shipping']['shipping_first_name']['priority'] = 20;
-    $fields['shipping']['shipping_last_name']['priority'] = 25;
-    $fields['shipping']['shipping_phone']['priority'] = 50;
     $fields['shipping']['shipping_address_1']['priority'] = 70;
     $fields['shipping']['shipping_address_2']['priority'] = 90;
     $fields['shipping']['shipping_address_number']['priority'] = 100;
+    $fields['shipping_phone_number']['priority'] = 105;
     $fields['shipping']['shipping_district']['priority'] = 110;
     $fields['shipping']['shipping_postcode']['priority'] = 120;
     $fields['shipping']['shipping_city']['priority'] = 130;
@@ -553,68 +558,68 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     return $fields;
   }
-
-  public function checkout_shipping_document_fields( $fields ) {
-    $shipping_fields = $fields['shipping'];
-
-    $new_shipping_fields = array(
-      $this->array_slice( $shipping_fields,
-        array(
-          'shipping_first_name', 'shipping_last_name', 'shipping_company'
-        )
-      ) +
-      array(
-        'shipping_birthdate' => array(
-          'label'           => __( 'Birthdate', 'woocommerce' ),
-          'placeholder'     => __( 'Birthdate', 'placeholder', 'woocommerce' ),
-          'required'        => true,
-          'foo-bar-baz'     => 'hei-how',
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true
-        ),
-      ) +
-      $this->array_slice(
-        $shipping_fields, array( 'shipping_company' )
-      ) +
-      $this->array_slice(
-        $shipping_fields,
-        array(
-          'shipping_address_1', 'shipping_address_2'
-        )
-      ) +
-      array(
-        'shipping_number'    => array(
-          'label'           => __( 'Number', 'woocommerce-rakuten-log' ),
-          'placeholder'     => __( 'Number', 'placeholder', 'woocommerce' ),
-          'required'        => true,
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true
-        ),
-        'shipping_district'  => array(
-          'label'           => __( 'District', 'woocommerce-rakuten-log' ),
-          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-log' ),
-          'required'        => true,
-          'class'           => array( 'form-row-wide' ),
-          'clear'           => true
-        )
-      ) +
-      $this->array_slice(
-        $shipping_fields,
-        array(
-          'shipping_city',
-          'shipping_postcode',
-          'shipping_country',
-          'shipping_state',
-          'shipping_email',
-          'shipping_phone'
-        )
-      ),
-    );
-
-    $fields['shipping'] = $new_shipping_fields;
-
-    return $fields;
-  }
+// TODO verficar método
+//  public function checkout_shipping_document_fields( $fields ) {
+//    $shipping_fields = $fields['shipping'];
+//
+//    $new_shipping_fields = array(
+//      $this->array_slice( $shipping_fields,
+//        array(
+//          'shipping_first_name', 'shipping_last_name', 'shipping_company'
+//        )
+//      ) +
+//      array(
+//        'shipping_birthdate' => array(
+//          'label'           => __( 'Birthdate', 'woocommerce' ),
+//          'placeholder'     => __( 'Birthdate', 'placeholder', 'woocommerce' ),
+//          'required'        => true,
+//          'foo-bar-baz'     => 'hei-how',
+//          'class'           => array( 'form-row-wide' ),
+//          'clear'           => true
+//        ),
+//      ) +
+//      $this->array_slice(
+//        $shipping_fields, array( 'shipping_company' )
+//      ) +
+//      $this->array_slice(
+//        $shipping_fields,
+//        array(
+//          'shipping_address_1', 'shipping_address_2'
+//        )
+//      ) +
+//      array(
+//        'shipping_address_number'    => array(
+//          'label'           => __( 'Number', 'woocommerce-rakuten-log' ),
+//          'placeholder'     => __( 'Number', 'placeholder', 'woocommerce' ),
+//          'required'        => true,
+//          'class'           => array( 'form-row-wide' ),
+//          'clear'           => true
+//        ),
+//        'shipping_district'  => array(
+//          'label'           => __( 'District', 'woocommerce-rakuten-log' ),
+//          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-log' ),
+//          'required'        => true,
+//          'class'           => array( 'form-row-wide' ),
+//          'clear'           => true
+//        )
+//      ) +
+//      $this->array_slice(
+//        $shipping_fields,
+//        array(
+//          'shipping_city',
+//          'shipping_postcode',
+//          'shipping_country',
+//          'shipping_state',
+//          'shipping_email',
+//          'shipping_phone'
+//        )
+//      ),
+//    );
+//
+//    $fields['shipping'] = $new_shipping_fields;
+//
+//    return $fields;
+//  }
 
   /**
    * Cancels Credit Card transaction.
