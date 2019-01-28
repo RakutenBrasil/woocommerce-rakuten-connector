@@ -558,6 +558,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     return $fields;
   }
+
 // TODO verficar método
 //  public function checkout_shipping_document_fields( $fields ) {
 //    $shipping_fields = $fields['shipping'];

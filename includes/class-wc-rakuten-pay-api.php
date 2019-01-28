@@ -397,7 +397,7 @@ class WC_Rakuten_Pay_API {
         }
 
         $endpoint = 'charges';
-        $body     = json_encode( $charge_data, JSON_PRESERVE_ZERO_FRACTION );
+        $body     = $this->getJson( $charge_data);
         $headers  = array(
             'Authorization' => $this->authorization_header(),
             'Signature' => $this->get_signature( $body ),
@@ -453,7 +453,7 @@ class WC_Rakuten_Pay_API {
             $this->gateway->log->add( $this->gateway->id, 'Cancelling payment for order ' . $order->get_order_number() . '...' );
         }
 
-        $body           = json_encode( array(), JSON_PRESERVE_ZERO_FRACTION );
+        $body           = $this->getJson( array(), JSON_PRESERVE_ZERO_FRACTION );
         $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
         $headers        = array(
             'Authorization' => $this->authorization_header(),
@@ -507,7 +507,7 @@ class WC_Rakuten_Pay_API {
      *   array( 'result' => 'authorized', ... ) for authorized Rakuten Pay transactions
      */
     public function refund_transaction( $order, $refund_kind, $refund_data ) {
-        $body           = json_encode( $refund_data, JSON_PRESERVE_ZERO_FRACTION );
+        $body           = $this->getJson( $refund_data, JSON_PRESERVE_ZERO_FRACTION );
         $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
         $headers        = array(
             'Authorization' => $this->authorization_header(),
@@ -1269,5 +1269,71 @@ class WC_Rakuten_Pay_API {
         if ( $free_installments == 12 ) {
             return $free_installments;
         }
+    }
+
+    /**
+     * @var array
+     */
+    private static $installmentsToFloat = [
+        'interest_percent',
+        'interest_amount',
+        'installment_amount',
+        'total',
+    ];
+
+    /**
+     * Json encode and Check if const exists based from PHP Version
+     *
+     * @param array $data
+     * @return mixed|string
+     */
+    public static function getJson(array $data)
+    {
+        if (defined('JSON_PRESERVE_ZERO_FRACTION')) {
+
+            return  json_encode($data, JSON_PRESERVE_ZERO_FRACTION);
+        }
+
+        /** For PHP Version < 5.6 */
+        return self::preserveZeroFractionInstallments($data);
+    }
+
+    /**
+     * @param array $data
+     * @return mixed|string
+     */
+    private static function preserveZeroFractionInstallments(array $data)
+    {
+        $jsonData = json_encode($data);
+        try {
+            $payments = $data['payments'];
+            foreach ($payments as $item) {
+                if (!array_key_exists('installments', $item)) {
+                    break;
+                }
+                $jsonData = self::installmentsToFloat($item['installments'], $jsonData);
+            }
+
+            return $jsonData;
+        } catch (\Exception $e) {
+
+            return $jsonData;
+        }
+    }
+
+    /**
+     * @param array $installments
+     * @param $jsonData
+     * @return mixed|string
+     */
+    private static function installmentsToFloat(array $installments, $jsonData)
+    {
+        foreach (self::$installmentsToFloat as $field) {
+            if (array_key_exists($field, $installments)) {
+                $jsonData = str_replace('"' . $field . '":'. $installments[$field], '"' . $field . '":'. number_format($installments[$field], 2, ".", "") . '', $jsonData);
+            }
+        }
+
+        return $jsonData;
     }
 }
