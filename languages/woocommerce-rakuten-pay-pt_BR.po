@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-01-22 17:58-0200\n"
+"PO-Revision-Date: 2019-01-24 14:29-0200\n"
 "Language-Team: \n"
 "X-Generator: Poedit 2.2\n"
 "Last-Translator: \n"
@@ -144,13 +144,25 @@ msgstr "Rakuten Pay: Transação efetuada."
 msgid "The transaction for order %s was cancelled"
 msgstr "A transação para o pedido %s foi cancelada"
 
+#: includes/class-wc-rakuten-pay-api.php:1047
+msgid "The transaction for order %s was declined"
+msgstr "A transação para o pedido %s foi declinada"
+
 #: includes/class-wc-rakuten-pay-api.php:943
 msgid "Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s."
 msgstr "O pedido %1$s foi marcado como cancelado, devido ao cancelamento feito no Rakuten Pay, para mais detalhes acesse %2$s."
 
+#: includes/class-wc-rakuten-pay-api.php:1049
+msgid "Order %1$s has been marked as declined, because the transaction was declined on Rakuten Pay, for more details, see %2$s."
+msgstr "O pedido %1$s foi marcado como declinado, devido ao cancelamento feito no Rakuten Pay, para mais detalhes acesse %2$s."
+
 #: includes/class-wc-rakuten-pay-api.php:946
 msgid "Rakuten Pay: The transaction was cancelled."
 msgstr "Rakuten Pay: A transação foi cancelada."
+
+#: includes/class-wc-rakuten-pay-api.php:946
+msgid "Rakuten Pay: The transaction was declined."
+msgstr "Rakuten Pay: A transação foi declinada."
 
 #: includes/class-wc-rakuten-pay-api.php:1001
 msgid "Order fully refunded"
@@ -168,6 +180,10 @@ msgstr "Rakuten Pay: A transação foi parcialmente estornada."
 msgid "The transaction for order %s refunded"
 msgstr "A transação para o pedido %s foi estornada"
 
+#: includes/class-wc-rakuten-pay-api.php:1033
+msgid "The transaction for order %s recieved"
+msgstr "A transação para o pedido %s foi recebido"
+
 #: includes/class-wc-rakuten-pay-api.php:1034
 msgid "Transaction refunded"
 msgstr "Transação estornada"
@@ -175,6 +191,10 @@ msgstr "Transação estornada"
 #: includes/class-wc-rakuten-pay-api.php:1035
 msgid "Order %1$s has been marked as refunded by Rakuten Pay, for more details, see %2$s."
 msgstr "O pedido %1$s foi marcado como estornado pelo Rakuten Pay, para maiores detalhes, acesse %2$s."
+
+#: includes/class-wc-rakuten-pay-api.php:1035
+msgid "Order %1$s has been marked as pending payment, for more details, see %2$s."
+msgstr "O pedido %1$s foi marcado como pagamento pendente, para maiores detalhes, acesse %2$s."
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:26
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:98

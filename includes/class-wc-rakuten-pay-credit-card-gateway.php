@@ -431,7 +431,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       array(
         'billing_birthdate' => array(
           'label'           => __( 'Birthdate', 'woocommerce-rakuten-pay' ),
-          'placeholder'     => __( 'Birthdate', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Data de nascimento', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'foo-bar-baz'     => 'hei-how',
           'class'           => array( 'form-row-wide' ),
@@ -439,7 +439,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         ),
         'billing_document'  => array(
           'label'           => __( 'Document', 'woocommerce-rakuten-pay' ),
-          'placeholder'     => __( 'Document', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Informe seu CPF', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
@@ -453,7 +453,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         ),
         'billing_district'  => array(
           'label'           => __( 'District', 'woocommerce-rakuten-pay' ),
-          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-pay' ),
+          'placeholder'     => __( 'Bairro', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
