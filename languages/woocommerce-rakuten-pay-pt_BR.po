@@ -635,3 +635,7 @@ msgstr "Número de telefone"
 msgctxt "placeholder"
 msgid "Phone number"
 msgstr "Número de telefone"
+
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:184
+msgid "payments.0.holder_document must be a valid CPF number or must be a valid CNPJ number"
+msgstr "CPF ou CNPJ deve ser um documento válido"

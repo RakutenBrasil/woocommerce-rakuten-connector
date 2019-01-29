@@ -124,28 +124,14 @@ $form = null;
 			return false;
 		});
 
-        $( '#billing_document' ).blur(function(){
-
-            // O CPF ou CNPJ
-            var cpf_cnpj = $(this).val();
-
-            // Testa a validação e formata se estiver OK
-            if ( formata_cpf_cnpj( cpf_cnpj ) ) {
-                $(this).val( formata_cpf_cnpj( cpf_cnpj ) );
-                $(this).addClass('validate_cpf_cnpj');
-            } else {
-                alert('CPF ou CNPJ inválido!');
-            }
-
-        });
-
         $( '#rakuten-pay-card-holder-document' ).blur(function(){
 
             // O CPF ou CNPJ
             var cpf_cnpj = $(this).val();
 
             // Testa a validação e formata se estiver OK
-            if ( formata_cpf_cnpj( cpf_cnpj ) ) {
+            if ( valida_cpf_cnpj( cpf_cnpj ) ) {
+                alert('OK');
                 $(this).val( formata_cpf_cnpj( cpf_cnpj ) );
                 $(this).addClass('validate_cpf_cnpj');
             } else {
@@ -153,6 +139,36 @@ $form = null;
             }
 
         });
+        //
+        // $( '#rakuten-pay-card-holder-document' ).blur(function(){
+        //
+        //     // O CPF ou CNPJ
+        //     var cpf_cnpj = $(this).val();
+        //
+        //     // Testa a validação e formata se estiver OK
+        //     if ( formata_cpf_cnpj( cpf_cnpj ) ) {
+        //         $(this).val( formata_cpf_cnpj( cpf_cnpj ) );
+        //         $(this).val( valida_cpf_cnpj( cpf_cnpj ) );
+        //         $(this).addClass('validate_cpf_cnpj');
+        //     } else {
+        //         alert('CPF ou CNPJ inválido!');
+        //     }
+        //
+        // });
+
+        // $('#billing_document').blur(function(){
+        //
+        //     // O CPF ou CNPJ
+        //     var cpf_cnpj = $(this).val();
+        //
+        //     // Testa a validação
+        //     if ( valida_cpf_cnpj( cpf_cnpj ) ) {
+        //         alert('OK');
+        //     } else {
+        //         alert('CPF ou CNPJ inválido!');
+        //     }
+        //
+        // });
 
         /*
          verifica_cpf_cnpj
@@ -340,7 +356,6 @@ $form = null;
 
             // Remove caracteres inválidos do valor
             valor = valor.replace(/[^0-9]/g, '');
-
 
             // Valida CPF
             if ( valida === 'CPF' ) {
