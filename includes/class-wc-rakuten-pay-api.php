@@ -407,7 +407,7 @@ class WC_Rakuten_Pay_API {
 
         if ( is_wp_error( $response ) ) {
             if ( 'yes' === $this->gateway->debug ) {
-                $this->gateway->log->add( $this->gateway->id, 'WP_Error in doing the charge_transaction: ' . $response->get_error_message() );
+                $this->gateway->log->add( $this->gateway->id, 'WP_Error in doing the charge_transaction: ' . print_r($response, true) . $response->get_error_message() );
             }
             return array( 'result' => 'fail' );
         }
@@ -422,8 +422,17 @@ class WC_Rakuten_Pay_API {
                 }
             }
             if ( 'yes' === $this->gateway->debug ) {
-                $this->gateway->log->add( $this->gateway->id, 'Fail in doing the charge_transaction: ' . $error_message );
+                $this->gateway->log->add( $this->gateway->id, 'Fail in doing the charge_transaction: ' . print_r( $response_body, true ) );
+                $this->gateway->log->add( $this->gateway->id, 'Result: ' . print_r( $response_body['result'], true ) );
+                $this->gateway->log->add( $this->gateway->id, 'URL: ' . print_r( $this->gateway->get_return_url( $order ), true ) );
             }
+
+            update_post_meta( $order_id, '_wc_rakuten_pay_transaction_data', $payment_data );
+            $this->save_order_meta_fields( $order_id, $payment_data, $payments );
+
+            // Change the order status.
+            $this->process_order_status( $order, $response_body['result'], $response_body );
+
             return array( 'result' => 'fail' );
         }
 
@@ -765,8 +774,12 @@ class WC_Rakuten_Pay_API {
         $transaction    = $this->charge_transaction( $order, $data );
         $payments = reset($transaction['payments']);
 
+
         if ( isset( $transaction['result'] ) && $transaction['result'] === 'fail' ) {
-            return $transaction;
+            return array(
+                'result'   => 'success',
+                'redirect' => $this->gateway->get_return_url( $order ),
+            );
         }
 
         if ( isset( $transaction['errors'] ) ) {
@@ -1042,8 +1055,29 @@ class WC_Rakuten_Pay_API {
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
                     sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
+                $this->send_email_customer(
+                    sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
+                    esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                );
 
                 $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled.', 'woocommerce-rakuten-pay' ) );
+
+                break;
+            case 'failure' :
+                update_post_meta( $order->get_id(), '_wc_rakuten_pay_order_failure', 'yes' );
+                $order->update_status( 'cancelled' );
+
+                $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
+                $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+
+                $this->send_email_customer(
+                    sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
+                    esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                );
+
+                $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled because .', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'declined' :
