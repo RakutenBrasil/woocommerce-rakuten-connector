@@ -27,7 +27,9 @@ $form = null;
                   "card-cvv": creditCardFormElem.querySelector("[data-rkp='card-cvv']"),
                   "expiration-month": creditCardFormElem.querySelector("[data-rkp='card-expiration-month']"),
                   "expiration-year": creditCardFormElem.querySelector("[data-rkp='card-expiration-year']")
-                };
+                },
+                buyerDocument       = document.getElementById('billing_document').value,
+                buyerBirthDate      = document.getElementById('billing_birthdate').value;
 
 			// Lock the checkout form.
 			form.addClass( 'processing' );
@@ -119,19 +121,24 @@ $form = null;
                 return defer;
             }
 
-            $.when(tokenize(), fingerprintfy()).then(handleSuccess, handleErrors);
+            if ( buyerDocument === "" ) {
+                alert('falta o bixão do CPF');
+            } else if ( buyerBirthDate === "" ) {
+                alert('falta a data de nascimento');
+            } else {
+                $.when(tokenize(), fingerprintfy()).then(handleSuccess, handleErrors);
+            }
 
 			return false;
 		});
 
-        $( '#rakuten-pay-card-holder-document' ).blur(function(){
+        $( '#billing_document' ).blur(function(){
 
             // O CPF ou CNPJ
             var cpf_cnpj = $(this).val();
 
             // Testa a validação e formata se estiver OK
             if ( valida_cpf_cnpj( cpf_cnpj ) ) {
-                alert('OK');
                 $(this).val( formata_cpf_cnpj( cpf_cnpj ) );
                 $(this).addClass('validate_cpf_cnpj');
             } else {
@@ -139,36 +146,6 @@ $form = null;
             }
 
         });
-        //
-        // $( '#rakuten-pay-card-holder-document' ).blur(function(){
-        //
-        //     // O CPF ou CNPJ
-        //     var cpf_cnpj = $(this).val();
-        //
-        //     // Testa a validação e formata se estiver OK
-        //     if ( formata_cpf_cnpj( cpf_cnpj ) ) {
-        //         $(this).val( formata_cpf_cnpj( cpf_cnpj ) );
-        //         $(this).val( valida_cpf_cnpj( cpf_cnpj ) );
-        //         $(this).addClass('validate_cpf_cnpj');
-        //     } else {
-        //         alert('CPF ou CNPJ inválido!');
-        //     }
-        //
-        // });
-
-        // $('#billing_document').blur(function(){
-        //
-        //     // O CPF ou CNPJ
-        //     var cpf_cnpj = $(this).val();
-        //
-        //     // Testa a validação
-        //     if ( valida_cpf_cnpj( cpf_cnpj ) ) {
-        //         alert('OK');
-        //     } else {
-        //         alert('CPF ou CNPJ inválido!');
-        //     }
-        //
-        // });
 
         /*
          verifica_cpf_cnpj
