@@ -15,11 +15,13 @@ $form = null;
 				return true;
 			}
 
-			var form    = $( 'form.checkout, form#order_review' ),
-        formElem  = form.get(0),
-				rpay      = new RPay(),
-				errors    = null,
-				errorHtml = '';
+			var form                = $( 'form.checkout, form#order_review' ),
+                formElem            = form.get(0),
+				rpay                = new RPay(),
+				errors              = null,
+				errorHtml           = '',
+                buyerDocument       = document.getElementById('billing_document').value,
+                buyerBirthDate      = document.getElementById('billing_birthdate').value;
 
 			// Lock the checkout form.
 			form.addClass( 'processing' );
@@ -56,7 +58,33 @@ $form = null;
         return defer;
       }
 
-      $.when(fingerprintfy()).then(handleSuccess, handleErrors);
+            if ( buyerDocument === "" && buyerBirthDate === "" ) {
+
+                console.log('Informe o CPF/CNPJ e data nascimento' + buyerDocument);
+
+                $('#billing_document').focus();
+                $('label[for=billing_document]').css({ color: '#a00' });
+                $('label[for=billing_birthdate]').css({ color: '#a00' });
+
+            } else if ( buyerDocument === "" ) {
+
+                console.log('Preencha a data de nascimento');
+
+                alert('Preencha a data de nascimento');
+                $('#billing_birthdate').focus();
+                $('label[for=billing_document]').css({ color: '#a00' });
+
+            } else if ( buyerBirthDate === "" ) {
+
+                console.log('Preencha a data de nascimento');
+
+                alert('Preencha a data de nascimento');
+                $('#billing_birthdate').focus();
+                $('label[for=billing_birthdate]').css({ color: '#a00' });
+
+            } else {
+                $.when(fingerprintfy()).then(handleSuccess, handleErrors);
+            }
 
 			return false;
 		});

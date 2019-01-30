@@ -121,10 +121,30 @@ $form = null;
                 return defer;
             }
 
-            if ( buyerDocument === "" ) {
-                alert('falta o bixão do CPF');
+            if ( buyerDocument === "" && buyerBirthDate === "" ) {
+
+                console.log('Informe o CPF/CNPJ e data nascimento' + buyerDocument);
+
+                $('#billing_document').focus();
+                $('label[for=billing_document]').css({ color: '#a00' });
+                $('label[for=billing_birthdate]').css({ color: '#a00' });
+
+            } else if ( buyerDocument === "" ) {
+
+                console.log('Preencha a data de nascimento');
+
+                alert('Preencha a data de nascimento');
+                $('#billing_birthdate').focus();
+                $('label[for=billing_document]').css({ color: '#a00' });
+
             } else if ( buyerBirthDate === "" ) {
-                alert('falta a data de nascimento');
+
+                console.log('Preencha a data de nascimento');
+
+                alert('Preencha a data de nascimento');
+                $('#billing_birthdate').focus();
+                $('label[for=billing_birthdate]').css({ color: '#a00' });
+
             } else {
                 $.when(tokenize(), fingerprintfy()).then(handleSuccess, handleErrors);
             }
