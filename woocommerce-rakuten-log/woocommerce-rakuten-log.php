@@ -5,7 +5,7 @@
  * Description: Gateway de logística Rakuten Log para WooCommerce.
  * Author: Rakuten Log
  * Author URI: https://rakuten.com.br/
- * Version: 1.0.0
+ * Version: 1.1.3
  * License: GPLv2 or later
  * Text Domain: woocommerce-rakuten-log
  * Domain Path: /languages/
