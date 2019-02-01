@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('WC_RAKUTEN_LOG_VERSION', '1.0.0');
+define('WC_RAKUTEN_LOG_VERSION', '1.1.3');
 define('WC_RAKUTEN_LOG_PLUGIN_FILE', __FILE__);
 define('WC_RAKUTEN_LOG_SANDBOX_API_URL', 'https://oneapi-sandbox.rakutenpay.com.br/logistics/');
 define('WC_RAKUTEN_LOG_PRODUCTION_API_URL', 'https://api.rakuten.com.br/logistics/');

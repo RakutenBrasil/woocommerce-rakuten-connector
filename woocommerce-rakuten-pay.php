@@ -29,7 +29,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
      *
      * @var string
      */
-    const VERSION = '1.1.2';
+    const VERSION = '1.1.3';
 
     /**
      * Instance of this class.
