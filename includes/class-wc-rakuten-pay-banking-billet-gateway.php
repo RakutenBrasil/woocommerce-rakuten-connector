@@ -153,7 +153,7 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
   public function checkout_scripts() {
     if ( is_checkout() ) {
       $suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-      wp_enqueue_script( 'rakuten-pay-banking-billet', plugins_url( 'assets/js/banking-billet' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'jquery-blockui', 'rakuten-pay-library' ), WC_Rakuten_Pay::VERSION, true );
+      wp_enqueue_script( 'rakuten-pay-banking-billet', plugins_url( 'assets/js/banking-billet' . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'jquery-blockui', 'rakuten-pay-library' ), WC_Rakuten_Pay::VERSION, true );
     }
   }
 
