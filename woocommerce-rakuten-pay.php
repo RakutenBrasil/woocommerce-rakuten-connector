@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento Rakuten Pay e Rakuten Logistics para WooCommerce.
  * Author: Rakuten Pay
  * Author URI: https://rakuten.com.br/
- * Version: 1.1.2
+ * Version: 1.1.3
  * License: GPLv2 or later
  * Text Domain: woocommerce-rakuten-pay
  * Domain Path: /languages/
