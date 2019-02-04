@@ -130,28 +130,27 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
     /**
      * @return string
      */
-    private function authorization_header() {
-        // $document  = $this->shipping->owner_document;
-        // $api_key   = $this->shipping->api_key;
-        // $user_pass = $document . ':' . $api_key;
-        // return 'Basic ' . base64_encode( $user_pass );
-        $document_b  = get_option('woocommerce_rakuten-pay-banking-billet_settings')['document'];
-        $api_key_b   = get_option('woocommerce_rakuten-pay-banking-billet_settings')['api_key'];
-        $enabled_b   = get_option('woocommerce_rakuten-pay-banking-billet_settings')['enabled'];
-        $document_c  = get_option('woocommerce_rakuten-pay-credit-card_settings')['document'];
-        $api_key_c   = get_option('woocommerce_rakuten-pay-credit-card_settings')['api_key'];
-        $enabled_c   = get_option('woocommerce_rakuten-pay-credit-card_settings')['enabled'];
+    private function authorization_header()
+    {
+        $document_billet = get_option('woocommerce_rakuten-pay-banking-billet_settings')['document'];
+        $api_key_billet = get_option('woocommerce_rakuten-pay-banking-billet_settings')['api_key'];
+        $enabled_billet = get_option('woocommerce_rakuten-pay-banking-billet_settings')['enabled'];
+        $document_credit_card = get_option('woocommerce_rakuten-pay-credit-card_settings')['document'];
+        $api_key_credit_card = get_option('woocommerce_rakuten-pay-credit-card_settings')['api_key'];
+        $enabled_credit_card = get_option('woocommerce_rakuten-pay-credit-card_settings')['enabled'];
 
-        $user_pass = $document_b . ':' . $api_key_b;
+        if ( $enabled_billet == 'yes' ) {
 
-        if ($enabled_b == 'no') {
-            if ($enabled_c == 'no') {
-                echo "<pre>nem ta</pre>";
-            } else {
-                return 'Basic ' . base64_encode( $user_pass );
-            }
-        } else {
+            $user_pass = $document_billet . ':' . $api_key_billet;
             return 'Basic ' . base64_encode( $user_pass );
+
+        } else if ( $enabled_credit_card == 'no' ) {
+
+            $user_pass = $document_credit_card . ':' . $api_key_credit_card;
+            return 'Basic ' . base64_encode( $user_pass );
+            
+        } else {
+            echo "<script>console.log('configure as coisas')</script>";
         }
     }
 }
