@@ -157,6 +157,10 @@ class WC_Rakuten_Pay_API {
      * @return array            Charge data.
      */
     public function generate_charge_data( $order, $payment_method, $posted, $installments ) {
+        // WC_Order class intance to get calculation_code and postage_service_code
+        $shipping_methods = $order->get_shipping_methods();
+        $shipping_data = reset($shipping_methods);
+
         $customer_name  = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
 
         // Root
@@ -243,7 +247,16 @@ class WC_Rakuten_Pay_API {
                         );
                     }, array_values( $order->get_items() )
                 )
-            )
+            ),
+            'commissionings'            => array(
+                array(
+                    'reference'             => (string) $order->get_id(),
+                    'kind'                  => 'shipping_fee',
+                    'amount'                => (float) $order->get_shipping_total(),
+                    'calculation_code'      => $shipping_data->get_meta('calculation_code'),
+                    'postage_service_code'  => $shipping_data->get_meta('postage_service_code'),
+                ),
+            ),
         );
 
         //Billing Address.
@@ -327,6 +340,19 @@ class WC_Rakuten_Pay_API {
             $shipping_address['kind']        = 'shipping';
             $data['customer']['addresses'][] = $shipping_address;
         }
+
+        //Commissionings Log
+//        if ( ! empty( $order->get_shipping_total() ) ) {
+//            $commissionings = array (
+//                'reference'             => $order->get_id(),
+//                'kind'                  => 'rakuten_logistics',
+//                'amount'                => $order->get_shipping_total(),
+//                'calculation_code'      => 'abcd-1234-asdf',
+//                'postage_service_code'  => 'shipping-id-1234'
+//            );
+//            $data['commissionings'] = $commissionings;
+//        }
+        $this->gateway->log->add('ERR', '$order: ' . print_r($order, true));
 
         return $data;
     }
