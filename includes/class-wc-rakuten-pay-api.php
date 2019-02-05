@@ -341,8 +341,6 @@ class WC_Rakuten_Pay_API {
             $data['customer']['addresses'][] = $shipping_address;
         }
 
-        $this->gateway->log->add('ERR', '$order: ' . print_r($order, true));
-
         return $data;
     }
 
