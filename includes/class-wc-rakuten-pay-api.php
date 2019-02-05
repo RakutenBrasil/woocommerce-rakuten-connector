@@ -341,17 +341,6 @@ class WC_Rakuten_Pay_API {
             $data['customer']['addresses'][] = $shipping_address;
         }
 
-        //Commissionings Log
-//        if ( ! empty( $order->get_shipping_total() ) ) {
-//            $commissionings = array (
-//                'reference'             => $order->get_id(),
-//                'kind'                  => 'rakuten_logistics',
-//                'amount'                => $order->get_shipping_total(),
-//                'calculation_code'      => 'abcd-1234-asdf',
-//                'postage_service_code'  => 'shipping-id-1234'
-//            );
-//            $data['commissionings'] = $commissionings;
-//        }
         $this->gateway->log->add('ERR', '$order: ' . print_r($order, true));
 
         return $data;
