@@ -53,7 +53,6 @@ class WC_Rakuten_Pay_API {
      * @return string
      */
     public function get_api_url() {
-//        throw new Exception("qualquer coisa");
         if ( 'production' === $this->gateway->environment ) {
             return self::PRODUCTION_API_URL;
         } else {
@@ -243,7 +242,16 @@ class WC_Rakuten_Pay_API {
                         );
                     }, array_values( $order->get_items() )
                 )
-            )
+            ),
+            'commissionings'            => array(
+	            array(
+		            'reference'             => (string) $order->get_id(),
+		            'kind'                  => 'shipping_fee',
+		            'amount'                => (float) $order->get_shipping_total(),
+		            'calculation_code'      => $shipping_data->get_meta('calculation_code'),
+		            'postage_service_code'  => $shipping_data->get_meta('postage_service_code'),
+	            ),
+            ),
         );
 
         //Billing Address.
