@@ -250,7 +250,7 @@ class WC_Rakuten_Pay_API {
             'commissionings'            => array(
                 array(
                     'reference'             => (string) $order->get_id(),
-                    'kind'                  => 'shipping_fee',
+                    'kind'                  => 'rakuten_logistics',
                     'amount'                => (float) $order->get_shipping_total(),
                     'calculation_code'      => $shipping_data->get_meta('calculation_code'),
                     'postage_service_code'  => $shipping_data->get_meta('postage_service_code'),
@@ -785,6 +785,9 @@ class WC_Rakuten_Pay_API {
         }
 
         $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
+
+	    update_post_meta( $order_id, '_billing_document', $data['customer']['document'] );
+
         $transaction    = $this->charge_transaction( $order, $data );
         $payments = reset($transaction['payments']);
 

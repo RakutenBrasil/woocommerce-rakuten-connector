@@ -144,13 +144,14 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
             $user_pass = $document_billet . ':' . $api_key_billet;
             return 'Basic ' . base64_encode( $user_pass );
 
-        } else if ( $enabled_credit_card == 'no' ) {
+        } else if ( $enabled_credit_card == 'yes' ) {
 
             $user_pass = $document_credit_card . ':' . $api_key_credit_card;
             return 'Basic ' . base64_encode( $user_pass );
-            
+
         } else {
-            echo "<script>console.log('configure as coisas')</script>";
+	        echo "<script>console.log('Configure as chaves da API e Assinatura Rakuten')</script>";
         }
+        return "<script>console.log('ERRO: Configure as chaves da API e Assinatura Rakuten')</script>";
     }
 }
