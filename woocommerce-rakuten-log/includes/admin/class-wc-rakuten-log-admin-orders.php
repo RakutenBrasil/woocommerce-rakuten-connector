@@ -20,8 +20,6 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
         add_action( 'current_screen', function(){
             $_SERVER['REQUEST_URI'] = remove_query_arg( ['success', 'errors'], $_SERVER['REQUEST_URI'] );
         } );
-	    add_action( 'woocommerce_order_actions', array($this, 'add_order_meta_box_action' ) );
-	    add_action( 'woocommerce_order_action_wc_custom_order_action', array($this, 'process_order_meta_box_action' ) );
 
         add_filter( 'posts_where', array($this, 'admin_rakuten_shipping_filter'), 10, 2 );
         add_filter( 'bulk_actions-edit-shop_order', array($this, 'admin_rakuten_log_batch') );
@@ -325,41 +323,6 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
         }
     }
 
-	/**
-	 * Add a custom action to order actions select box on edit order page
-	 * Only added for paid orders that haven't fired this action yet
-	 *
-	 * @param array $actions order actions array to display
-	 * @return array - updated actions
-	 */
-	public function add_order_meta_box_action( $actions ) {
-		global $theorder;
-		$order = new WC_Order();
-
-		// bail if the order has been paid for or this action has been run
-		if ( ! $theorder->is_paid() || get_post_meta( $order->get_id(), '_wc_order_marked_printed_for_packaging', true ) ) {
-			return $actions;
-		}
-
-		// add "Create the batch" custom action
-		$actions['wc_custom_order_action'] = __( 'Create the batch', 'woocommerce-rakuten-log' );
-		return $actions;
-	}
-
-	/**
-	 * Add an order note when custom action is clicked
-	 * Add a flag on the order to show it's been run
-	 *
-	 * @param \WC_Order $order
-	 */
-	public function process_order_meta_box_action( $order ) {
-
-		// add the order note
-		$order->add_order_note( __( 'Rakuten Log: The batch was created', 'woocommerce-rakuten-log' ) );
-
-		// add the flag
-		update_post_meta( $order->id, '_wc_order_batch_created', 'yes' );
-	}
 }
 
 new WC_Rakuten_Log_Admin_Orders();
