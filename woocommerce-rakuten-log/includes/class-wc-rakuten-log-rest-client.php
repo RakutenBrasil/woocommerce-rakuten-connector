@@ -160,7 +160,6 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
 
 	public function get_batch( $batch_data, $order_id, $order_ids )
 	{
-		$this->log = new WC_Logger();
 		$this->log_admin = new WC_Rakuten_Log_Admin_Orders();
 
 		$store_code = 'ea06ed55-fb0a-4f14-8d9b-e3ee7a7b3f41';
