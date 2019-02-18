@@ -160,12 +160,10 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
 	    $query = $GLOBALS['wpdb']->get_results( "SELECT instance_id, method_id FROM {$GLOBALS['wpdb']->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'rakuten-log' " );
         foreach ( $query as $dado ) {
             $instance_id = $dado->instance_id;
-            $this->log->add('ERR', '$dado: ' . print_r($dado->instance_id, true));
 	        $rakuten_log_shipping = new WC_Rakuten_Log_REST_Client($instance_id);
         }
-//        $rakuten_log_shipping = new WC_Rakuten_Log_Shipping($shipping_data->get_meta('instance_id'));
 
-        $result = $rakuten_log_shipping->create_batch($batch_payload);
+        $result = $rakuten_log_shipping->create_batch($batch_payload, $order_id, $order_ids);
 
         if( !isset($result['result']) || $result['result'] !== 'fail' ){
             foreach ($result['content'] as $content){
@@ -231,7 +229,7 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
             $print_url = wc_rakuten_log_get_print_url($the_order);
 
             if (!empty($code)){
-                $tracking_code = '<a href="' . esc_html($print_url) . '" aria-label="' . esc_attr__('Tracking Code', 'woocommerce-rakuten-log') . '">' . esc_html($code) . '</a>';
+                $tracking_code = '<a href="' . esc_html($print_url) . '" aria-label="' . esc_attr__('Tracking Code', 'woocommerce-rakuten-log') . '" target="_blank">' . esc_html($code) . '</a>';
 
                 include dirname( __FILE__ ) . '/views/html-list-table-tracking-code.php';
             }

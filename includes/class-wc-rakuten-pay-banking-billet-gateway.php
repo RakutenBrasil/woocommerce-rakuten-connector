@@ -27,7 +27,7 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
     $this->description          = __( 'Pay with Banking Billet', 'woocommerce-rakuten-pay' );
     $this->method_title         = __( 'Rakuten Pay - Banking Billet', 'woocommerce-rakuten-pay' );
     $this->method_description   = __( 'Accept banking billet payments using Rakuten Pay.', 'woocommerce-rakuten-pay' );
-    $this->view_transaction_url = 'https://dashboard.rakuten.com.br/sales/%s';
+    $this->view_transaction_url = 'https://dashboard.rakutenpay.com.br/sales/%s';
     $this->supports             = array( 'products', 'refunds' );
 
     // Load the form fields.
@@ -164,7 +164,7 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
   public function load_admin_scripts() {
     $suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-    $var = wp_enqueue_script( 'rakuten-pay-adminn', plugins_url( 'assets/js/admin' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), WC_Rakuten_Pay::VERSION, true );
+    $var = wp_enqueue_script( 'rakuten-pay-admin', plugins_url( 'assets/js/admin' . $suffix . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), WC_Rakuten_Pay::VERSION, true );
     error_log('load_admin_scripts...');
     error_log(print_r($var, true));
   }
