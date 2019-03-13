@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-01-24 14:29-0200\n"
+"PO-Revision-Date: 2019-03-13 12:32-0300\n"
 "Language-Team: \n"
 "X-Generator: Poedit 2.2\n"
 "Last-Translator: \n"
@@ -406,7 +406,7 @@ msgstr "Feminino"
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:523
 #: templates/banking-billet/refund-banking-data.php:35
 msgid "Document"
-msgstr "Documento"
+msgstr "Documento CPF/CPNJ"
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:424
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:425
@@ -427,6 +427,10 @@ msgstr "Bairro"
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:582
 msgid "Rakuten Pay: Credit Card Orders cannot be cancelled, you must wait the approve to proceed the refund."
 msgstr "Rakuten Pay: Pedidos pagos via Cartão de Crédito não podem ser cancelados, você deve esperar até que eles sejam aprovados para fazer um estorno."
+
+#: includes/class-wc-rakuten-pay-credit-card-gateway.php:582
+msgid "PayVault tokenization error response"
+msgstr "Erro ao gerar o Token, verifique os campos do cartão de crédito"
 
 #: includes/class-wc-rakuten-pay-my-account.php:43
 msgid "Billet"
@@ -548,7 +552,7 @@ msgstr "Nome impresso no Cartão"
 
 #: templates/credit-card/payment-form.php:27
 msgid "Card Holder Document"
-msgstr "Documento do proprietário do Cartão"
+msgstr "CPF/CNPJ do proprietário do Cartão"
 
 #: templates/credit-card/payment-form.php:31
 msgid "Card Number"
