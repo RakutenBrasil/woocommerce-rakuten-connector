@@ -162,7 +162,7 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
 	{
 		$this->log = new WC_Logger();
 		$this->log_admin = new WC_Rakuten_Log_Admin_Orders();
-		
+
 		$endpoint = 'order/' . $order_id;
 
 		$headers = array(
