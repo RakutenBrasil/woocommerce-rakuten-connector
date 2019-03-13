@@ -9,7 +9,7 @@ if ( ! defined('ABSPATH') ){
     exit;
 }
 
-class WC_Rakuten_Log_Admin_Orders{
+class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
 
     public function __construct()
     {
@@ -109,6 +109,11 @@ class WC_Rakuten_Log_Admin_Orders{
             $shipping_methods = $order->get_shipping_methods();
             $shipping_data = reset($shipping_methods);
             $errors = $this->valid_rakuten_log_batch_orders($order_ids);
+	        $charge_uuid = get_post_meta($order_id, '_wc_rakuten_pay_transaction_id');
+	        $document = get_post_meta($order->get_id(), '_billing_document');
+	        $total_value = (float) $order->get_shipping_total();
+	        $district = get_post_meta($order_id, '_shipping_district');
+
             if(empty($errors)){
                 $batch_item = array(
                     'calculation_code' => $shipping_data->get_meta('calculation_code'),
@@ -116,14 +121,15 @@ class WC_Rakuten_Log_Admin_Orders{
                     'order' => array(
                         'code' => (string) $order->get_id(),
                         'customer_order_number' => $order->get_id(),
-                        'payments_charge_id' => '9b53979d-cfb7-43a8-a020-252b59f05776',
+                        'payments_charge_id' => $charge_uuid[0],
+                        'total_value' => $total_value,
                         'delivery_address' => array (
                             'first_name' => $order->get_shipping_first_name(),
                             'last_name' => $order->get_shipping_last_name(),
                             'street' => $order->get_shipping_address_1(),
-                            'number' => $order->get_shipping_address_2(),
-                            'complement' => '',
                             'number' => $order->get_meta('_shipping_address_number'),
+                            'complement' => $order->get_shipping_address_2(),
+                            'district' => $district[0],
                             'city' => $order->get_shipping_city(),
                             'state' => $order->get_shipping_state(),
                             'zipcode' => str_replace("-", "", $order->get_shipping_postcode()),
@@ -133,7 +139,7 @@ class WC_Rakuten_Log_Admin_Orders{
                         'customer' => array(
                             'first_name' => $customer->get_first_name(),
                             'last_name' => $customer->get_last_name(),
-                            'cpf' => '42764742053'
+                            'cpf' => $document[0],
                         ),
                         'invoice' => array(
                             'series' => wc_rakuten_log_get_invoice_series($order),
@@ -150,9 +156,14 @@ class WC_Rakuten_Log_Admin_Orders{
                 $redirect_to = add_query_arg('errors', $errors, $redirect_to);
             }
         }
+        $this->log = new WC_Logger();
+	    $query = $GLOBALS['wpdb']->get_results( "SELECT instance_id, method_id FROM {$GLOBALS['wpdb']->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'rakuten-log' " );
+        foreach ( $query as $dado ) {
+            $instance_id = $dado->instance_id;
+	        $rakuten_log_shipping = new WC_Rakuten_Log_REST_Client($instance_id);
+        }
 
-        $rakuten_log_shipping = new WC_Rakuten_Log_Shipping($shipping_data->get_meta('instance_id'));
-        $result = $rakuten_log_shipping->create_batch($batch_payload);
+        $result = $rakuten_log_shipping->create_batch($batch_payload, $order_id, $order_ids);
 
         if( !isset($result['result']) || $result['result'] !== 'fail' ){
             foreach ($result['content'] as $content){
@@ -218,7 +229,7 @@ class WC_Rakuten_Log_Admin_Orders{
             $print_url = wc_rakuten_log_get_print_url($the_order);
 
             if (!empty($code)){
-                $tracking_code = '<a href="' . esc_html($print_url) . '" aria-label="' . esc_attr__('Tracking Code', 'woocommerce-rakuten-log') . '">' . esc_html($code) . '</a>';
+                $tracking_code = '<a href="' . esc_html($print_url) . '" aria-label="' . esc_attr__('Tracking Code', 'woocommerce-rakuten-log') . '" target="_blank">' . esc_html($code) . '</a>';
 
                 include dirname( __FILE__ ) . '/views/html-list-table-tracking-code.php';
             }

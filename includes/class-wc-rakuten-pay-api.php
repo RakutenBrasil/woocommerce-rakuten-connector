@@ -31,12 +31,15 @@ class WC_Rakuten_Pay_API {
      */
     protected $gateway;
 
-    /**
-     * JS Library URL.
-     *
-     * @var string
-     */
-    protected $js_url = 'https://static.rakutenpay.com.br/rpayjs/rpay-latest.dev.min.js';
+	/**
+	 * PRODUCTION_JS_URL
+	 */
+	const PRODUCTION_JS_URL = 'https://static.rakutenpay.com.br/rpayjs/rpay-latest.min.js';
+
+	/**
+	 * SANDBOX_JS_URL
+	 */
+    const SANDBOX_JS_URL = 'https://static.rakutenpay.com.br/rpayjs/rpay-latest.dev.min.js';
 
     /**
      * Constructor.
@@ -66,7 +69,11 @@ class WC_Rakuten_Pay_API {
      * @return string
      */
     public function get_js_url() {
-        return $this->js_url;
+	    if ( 'production' === $this->gateway->environment ) {
+		    return self::PRODUCTION_JS_URL;
+	    } else {
+    		return self::SANDBOX_JS_URL;
+	    }
     }
 
     /**
@@ -490,7 +497,7 @@ class WC_Rakuten_Pay_API {
             if ( 'yes' === $this->gateway->debug ) {
                 $this->gateway->log->add( $this->gateway->id, 'WP_Error in doing the transaction: ' . $response->get_error_message() );
             }
-            $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+            $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
             $this->send_email(
                 sprintf( esc_html__( 'The cancel transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
@@ -549,7 +556,7 @@ class WC_Rakuten_Pay_API {
             if ( 'yes' === $this->gateway->debug ) {
                 $this->gateway->log->add( $this->gateway->id, 'WP_Error in doing the refund_transaction: ' . $response->get_error_message() );
             }
-            $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+            $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
             $this->send_email(
                 sprintf( esc_html__( 'The refund transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
@@ -785,6 +792,9 @@ class WC_Rakuten_Pay_API {
         }
 
         $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
+
+	    update_post_meta( $order_id, '_billing_document', $data['customer']['document'] );
+
         $transaction    = $this->charge_transaction( $order, $data );
         $payments = reset($transaction['payments']);
 
@@ -1024,7 +1034,7 @@ class WC_Rakuten_Pay_API {
                 $order->update_status( 'pending', __( 'Rakuten Pay: The transaction is being processed.', 'woocommerce-rakuten-pay' ) );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was recieved', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction recieved', 'woocommerce-rakuten-pay' ),
@@ -1063,7 +1073,7 @@ class WC_Rakuten_Pay_API {
                 $order->update_status( 'cancelled' );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
                 $this->send_email(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
@@ -1083,7 +1093,7 @@ class WC_Rakuten_Pay_API {
                 $order->update_status( 'cancelled' );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
 
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
@@ -1099,7 +1109,7 @@ class WC_Rakuten_Pay_API {
                 $order->update_status( 'failed' );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
 
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was declined', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
@@ -1192,7 +1202,7 @@ class WC_Rakuten_Pay_API {
                 }
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakuten.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
                 $this->send_email(
                     sprintf( esc_html__( 'The transaction for order %s refunded', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction refunded', 'woocommerce-rakuten-pay' ),

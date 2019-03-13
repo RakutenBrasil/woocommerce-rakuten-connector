@@ -72,7 +72,7 @@ $form = null;
 
                   errorHtml += '<ul class="woocommerce-error" role="alert">';
                   $.each( errors, function (_idx, error ) {
-                    errorHtml += '<li>' + error["message"] + '</li>';
+                    errorHtml += '<li>' + wcRakutenPayParams.error_message + '</li>';
                   });
                   errorHtml += '</ul>';
 

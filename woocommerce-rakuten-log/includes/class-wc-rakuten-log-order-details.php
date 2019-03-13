@@ -25,7 +25,7 @@ class WC_Rakuten_Log_Order_Details {
         }
 
         wc_get_template(
-            'myaccount/tracking_link.php',
+            '../woocommerce-rakuten-log/templates/myaccount/tracking_link.php',
             array(
                 'tracking_code' => $tracking_code,
                 'tracking_url' => $tracking_link

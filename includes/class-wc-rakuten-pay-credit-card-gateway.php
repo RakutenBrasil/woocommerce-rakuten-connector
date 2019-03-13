@@ -242,7 +242,8 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'rakuten-pay-credit-card',
         'wcRakutenPayParams',
         array(
-          'signatureKey' => $this->signature_key,
+          'signatureKey'    => $this->signature_key,
+          'error_message'         => __( 'PayVault tokenization error response', 'woocommerce-rakuten-pay' ),
         )
       );
     }

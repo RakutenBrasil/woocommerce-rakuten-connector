@@ -74,7 +74,7 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
         return $response_body;
     }
 
-    public function create_batch($batch_data)
+    public function create_batch($batch_data, $order_id, $order_ids)
     {
         $endpoint = 'batch';
         $body = json_encode($batch_data, JSON_PRESERVE_ZERO_FRACTION);
@@ -91,6 +91,9 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
         }
 
         $response_body = json_decode( $response['body'], true );
+
+        $this->get_batch($batch_data, $order_id, $order_ids);
+
         if ( $response['response']['code'] != 200 ) {
             return array(
                 'result' => 'fail',
@@ -144,13 +147,61 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
             $user_pass = $document_billet . ':' . $api_key_billet;
             return 'Basic ' . base64_encode( $user_pass );
 
-        } else if ( $enabled_credit_card == 'no' ) {
+        } else if ( $enabled_credit_card == 'yes' ) {
 
             $user_pass = $document_credit_card . ':' . $api_key_credit_card;
             return 'Basic ' . base64_encode( $user_pass );
-            
+
         } else {
-            echo "<script>console.log('configure as coisas')</script>";
+	        echo "<script>console.log('Configure as chaves da API e Assinatura Rakuten')</script>";
         }
+        return "<script>console.log('ERRO: Configure as chaves da API e Assinatura Rakuten')</script>";
     }
+
+	public function get_batch( $batch_data, $order_id, $order_ids )
+	{
+		$this->log = new WC_Logger();
+		$this->log_admin = new WC_Rakuten_Log_Admin_Orders();
+		
+		$endpoint = 'order/' . $order_id;
+
+		$headers = array(
+			'Authorization' => $this->authorization_header(),
+			'Content-Type'  => 'application/json',
+			'Cache-Control' => 'no-cache'
+		);
+		$response = $this->do_get_request($endpoint, $headers);
+		$response_body = json_decode( $response['body'], true );
+		$this->log->add('LOG', 'endpoint: ' . print_r($endpoint, true));
+
+		if ( $response_body['status'] == 'OK' ) {
+
+			$errors = $this->log_admin->valid_rakuten_log_batch_orders($order_ids);
+			$count_error = count($errors);
+
+			if( $count_error != 0 ) {
+				return false;
+			} else {
+
+			update_post_meta( $order_id, '_rakuten_log_tracking_code', $response_body['content']['trackings_number'][0] );
+			update_post_meta( $order_id, '_rakuten_log_tracking_url', $response_body['content']['tracking_print_url'] );
+			update_post_meta( $order_id, '_rakuten_log_print_url', $response_body['content']['batch_print_url'] );
+			update_post_meta( $order_id, '_rakuten_log_batch_print_url', $response_body['content']['batch_print_url'] );
+			update_post_meta( $order_id, '_rakuten_log_batch_code', $response_body['content']['batch_code'] );
+			update_post_meta( $order_id, '_rakuten_log_volume', $response_body['content']['shipping_option']['volumes'][0]['number'] );
+
+			}
+		} else {
+
+			$errors = $this->log_admin->valid_rakuten_log_batch_orders($order_ids);
+			$count_error = count($errors);
+
+			if ( $count_error != 0 ) {
+				return false;
+			} else {
+				return $batch_data;
+			}
+		}
+		return $response_body;
+	}
 }
