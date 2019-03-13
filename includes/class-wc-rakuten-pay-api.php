@@ -257,7 +257,7 @@ class WC_Rakuten_Pay_API {
             'commissionings'            => array(
                 array(
                     'reference'             => (string) $order->get_id(),
-                    'kind'                  => 'shipping_fee',
+                    'kind'                  => 'rakuten_logistics',
                     'amount'                => (float) $order->get_shipping_total(),
                     'calculation_code'      => $shipping_data->get_meta('calculation_code'),
                     'postage_service_code'  => $shipping_data->get_meta('postage_service_code'),
