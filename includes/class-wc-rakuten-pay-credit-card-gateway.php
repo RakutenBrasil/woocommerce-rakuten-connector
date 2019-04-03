@@ -66,7 +66,9 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     // Filters.
     add_filter( 'woocommerce_checkout_fields', array( $this, 'custom_checkout_fields' ) );
     add_filter( 'woocommerce_default_address_fields', array( $this, 'reorder_custom_default_address_fields' ) );
-    // A Hack to allow insert script tag of type text/template just for additional refund banking data.
+    add_filter( 'woocommerce_checkout_get_value', array( $this, 'rk_populate_checkout_fields' ), 10, 2 );
+
+          // A Hack to allow insert script tag of type text/template just for additional refund banking data.
     add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'refund_banking_data_fields' ) );
   }
 
@@ -516,35 +518,24 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
   }
 
   public function reorder_custom_default_address_fields( $fields ) {
-    $fields['address_1']['priority'] = 70;
-    $fields['address_2']['priority'] = 90;
-    $fields['city']['priority'] = 110;
-    $fields['state']['priority'] = 120;
-    $fields['country']['priority'] = 130;
-    $fields['postcode']['priority'] = 140;
+      $fields['postcode']['priority'] = 60;
+      $fields['address_1']['priority'] = 70;
+      $fields['address_2']['priority'] = 90;
+      $fields['city']['priority'] = 110;
+      $fields['state']['priority'] = 120;
+      $fields['country']['priority'] = 130;
+      $fields['state']['required'] = true;
 
-    $fields['state']['required'] = true;
-
-    return $fields;
+      return $fields;
   }
 
   public function reorder_all_fields( array $fields ) {
     // Billing fields
-    $fields['billing']['billing_company']['priority'] = 10;
-    $fields['billing']['billing_first_name']['priority'] = 20;
-    $fields['billing']['billing_last_name']['priority'] = 25;
-    $fields['billing']['billing_birthdate']['priority'] = 30;
-    $fields['billing']['billing_document']['priority'] = 30;
-    $fields['billing']['billing_email']['priority'] = 50;
-    $fields['billing']['billing_phone']['priority'] = 50;
-    $fields['billing']['billing_address_1']['priority'] = 70;
-    $fields['billing']['billing_address_2']['priority'] = 90;
-    $fields['billing']['billing_address_number']['priority'] = 100;
-    $fields['billing']['billing_district']['priority'] = 110;
-    $fields['billing']['billing_postcode']['priority'] = 120;
-    $fields['billing']['billing_city']['priority'] = 130;
-    $fields['billing']['billing_state']['priority'] = 140;
-    $fields['billing']['billing_country']['priority'] = 150;
+
+      $fields['billing']['billing_company']['priority'] = 10;
+      $fields['billing']['billing_first_name']['priority'] = 20;
+      $fields['billing']['billing_last_name']['priority'] = 25;
+      $fields['billing']['billing_document']['priority'] = 30;
 
     // Shipping Fields
     $fields['shipping']['shipping_address_1']['priority'] = 70;
@@ -641,5 +632,42 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
   private function array_slice( $arr, $keys ) {
     wp_array_slice_assoc( $arr, $keys );
+  }
+
+    /**
+     * Pre populate already filled billing or shipping fields
+     *
+     * @param $key
+     * @return mixed
+     *
+     */
+  public function rk_populate_checkout_fields( $key ) {
+      global $current_user;
+      $current_user = wp_get_current_user();
+      $current_user_id = $current_user->ID;
+      $document = get_user_meta( $current_user_id, '', true );
+
+      if ( isset($document['billing_document'][0]) ) {
+          switch ($key) :
+              case 'billing_first_name':
+              case 'shipping_first_name':
+                  return $current_user->first_name;
+                  break;
+
+              case 'billing_last_name':
+              case 'shipping_last_name':
+                  return $current_user->last_name;
+                  break;
+              case 'billing_email':
+                  return $current_user->user_email;
+                  break;
+              case 'billing_document':
+                  return $document['billing_document'][0];
+                  break;
+              case 'billing_birthdate':
+                  return $document['billing_birthdate'][0];
+                  break;
+          endswitch;
+      }
   }
 }

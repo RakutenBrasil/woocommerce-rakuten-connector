@@ -793,7 +793,13 @@ class WC_Rakuten_Pay_API {
 
         $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
 
+        // Save customer data at database, CPF, birthdate and Phone
 	    update_post_meta( $order_id, '_billing_document', $data['customer']['document'] );
+        $current_user = wp_get_current_user();
+        $current_user_id = $current_user->ID;
+	    update_user_meta( $current_user_id, 'billing_document', $data['customer']['document'] );
+	    update_user_meta( $current_user_id, 'billing_birthdate', $data['customer']['birth_date'] );
+	    update_user_meta( $current_user_id, 'billing_phone', $order->get_billing_phone() );
 
         $transaction    = $this->charge_transaction( $order, $data );
         $payments = reset($transaction['payments']);
