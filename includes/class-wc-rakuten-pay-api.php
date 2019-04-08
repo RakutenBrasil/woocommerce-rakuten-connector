@@ -166,6 +166,7 @@ class WC_Rakuten_Pay_API {
         // WC_Order class intance to get calculation_code and postage_service_code
         $shipping_methods = $order->get_shipping_methods();
         $shipping_data = reset($shipping_methods);
+        $shipping_method = $shipping_data->get_method_id();
 
         $customer_name  = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
 
@@ -254,16 +255,22 @@ class WC_Rakuten_Pay_API {
                     }, array_values( $order->get_items() )
                 )
             ),
-            'commissionings'            => array(
-                array(
-                    'reference'             => (string) $order->get_id(),
-                    'kind'                  => 'rakuten_logistics',
-                    'amount'                => (float) $order->get_shipping_total(),
-                    'calculation_code'      => $shipping_data->get_meta('calculation_code'),
-                    'postage_service_code'  => $shipping_data->get_meta('postage_service_code'),
-                ),
-            ),
         );
+
+        //Commissionings
+        if ( $shipping_method == 'rakuten-log' ) {
+            $commissionings = array(
+
+                    'reference'                 => (string) $order->get_id(),
+                    'kind'                      => 'rakuten_logistics',
+                    'amount'                    => (float) $order->get_shipping_total(),
+                    'calculation_code'          => $shipping_data->get_meta('calculation_code'),
+                    'postage_service_code'      => $shipping_data->get_meta('postage_service_code'),
+
+            );
+
+            $data['commissionings'][] = $commissionings;
+        }
 
         //Billing Address.
         if ( ! empty( $order->get_billing_address_1() ) ) {

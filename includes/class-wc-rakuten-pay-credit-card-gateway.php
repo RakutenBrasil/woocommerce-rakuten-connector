@@ -239,6 +239,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       wp_enqueue_script( 'rakuten-pay-library', $this->api->get_js_url(), array( 'jquery' ), null );
       wp_enqueue_script( 'jquery-inputmask', plugins_url( 'assets/js/jquery.inputmask.min' . '.js', plugin_dir_path( __FILE__ ) ), array ( 'jquery' ), null );
       wp_enqueue_script( 'rakuten-pay-credit-card', plugins_url( 'assets/js/credit-card' . '.js', plugin_dir_path( __FILE__ ) ), array( 'jquery', 'jquery-blockui', 'jquery-inputmask', 'rakuten-pay-library' ), WC_Rakuten_Pay::VERSION, true );
+      wp_enqueue_script( 'cep-validation', plugins_url( 'assets/js/cep-validation' . '.js', plugin_dir_path( __FILE__ ) ), array ( 'jquery' ), null );
 
       wp_localize_script(
         'rakuten-pay-credit-card',
