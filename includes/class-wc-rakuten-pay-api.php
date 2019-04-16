@@ -354,6 +354,10 @@ class WC_Rakuten_Pay_API {
             $data['customer']['addresses'][] = $shipping_address;
         }
 
+        $current_user = wp_get_current_user();
+        $current_user_id = $current_user->ID;
+        update_user_meta( $current_user_id, 'billing_birthdate', $posted['billing_birthdate']);
+        $this->gateway->log->add('LOG', 'posted: birth_date ' . print_r( $posted, true) );
         return $data;
     }
 
@@ -805,7 +809,6 @@ class WC_Rakuten_Pay_API {
         $current_user = wp_get_current_user();
         $current_user_id = $current_user->ID;
 	    update_user_meta( $current_user_id, 'billing_document', $data['customer']['document'] );
-	    update_user_meta( $current_user_id, 'billing_birthdate', $data['customer']['birth_date'] );
 	    update_user_meta( $current_user_id, 'billing_phone', $order->get_billing_phone() );
 
         $transaction    = $this->charge_transaction( $order, $data );
@@ -1025,7 +1028,9 @@ class WC_Rakuten_Pay_API {
             return false;
         }
 
-        $order_status_result = $this->process_order_status( $order, $status, $posted );
+        $result_message = null;
+        $order_status_result = $this->process_order_status( $order, $status, $posted, $result_message );
+
         return $order_status_result;
     }
 
@@ -1037,7 +1042,7 @@ class WC_Rakuten_Pay_API {
      *
      * @return boolean  $result Order status result
      */
-    public function process_order_status( $order, $status, $data, $result_message ) {
+    public function process_order_status( $order, $status, $data, $result_message = null ) {
         if ( 'yes' === $this->gateway->debug ) {
             $this->gateway->log->add( $this->gateway->id, 'Payment status for order ' . $order->get_order_number() . ' is now: ' . $status );
         }

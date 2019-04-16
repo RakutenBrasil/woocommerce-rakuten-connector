@@ -6,6 +6,7 @@
         function limpa_formulário_cep() {
             // Limpa valores do formulário de cep.
             $("#billing_address_1").val("");
+            $("#billing_address_2").val("");
             $("#billing_district").val("");
             $("#billing_city").val("");
             $("#billing_state").val("");
@@ -29,6 +30,7 @@
 
                     //Preenche os campos com "..." enquanto consulta webservice.
                     $("#billing_address_1").val("...");
+                    $("#billing_address_2").val("");
                     $("#billing_district").val("...");
                     $("#billing_city").val("...");
 
@@ -38,9 +40,11 @@
                         if (!("erro" in dados)) {
                             //Atualiza os campos com os valores da consulta.
                             $("#billing_address_1").val(dados.logradouro);
+                            $("#billing_address_2").val("");
                             $("#billing_district").val(dados.bairro);
                             $("#billing_city").val(dados.localidade);
                             $("#billing_state").val(dados.uf).change();
+                            $("#billing_address_number").focus();
 
                         } //end if.
                         else {
