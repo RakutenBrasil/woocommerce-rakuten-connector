@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: WooCommerce Rakuten Pay
+ * Plugin Name: WooCommerce Rakuten Connector
  * Plugin URI: http://github.com/RakutenBrasil/woocommerce-rakuten-pay
  * Description: Gateway de pagamento Rakuten Pay e Rakuten Logistics para WooCommerce.
  * Author: Rakuten Pay
  * Author URI: https://rakuten.com.br/
- * Version: 1.1.4
+ * Version: 1.1.7
  * License: GPLv2 or later
  * Text Domain: woocommerce-rakuten-pay
  * Domain Path: /languages/
@@ -29,7 +29,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
      *
      * @var string
      */
-    const VERSION = '1.1.4';
+    const VERSION = '1.1.7';
 
     /**
      * Instance of this class.
@@ -56,9 +56,11 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
       function rakuten_connector_page_menu() {
         echo "
         <style>
-          a { color: #333; }
-
+          a { color: #333; text-decoration: none; }
+          a:hover { text-decoration: underline; }
+          
           .title {
+            text-align: center;
             color: #c4c4c4;
             font-weight: bolder !important;
             transition: .2s all ease-in-out;
@@ -66,7 +68,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
 
           .wrap {
             display: flex;
-            width: 93%;
+            width: 100%;
             justify-content: center;
           }
 
@@ -81,21 +83,40 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
             margin: 40px 40px 20px 0;
             text-align: center;
             float: left;
-            box-shadow: 2px 2px 10px #c4c4c4;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
             border-radius: 5px;
             transition: .2s all ease-in-out;
           }
           
           .box:hover {
-            transform: scale(1.1);
+            box-shadow: 2px 5px 20px rgba(0,0,0,0.3);
           }
           .box:hover h1 {
             color: #bf0000;
           }
-          .box-full {
+          
+          .box-full:hover {
+            box-shadow: 2px 5px 20px rgba(0,0,0,0.3);
+          }
+          .box-full:hover h1 {
+            color: #bf0000;
+          }
+          .box-logo {
             width: 95%;
             padding: 20px;
           }
+          .box-full {
+            text-align: center;
+            width: 50%;
+            padding: 50px;
+            background: #fff;
+            margin: 10px auto;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            transition: .2s all ease-in-out;
+          }
+          .submit { display: table; margin: 20px auto 5px }
+          
           @media screen and (max-width: 479px){
             .box {
               width: 72%;
@@ -104,11 +125,11 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
         </style>
 
         <br />
-        <div class='box-full'>
+        <div class='box-logo'>
           <img src='" . plugins_url('rakuten-connector-logo.png', __FILE__) . "' />
           <hr>
         </div>
-        
+        <!-- Rakuten Pay configuration admin menu page-->
         <div class='wrap'>
           <div class='box'>
             <h1 class='title'>Rakuten Pay</h1>
@@ -119,18 +140,124 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
           </div>
         ";
         $query = $GLOBALS['wpdb']->get_results( "SELECT instance_id,method_id FROM {$GLOBALS['wpdb']->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'rakuten-log' " );
-        // get the Rakuten Log id 
+        // get the Rakuten Log id
         foreach ($query as $dado) {
           echo "
+            <!-- Rakuten Logistics configuration admin menu page -->
             <div class='box'>
               <h1 class='title'>Rakuten Log</h1>
               <hr>
               <br />
               <h3><a href='admin.php?page=wc-settings&tab=shipping&instance_id={$dado->instance_id}' >Configurações de Entrega</a></h3>
+              <h3><a href='http://logistics-sandbox.rakuten.com.br' target='_blank'>Painel Rakuten Logistics</a></h3>
             </div>
           </div>
           ";
         }
+
+        // CEP checkout validation configuration admin menu page
+        $value = get_option('rakuten_cep_validation');
+
+//        if ( empty( $value )) {
+//            update_option('rakuten_cep_validation', '1');
+//        }
+        ?>
+
+        <div class='wrap'>
+          <div class='box-full'>
+            <h1 class='title'>Validação CEP no checkout</h1>
+            <hr>
+            <br />
+
+                <form method='post' action='admin.php?page=rakuten_connector'>
+                <?php
+
+                if ( $value == "1" ) { ?>
+
+                    Habilitar:
+                    <select name="cep_validation_1" id="cep">
+                        <?php
+                            $options = array( "1" => "Sim", "0" => "Não" );
+                            foreach ( $options as $option ) {
+                                echo "<option value='" . print_r($option, true) . "'>" . print_r($option, true) . "</option>";
+                            }
+                        ?>
+
+                    </select>
+
+                    <?php
+
+                    if( ! empty($_POST['cep_validation_1']) ){
+
+                        switch ( $_POST['cep_validation_1'] ){
+                            case 'Sim':
+                                echo "<script>console.log('1 checked isset')</script>";
+                                update_option('rakuten_cep_validation', '1');
+                                break;
+                                $value = get_option('rakuten_cep_validation');
+
+                            case 'Não':
+
+                                update_option('rakuten_cep_validation', '0');
+
+                                break;
+                        }
+
+                        header('location: admin.php?page=rakuten_connector');
+                    } else {
+                        submit_button();
+                    }
+
+                    ?>
+                </form>
+            <?php
+
+            ?>
+
+          </div>
+        </div>
+            <?php } else { ?>
+                    Habilitar:
+
+                    <select name="cep_validation_0">
+                        <?php
+
+                        $options = array( "0" => "Não", "1" => "Sim" );
+                        foreach ( $options as $option ) {
+                            echo "<option value='" . print_r($option, true) . "' id='". print_r($option, true) ."'>" . print_r($option, true) . "</option>";
+                        }
+
+                        ?>
+                    </select>
+
+                    <?php
+
+                        if( ! empty($_POST['cep_validation_0']) ){
+
+                            switch ( $_POST['cep_validation_0'] ){
+                                case 'Sim':
+                                    echo "<script>console.log('1 checked isset')</script>";
+                                    update_option('rakuten_cep_validation', '1');
+                                    break;
+                                    $value = get_option('rakuten_cep_validation');
+                                    echo $value;
+                                case 'Não':
+                                    echo "<script>console.log('0 unchecked isset')</script>";
+                                    update_option('rakuten_cep_validation', '0');
+                                    echo $value;
+                                    break;
+                            }
+
+                            header('location: admin.php?page=rakuten_connector');
+                        } else {
+                            submit_button();
+                        }
+                    ?>
+                </form>
+
+          </div>
+        </div>
+        <?php   }
       }
 
       // Checks with WooCommerce is installed.
@@ -173,6 +300,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
       include_once dirname( __FILE__ ) . '/includes/class-wc-rakuten-pay-admin-customizations.php';
       include_once dirname( __FILE__ ) . '/includes/class-wc-rakuten-pay-banking-billet-gateway.php';
       include_once dirname( __FILE__ ) . '/includes/class-wc-rakuten-pay-credit-card-gateway.php';
+      include_once dirname( __FILE__ ) . '/includes/class-wc-rakuten-pay-order-details.php';
     }
 
     /**
