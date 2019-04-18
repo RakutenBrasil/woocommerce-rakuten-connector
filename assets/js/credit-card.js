@@ -440,6 +440,6 @@ $form = null;
   $( '#billing_document' ).inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
   $( '#rakuten-pay-card-holder-document' ).inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
   $( '#billing_phone' ).inputmask('(99) 9999[9]-9999');
-  $( '#shipping_phone_address' ).inputmask('(99) 9999[9]-9999');
+  $( '#shipping_phone_number' ).inputmask('(99) 9999[9]-9999');
 
 }( jQuery ));
