@@ -123,7 +123,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                 echo "<option value='${max}'>${installment}x de " . number_format($price_installment, 2) . " (sem juros)</option>";
                 $installment++;
             }
-            echo "</select>";
+            echo "
+        </select>
+        <script type=\"text/javascript\">
+            jQuery(document).ready(function(){
+                jQuery( '#rakuten-pay-card-holder-document' ).inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
+            });
+        </script>";
         }
         ?>
     </p>
