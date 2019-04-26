@@ -240,7 +240,7 @@ class WC_Rakuten_Pay_API {
                         $product = $item->get_product();
                         return array(
                             'reference'     => $product->get_sku(),
-                            'description'   => substr( $product->get_description(), 0, 255 ),
+                            'description'   => substr( $product->get_title(), 0, 255 ),
                             'amount'        => (float) $product->get_price(),
                             'quantity'      => $item->get_quantity(),
                             'total_amount'  => (float) $item->get_total(),
