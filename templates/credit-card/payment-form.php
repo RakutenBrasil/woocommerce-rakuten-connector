@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <label for="rakuten-pay-card-expiry-year"><?php esc_html_e( 'Expiry Year', 'woocommerce-rakuten-pay' ); ?> <span class="required">*</span></label>
         <select name="rakuten_pay_card_expiry_year" data-rkp="card-expiration-year" id="rakuten-pay-card-expiry-year" style="font-size: 1.5em; padding: 8px; width: 100%;">
             <?php
-            foreach ( range(2018, 2038) as $year ) :
+            foreach ( range(2019, 2038) as $year ) :
                 ?>
                 <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
             <?php endforeach; ?>
@@ -98,7 +98,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 var total_value = document.getElementsByClassName('woocommerce-Price-amount');
                 var text_value = total_value[total_value.length - 1];
 
-                text_value.innerHTML = 'R$' + parseFloat(total_interest);
+                text_value.innerHTML = 'R$' + parseFloat(total_interest).toFixed(2);
             }
 
             jQuery(document).ready(function () {
@@ -128,7 +128,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     var text_value = total_value_cart[total_value_cart.length - 1];
 
                     // text_value.innerHTML = 'R$' + text_list[2];
-                    text_value.innerHTML = 'R$' + parseFloat(total_interest);
+                    text_value.innerHTML = 'R$' + parseFloat(total_interest).toFixed(2);
                     // console.log(parseFloat(total_interest));
                 });
             });
