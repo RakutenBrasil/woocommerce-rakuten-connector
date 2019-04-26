@@ -167,13 +167,14 @@ class WC_Rakuten_Pay_API {
         $shipping_methods = $order->get_shipping_methods();
         $shipping_data = reset($shipping_methods);
         $shipping_method = $shipping_data->get_method_id();
+        $total_amount = (float) $order->get_total() + $installments['interest_amount'];
 
         $customer_name  = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
 
         // Root
         $data = array(
             'reference'   => $order->get_order_number(),
-            'amount'      => (float) $order->get_total(),
+            'amount'      => $total_amount,
             'currency'    => get_woocommerce_currency(),
             'webhook_url' => WC()->api_request_url( get_class( $this->gateway ) ),
             'fingerprint' => $posted['rakuten_pay_fingerprint'],
@@ -232,7 +233,7 @@ class WC_Rakuten_Pay_API {
                 'payer_ip'        => $this->customer_ip_address( $order ),
                 'items_amount'    => (float) $order->get_subtotal(),
                 'shipping_amount' => (float) $order->get_shipping_total(),
-                'taxes_amount'    => (float) $order->get_total_tax(),
+                'taxes_amount'    => (float) $order->get_total_tax() + $installments['interest_amount'],
                 'discount_amount' => (float) $order->get_total_discount(),
                 'items' => array_map(
                     function( $item ) {
@@ -300,7 +301,7 @@ class WC_Rakuten_Pay_API {
             $payment = array(
                 'reference'                => '1',
                 'method'                   => $payment_method,
-                'amount'                   => (float) $order->get_total(),
+                'amount'                   => $total_amount,
                 'installments_quantity'    => (integer) $posted['rakuten_pay_installments'],
                 'brand'                    => strtolower( $posted['rakuten_pay_card_brand'] ),
                 'token'                    => $posted['rakuten_pay_token'],
@@ -357,7 +358,7 @@ class WC_Rakuten_Pay_API {
         $current_user = wp_get_current_user();
         $current_user_id = $current_user->ID;
         update_user_meta( $current_user_id, 'billing_birthdate', $posted['billing_birthdate']);
-        $this->gateway->log->add('LOG', 'posted: birth_date ' . print_r( $posted, true) );
+        
         return $data;
     }
 
@@ -783,6 +784,7 @@ class WC_Rakuten_Pay_API {
     public function process_regular_payment( $order_id ) {
         $order          = wc_get_order( $order_id );
         $payment_method = $this->get_payment_method( $order );
+        $buyer_interest = $this->get_buyer_interest();
 
         $installments_qty = (integer) $_POST['rakuten_pay_installments'];
         $amount           = (float) $order->get_total();
@@ -802,7 +804,19 @@ class WC_Rakuten_Pay_API {
             }
         }
 
-        $data           = $this->generate_charge_data( $order, $payment_method, $_POST, $installment );
+        if ( $buyer_interest == 'yes' ) {
+            $data = $this->generate_charge_data($order, $payment_method, $_POST, $installment);
+        } else {
+            $installment = array(
+                'total' => $amount,
+                'quantity' => $installments_qty,
+                'interest_percent' => (float) '0',
+                'interest_amount' => (float) '0',
+            );
+            $installment['installment_amount'] = $installment['total'] / $installment['quantity'];
+
+            $data = $this->generate_charge_data($order, $payment_method, $_POST, $installment);
+        }
 
         // Save customer data at database, CPF, birthdate and Phone
 	    update_post_meta( $order_id, '_billing_document', $data['customer']['document'] );
