@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </p>
     <p class="form-row form-row-last">
         <label for="rakuten-pay-card-installments"><?php esc_html_e( 'Installments', 'woocommerce-rakuten-pay' ); ?> <span class="required">*</span></label>
-        <select name="rakuten_pay_installments" id="rakuten-pay-card-installments" style="font-size: 1.5em; padding: 8px; width: 100%;">
+        <select name="rakuten_pay_installments" id="rakuten-pay-card-installments" style="font-size: 1.5em; padding: 8px; width: 100%;" onchange="installments_value()">
             <?php
 
 
@@ -81,32 +81,58 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         </select>
         <script type="text/javascript">
-            jQuery(document).ready(function(){
-                jQuery( '#rakuten-pay-card-holder-document' ).inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
 
+            function installments_value() {
 
-                jQuery( '#payment_method_rakuten-pay-banking-billet' ).click(function(){
-                    var cart_subtotal = document.querySelectorAll('tr.cart-subtotal .woocommerce-Price-amount');
-                    var subtotal_value = cart_subtotal[0].innerText;
+                var installments = document.getElementById('rakuten-pay-card-installments');
+                var raw_text = installments.options[installments.selectedIndex].text;
+                var text_list = raw_text.split(" ");
+
+                var cart_subtotal = document.querySelectorAll('tr.cart-subtotal .woocommerce-Price-amount');
+                var subtotal_value = cart_subtotal[0].innerText;
+
+                var subtotal_number = subtotal_value.replace('R$', '');
+                var interest = text_list[5].replace(')', '');
+                var total_interest = parseFloat(subtotal_number.replace(',', '.')) + parseFloat(interest.replace(',', '.'));
+
+                var total_value = document.getElementsByClassName('woocommerce-Price-amount');
+                var text_value = total_value[total_value.length - 1];
+
+                text_value.innerHTML = 'R$' + parseFloat(total_interest);
+            }
+
+            jQuery(document).ready(function () {
+                jQuery('#rakuten-pay-card-holder-document').inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
+
+                var installments = document.getElementById('rakuten-pay-card-installments');
+                var raw_text = installments.options[installments.selectedIndex].text;
+                var text_list = raw_text.split(" ");
+
+                var cart_subtotal = document.querySelectorAll('tr.cart-subtotal .woocommerce-Price-amount');
+                var subtotal_value = cart_subtotal[0].innerText;
+
+                var subtotal_number = subtotal_value.replace('R$', '');
+                var interest = text_list[5].replace(')', '');
+                var total_interest = parseFloat(subtotal_number.replace(',', '.')) + parseFloat(interest.replace(',', '.'));
+
+                jQuery('#payment_method_rakuten-pay-banking-billet').click(function () {
                     var total_value = document.getElementsByClassName('woocommerce-Price-amount');
                     var text_value = total_value[total_value.length - 1];
 
                     text_value.innerHTML = subtotal_value;
-
                 });
 
-                jQuery( '#payment_method_rakuten-pay-credit-card' ).click(function(){
-                    var installments = document.getElementById('rakuten-pay-card-installments');
-                    var raw_text = installments.options[installments.selectedIndex].text;
-                    var text_list = raw_text.split(" ");
+                jQuery('#payment_method_rakuten-pay-credit-card').click(function () {
 
                     var total_value_cart = document.getElementsByClassName('woocommerce-Price-amount');
                     var text_value = total_value_cart[total_value_cart.length - 1];
 
-                    text_value.innerHTML = 'R$' + text_list[2];
+                    // text_value.innerHTML = 'R$' + text_list[2];
+                    text_value.innerHTML = 'R$' + parseFloat(total_interest);
+                    // console.log(parseFloat(total_interest));
                 });
-
             });
+
         </script>
         <?php
         } else {
