@@ -167,7 +167,6 @@ class WC_Rakuten_Pay_API {
         $shipping_methods = $order->get_shipping_methods();
         $shipping_data = reset($shipping_methods);
         $shipping_method = $shipping_data->get_method_id();
-//        $data['amount'] = (float) $order->get_total() + $installments['interest_amount'];
         $total_amount = (float) $order->get_total() + $installments['interest_amount'];
 
         $customer_name  = trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() );
@@ -175,7 +174,6 @@ class WC_Rakuten_Pay_API {
         // Root
         $data = array(
             'reference'   => $order->get_order_number(),
-//            'amount'      => (float) $order->get_total(),
             'amount'      => $total_amount,
             'currency'    => get_woocommerce_currency(),
             'webhook_url' => WC()->api_request_url( get_class( $this->gateway ) ),
@@ -303,7 +301,6 @@ class WC_Rakuten_Pay_API {
             $payment = array(
                 'reference'                => '1',
                 'method'                   => $payment_method,
-//                'amount'                   => (float) $order->get_total(),
                 'amount'                   => $total_amount,
                 'installments_quantity'    => (integer) $posted['rakuten_pay_installments'],
                 'brand'                    => strtolower( $posted['rakuten_pay_card_brand'] ),
