@@ -459,12 +459,12 @@ class WC_Rakuten_Pay_API {
                 $this->gateway->log->add( $this->gateway->id, 'URL: ' . print_r( $this->gateway->get_return_url( $order ), true ) );
             }
 
-            $result_message = $response_body['result_messages'][0];
+            $result_messages = $response_body['result_messages'][0];
             update_post_meta( $order_id, '_wc_rakuten_pay_transaction_data', $payment_data );
             $this->save_order_meta_fields( $order_id, $payment_data, $payments );
 
             // Change the order status.
-            $this->process_order_status( $order, $response_body['result'], $response_body, $result_message );
+            $this->process_order_status( $order, $response_body['result'], $response_body, $result_messages );
 
             return array( 'result' => 'fail' );
         }
@@ -886,7 +886,9 @@ class WC_Rakuten_Pay_API {
         $this->save_order_meta_fields( $order_id, $payment_data, $payments );
 
         // Change the order status.
-        $this->process_order_status( $order, $transaction['result'], $transaction, $result_message );
+        $result_messages = implode(' - ', $transaction['payments'][0]['result_messages']);
+
+        $this->process_order_status( $order, $transaction['result'], $transaction, $result_messages );
 
         // Empty the cart.
         WC()->cart->empty_cart();
@@ -1042,8 +1044,8 @@ class WC_Rakuten_Pay_API {
             return false;
         }
 
-        $result_message = null;
-        $order_status_result = $this->process_order_status( $order, $status, $posted, $result_message );
+        $result_messages = null;
+        $order_status_result = $this->process_order_status( $order, $status, $posted, $result_messages );
 
         return $order_status_result;
     }
@@ -1056,7 +1058,7 @@ class WC_Rakuten_Pay_API {
      *
      * @return boolean  $result Order status result
      */
-    public function process_order_status( $order, $status, $data, $result_message = null ) {
+    public function process_order_status( $order, $status, $data, $result_messages ) {
         if ( 'yes' === $this->gateway->debug ) {
             $this->gateway->log->add( $this->gateway->id, 'Payment status for order ' . $order->get_order_number() . ' is now: ' . $status );
         }
@@ -1072,6 +1074,8 @@ class WC_Rakuten_Pay_API {
                     esc_html__( 'Transaction recieved', 'woocommerce-rakuten-pay' ),
                     sprintf( esc_html__( 'Order %1$s has been marked as pending payment, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
+
+                $order->add_order_note( __( 'Rakuten Pay: The transaction is Pending for payment.', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'authorized' :
@@ -1133,7 +1137,7 @@ class WC_Rakuten_Pay_API {
                     sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled because ' . $result_message  , 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled because ' . $result_messages  , 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'declined' :
@@ -1149,7 +1153,7 @@ class WC_Rakuten_Pay_API {
                     sprintf( esc_html__( 'Order %1$s has been marked as declined, because the transaction was declined on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'Rakuten Pay: The transaction was declined.', 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( 'Rakuten Pay: A transação foi declinada. <br /> ' . print_r($result_messages, true) );
 
                 break;
             case 'refunded' :
