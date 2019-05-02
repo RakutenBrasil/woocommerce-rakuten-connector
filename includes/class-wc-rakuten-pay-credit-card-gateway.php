@@ -27,7 +27,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $this->description          = __( 'Pay with Credit Card', 'woocommerce-rakuten-pay' );
     $this->method_title         = __( 'Rakuten Pay - Credit Card', 'woocommerce-rakuten-pay' );
     $this->method_description   = __( 'Accept credit card payments using Rakuten Pay.', 'woocommerce-rakuten-pay' );
-    $this->view_transaction_url = 'https://dashboard.rakuten.com.br/sales/%s';
+    $this->view_transaction_url = 'https://dashboard.rakutenpay.com.br/sales/%s';
     $this->supports             = array( 'products', 'refunds' );
 
 
