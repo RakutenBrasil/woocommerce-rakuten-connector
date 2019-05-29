@@ -1425,9 +1425,6 @@ class WC_Rakuten_Pay_API {
 
 		foreach ( $items as $item ) {
 
-			$this->gateway->log->add('ADS', 'item: ' . print_r($item, true));
-			$this->gateway->log->add('ADS', 'item: ' . print_r($item->get_product(), true));
-
 			if (empty($sku) || is_null($sku) ) {
 
 				$data[] = [
@@ -1469,7 +1466,7 @@ class WC_Rakuten_Pay_API {
 
 	/**
 	 * Get sku or product ID
-	 * 
+	 *
 	 * @param $item
 	 *
 	 * @return string
