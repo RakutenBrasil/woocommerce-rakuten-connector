@@ -1424,14 +1424,18 @@ class WC_Rakuten_Pay_API {
 		$data = [];
 
 		foreach ( $items as $item ) {
-			$data[] = [
-				'reference' => (string) $item['product_id'],
-				'description' => substr( $item['name'], 0, 255 ),
-				'amount' => (float) $item->get_product()->get_price(),
-				'quantity' => $item['quantity'],
-				'total_amount' => (float) $item['total'],
-				'categories' => $this->getCategories($order, $item['product_id']),
-			];
+
+			if (empty($sku) || is_null($sku) ) {
+
+				$data[] = [
+					'reference'    => (string) $this->getSku($item),
+					'description'  => substr( $item['name'], 0, 255 ),
+					'amount'       => (float) $item->get_product()->get_price(),
+					'quantity'     => $item['quantity'],
+					'total_amount' => (float) $item['total'],
+					'categories'   => $this->getCategories( $order, $item['product_id'] ),
+				];
+			}
 		}
 
 		return $data;
@@ -1446,7 +1450,7 @@ class WC_Rakuten_Pay_API {
 	 *
 	 * @return array
 	 */
-	public function getCategories($order, $product_id) {
+	private function getCategories($order, $product_id) {
 
 		$categories = wp_get_post_terms( $product_id, 'product_cat');
 		$category_id = [];
@@ -1458,5 +1462,20 @@ class WC_Rakuten_Pay_API {
 			];
 		}
 		return $category_id;
+	}
+
+	/**
+	 * Get sku or product ID
+	 *
+	 * @param $item
+	 *
+	 * @return string
+	 */
+	private function getSku($item) {
+		if (empty($item->get_product()->get_sku()) || is_null($item->get_product()->get_sku()) ) {
+			return $item['product_id'];
+		}
+
+		return $item->get_product()->get_sku();
 	}
 }
