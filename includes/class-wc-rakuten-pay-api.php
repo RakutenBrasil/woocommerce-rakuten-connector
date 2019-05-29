@@ -235,26 +235,7 @@ class WC_Rakuten_Pay_API {
                 'shipping_amount' => (float) $order->get_shipping_total(),
                 'taxes_amount'    => (float) $order->get_total_tax() + $installments['interest_amount'],
                 'discount_amount' => (float) $order->get_total_discount(),
-                'items' => array_map(
-                    function( $item ) {
-                        $product = $item->get_product();
-                        return array(
-                            'reference'     => $product->get_sku(),
-                            'description'   => substr( $product->get_title(), 0, 255 ),
-                            'amount'        => (float) $product->get_price(),
-                            'quantity'      => $item->get_quantity(),
-                            'total_amount'  => (float) $item->get_total(),
-                            'categories'    => array_map(
-                                function( $term ) {
-                                    return array(
-                                        'id'   => (string) $term->term_id,
-                                        'name' => $term->name
-                                    );
-                                }, wp_get_post_terms( $product->get_id(), 'product_cat' )
-                            )
-                        );
-                    }, array_values( $order->get_items() )
-                )
+                'items' => $this->getItems($order),
             ),
         );
 
@@ -309,8 +290,8 @@ class WC_Rakuten_Pay_API {
                 'holder_name'              => $posted['rakuten_pay_card_holder_name'],
                 'holder_document'          => $posted['rakuten_pay_card_holder_document'],
                 'options'                  => array(
-                    'save_card'   => true,
-                    'new_card'    => true,
+                    'save_card'   => false,
+                    'new_card'    => false,
                     'recurrency'  => false
                 )
             );
@@ -1430,4 +1411,52 @@ class WC_Rakuten_Pay_API {
 
         return $jsonData;
     }
+
+	/**
+	 * Get the items with the order params and set the array to the payload.
+	 *
+	 * @param $order
+	 *
+	 * @return array
+	 */
+	public function getItems($order) {
+		$items = $order->get_items();
+		$data = [];
+
+		foreach ( $items as $item ) {
+			$data[] = [
+				'reference' => (string) $item['product_id'],
+				'description' => substr( $item['name'], 0, 255 ),
+				'amount' => (float) $item->get_product()->get_price(),
+				'quantity' => $item['quantity'],
+				'total_amount' => (float) $item['total'],
+				'categories' => $this->getCategories($order, $item['product_id']),
+			];
+		}
+
+		return $data;
+
+	}
+
+	/**
+	 * Get the categories IDs and title.
+	 *
+	 * @param $order
+	 * @param $product_id
+	 *
+	 * @return array
+	 */
+	public function getCategories($order, $product_id) {
+
+		$categories = wp_get_post_terms( $product_id, 'product_cat');
+		$category_id = [];
+		foreach ($categories as $category) {
+
+			$category_id[] = [
+				'name' => (string) $category->name,
+				'id' => (string) $category->term_id
+			];
+		}
+		return $category_id;
+	}
 }
