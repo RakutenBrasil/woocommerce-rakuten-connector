@@ -149,7 +149,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
               <hr>
               <br />
               <h3><a href='admin.php?page=wc-settings&tab=shipping&instance_id={$dado->instance_id}' >Configurações de Entrega</a></h3>
-              <h3><a href='http://logistics-sandbox.rakuten.com.br' target='_blank'>Painel Rakuten Logistics</a></h3>
+              <h3><a href='http://logistics.rakuten.com.br/dashboard' target='_blank'>Painel Rakuten Logistics</a></h3>
             </div>
           </div>
           ";
