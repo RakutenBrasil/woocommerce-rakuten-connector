@@ -1428,7 +1428,7 @@ class WC_Rakuten_Pay_API {
 			if (empty($sku) || is_null($sku) ) {
 
 				$data[] = [
-					'reference'    => (string) $this->getSku($item),
+					'reference'    => (string) $this->removeAccentuation($this->getSku($item)),
 					'description'  => substr( $item['name'], 0, 255 ),
 					'amount'       => (float) $item->get_product()->get_price(),
 					'quantity'     => $item['quantity'],
@@ -1477,5 +1477,44 @@ class WC_Rakuten_Pay_API {
 		}
 
 		return $item->get_product()->get_sku();
+	}
+
+	/**
+	 * Recieves an string and take off the accentuation
+	 *
+	 * @param $string
+	 */
+	private function removeAccentuation($str) {
+
+		$map = [
+			'á' => 'a',
+			'à' => 'a',
+			'ã' => 'a',
+			'â' => 'a',
+			'é' => 'e',
+			'ê' => 'e',
+			'í' => 'i',
+			'ó' => 'o',
+			'ô' => 'o',
+			'õ' => 'o',
+			'ú' => 'u',
+			'ü' => 'u',
+			'ç' => 'c',
+			'Á' => 'A',
+			'À' => 'A',
+			'Ã' => 'A',
+			'Â' => 'A',
+			'É' => 'E',
+			'Ê' => 'E',
+			'Í' => 'I',
+			'Ó' => 'O',
+			'Ô' => 'O',
+			'Õ' => 'O',
+			'Ú' => 'U',
+			'Ü' => 'U',
+			'Ç' => 'C'
+		];
+
+		return strtr($str, $map);
 	}
 }
