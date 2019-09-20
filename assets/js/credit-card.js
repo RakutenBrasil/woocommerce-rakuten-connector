@@ -15,6 +15,16 @@ $form = null;
 				return true;
 			}
 
+            validateBlankFields();
+
+            var blankfields = document.querySelector('.border-error');
+
+            if (blankfields !== null) {
+
+                alert('Erro! Preencha todos os campos necessários');
+                return false;
+            }
+
 			var form              = $( 'form.checkout, form#order_review' ),
 				rpay                = new RPay(),
 				creditCardForm      = $( '#rakuten-pay-credit-cart-form', form ),
