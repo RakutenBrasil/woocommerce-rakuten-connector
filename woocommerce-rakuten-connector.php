@@ -5,7 +5,7 @@
  * Description: Gateway de pagamento Rakuten Pay e Rakuten Logistics para WooCommerce.
  * Author: Rakuten Pay
  * Author URI: https://rakuten.com.br/
- * Version: 1.1.12
+ * Version: 1.1.13
  * License: GPLv2 or later
  * Text Domain: woocommerce-rakuten-pay
  * Domain Path: /languages/
@@ -29,7 +29,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
      *
      * @var string
      */
-    const VERSION = '1.1.12';
+    const VERSION = '1.1.13';
 
     /**
      * Instance of this class.
@@ -45,6 +45,8 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
       // Load plugin text domain.
       add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
       add_action('admin_menu','rakuten_connector_menu');
+      add_action( "wp_ajax_validate_credential", "validate_credential" );
+      add_action( "wp_ajax_nopriv_validate_credential", "validate_credential" );
 
       function rakuten_connector_menu() {
         add_menu_page( 'Rakuten Connector Plugin','Rakuten Connector','manage_options','rakuten_connector','rakuten_connector_page_menu',plugins_url('rakuten-favicon.png', __FILE__) );
@@ -374,4 +376,14 @@ if (!class_exists('WC_Rakuten_Log')) {
     include_once dirname(__FILE__) . '/woocommerce-rakuten-log/includes/class-wc-rakuten-log.php';
 
     add_action('plugins_loaded', array('WC_Rakuten_Log', 'init'));
+}
+
+function validate_credential() {
+    $apiKey = $_POST['apiKey'];
+    $document = $_POST['document'];
+    $environment = $_POST['environment'];
+
+    $api = new WC_Rakuten_Pay_API();
+    echo $api->charge_authorization($apiKey, $document, $environment);
+    wp_die();
 }
