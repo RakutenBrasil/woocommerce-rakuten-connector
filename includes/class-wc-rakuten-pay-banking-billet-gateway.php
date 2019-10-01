@@ -145,8 +145,8 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
             'description' => sprintf( __( 'Rakuten Pay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
             'default'     => 'production',
             'options'     => array(
-                'production'  => sprintf( __( 'Production', 'woocommerce-raktuten-pay' ) ),
-                'sandbox'     => sprintf( __( 'Sandbox', 'woocommerce-raktuten-pay' ) )
+                'production'  => sprintf( __( 'Production', 'woocommerce-rakuten-pay' ) ),
+                'sandbox'     => sprintf( __( 'Sandbox', 'woocommerce-rakuten-pay' ) )
             )
         ),
         'validate_credential' => array(

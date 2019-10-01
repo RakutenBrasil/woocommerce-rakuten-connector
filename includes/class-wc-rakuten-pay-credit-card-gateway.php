@@ -70,7 +70,23 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
           // A Hack to allow insert script tag of type text/template just for additional refund banking data.
     add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'refund_banking_data_fields' ) );
-      add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'generate_button_html' ) );
+    add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'generate_button_html' ) );
+    add_action( 'admin_enqueue_scripts', array( $this, 'load_validate_credential' ) );
+  }
+
+  public function load_validate_credential() {
+    wp_register_script( 'sweetAlert', 'https://cdn.jsdelivr.net/npm/sweetalert2@8', null, null, true );
+    wp_register_script(
+        'ajaxHandle',
+        plugins_url( 'assets/js/validate-credential.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), false, true
+    );
+    wp_enqueue_script( 'sweetAlert' );
+    wp_enqueue_script( 'ajaxHandle' );
+    wp_localize_script(
+        'ajaxHandle',
+        'ajax_object',
+        array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) )
+    );
   }
 
   /**
@@ -138,8 +154,8 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
             'description' => sprintf( __( 'Rakuten Pay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
             'default'     => 'production',
             'options'     => array(
-                'production'  => sprintf( __( 'Production', 'woocommerce-raktuten-pay' ) ),
-                'sandbox'     => sprintf( __( 'Sandbox', 'woocommerce-raktuten-pay' ) )
+                'production'  => sprintf( __( 'Production', 'woocommerce-rakuten-pay' ) ),
+                'sandbox'     => sprintf( __( 'Sandbox', 'woocommerce-rakuten-pay' ) )
             )
         ),
         'validate_credential' => array(
