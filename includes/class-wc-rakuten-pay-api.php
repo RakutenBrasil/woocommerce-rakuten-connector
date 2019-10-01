@@ -463,6 +463,37 @@ class WC_Rakuten_Pay_API {
         return $response_body;
     }
 
+    public function charge_authorization( $api_key, $document, $environment ) {
+        if ( 'yes' === $this->gateway->debug ) {
+            $this->gateway->log->add( $this->gateway->id, 'Doing a charge charge_authorization' );
+        }
+
+        $endpoint = self::PRODUCTION_API_URL . 'charges';
+        if ( 'sandbox' === $environment ) {
+            $endpoint = self::SANDBOX_API_URL . 'charges';
+        }
+        $user_pass = $document . ':' . $api_key;
+
+        $headers  = array(
+            'Authorization' => 'Basic ' . base64_encode( $user_pass ),
+            'Cache-Control' => 'no-cache',
+            'Content-Type' => 'application/json'
+        );
+
+        $params = array(
+            'timeout' => 60,
+            'method'  => 'GET',
+            'headers' => $headers,
+        );
+
+        $response = wp_remote_get( $endpoint, $params );
+        if ( 'yes' === $this->gateway->debug ) {
+            $this->gateway->log->add( $this->gateway->id, 'Response HTTP Code: ' . $response['response']['code'] );
+        }
+
+        return $response['response']['code'];
+    }
+
     /**
      * Cancels the transaction.
      *
