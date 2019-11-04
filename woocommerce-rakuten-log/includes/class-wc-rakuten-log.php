@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Plugin Setup
+ * GenLog Plugin Setup
  *
  * @package WC_Rakuten_Log
  */
@@ -77,7 +77,7 @@ class WC_Rakuten_Log
     /**
      * @param $methods
      *
-     * Adds Rakuten Log shipping method to the
+     * Adds GenLog shipping method to the
      * array of shipping methods
      *
      * @return array
@@ -90,7 +90,7 @@ class WC_Rakuten_Log
     }
 
     /**
-     * Loads textdomain for Rakuten Log
+     * Loads textdomain for GenLog
      */
     public static function load_plugin_textdomain()
     {

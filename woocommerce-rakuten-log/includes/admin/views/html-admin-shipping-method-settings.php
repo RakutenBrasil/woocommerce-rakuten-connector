@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Shipping Method settings
+ * GenLog Shipping Method settings
  *
  * @package WC_Rakuten_Log
  */

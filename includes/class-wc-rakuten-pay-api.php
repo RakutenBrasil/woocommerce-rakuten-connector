@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Pay API
+ * GenPay API
  *
  * @package WooCommerce_Rakuten_Pay/API
  */
@@ -106,7 +106,7 @@ class WC_Rakuten_Pay_API {
     }
 
     /**
-     * Do POST requests in the Rakuten Pay API.
+     * Do POST requests in the GenPay API.
      *
      * @param  string $endpoint API Endpoint.
      * @param  array  $data     Request data.
@@ -132,7 +132,7 @@ class WC_Rakuten_Pay_API {
     }
 
     /**
-     * Do GET requests in the Rakuten Pay API.
+     * Do GET requests in the GenPay API.
      *
      * @param  string $endpoint API Endpoint.
      * @param  array  $headers  Request headers.
@@ -339,7 +339,7 @@ class WC_Rakuten_Pay_API {
         $current_user = wp_get_current_user();
         $current_user_id = $current_user->ID;
         update_user_meta( $current_user_id, 'billing_birthdate', $posted['billing_birthdate']);
-        
+
         return $data;
     }
 
@@ -401,8 +401,8 @@ class WC_Rakuten_Pay_API {
      *
      * @return array Response data.
      *   array( 'result' => 'fail' ) for general request failures
-     *   array( 'result' => 'failure', 'errors' => errors[] ) for Rakuten Pay errors
-     *   array( 'result' => 'authorized', ... ) for authorized Rakuten Pay transactions
+     *   array( 'result' => 'failure', 'errors' => errors[] ) for GenPay errors
+     *   array( 'result' => 'authorized', ... ) for authorized GenPay transactions
      */
     public function charge_transaction( $order, $charge_data) {
         if ( 'yes' === $this->gateway->debug ) {
@@ -525,9 +525,9 @@ class WC_Rakuten_Pay_API {
             $this->send_email(
                 sprintf( esc_html__( 'The cancel transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                sprintf( esc_html__( 'In order to cancel this transaction access the rakuten pay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
+                sprintf( esc_html__( 'In order to cancel this transaction access the GenPay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
             );
-            $order->add_order_note( __('Rakuten Pay: Order could not be cancelled due to an error. You must access the Rakuten Pay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
+            $order->add_order_note( __('GenPay: Order could not be cancelled due to an error. You must access the GenPay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
             return;
         }
 
@@ -557,8 +557,8 @@ class WC_Rakuten_Pay_API {
      *
      * @return array Response data.
      *   array( 'result' => 'fail' ) for general request failures
-     *   array( 'result' => 'failure', 'errors' => errors[] ) for Rakuten Pay errors
-     *   array( 'result' => 'authorized', ... ) for authorized Rakuten Pay transactions
+     *   array( 'result' => 'failure', 'errors' => errors[] ) for GenPay errors
+     *   array( 'result' => 'authorized', ... ) for authorized GenPay transactions
      */
     public function refund_transaction( $order, $refund_kind, $refund_data ) {
         $body           = $this->getJson( $refund_data, JSON_PRESERVE_ZERO_FRACTION );
@@ -584,9 +584,9 @@ class WC_Rakuten_Pay_API {
             $this->send_email(
                 sprintf( esc_html__( 'The refund transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                sprintf( esc_html__( 'In order to refund this transaction access the rakuten pay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
+                sprintf( esc_html__( 'In order to refund this transaction access the GenPay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
             );
-            $order->add_order_note( __('Rakuten Pay: Order could not be refunded due to an error. You must access the Rakuten Pay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
+            $order->add_order_note( __('GenPay: Order could not be refunded due to an error. You must access the GenPay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
             return false;
         }
 
@@ -632,7 +632,7 @@ class WC_Rakuten_Pay_API {
      *
      * @return array Response data.
      *   false for general request failures
-     *   array( 'result' => 'data', ... ) with data from Rakuten Pay transaction
+     *   array( 'result' => 'data', ... ) with data from GenPay transaction
      */
     public function get_transaction( $order ) {
         $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
@@ -940,7 +940,7 @@ class WC_Rakuten_Pay_API {
     }
 
     /**
-     * Check if Rakuten Pay response is valid.
+     * Check if GenPay response is valid.
      *
      * @param  string $body  IPN body.
      * @param  string $token IPN signature token
@@ -1030,7 +1030,7 @@ class WC_Rakuten_Pay_API {
     }
 
     protected function ipn_handler_fail() {
-        wp_die( esc_html__( 'Rakuten Pay Request Failure', 'woocommerce-rakuten-pay' ), '', array( 'response' => 401 ) );
+        wp_die( esc_html__( 'GenPay Request Failure', 'woocommerce-rakuten-pay' ), '', array( 'response' => 401 ) );
     }
 
     /**
@@ -1077,7 +1077,7 @@ class WC_Rakuten_Pay_API {
 
         switch ( $status ) {
             case 'pending' :
-                $order->update_status( 'pending', __( 'Rakuten Pay: The transaction is being processed.', 'woocommerce-rakuten-pay' ) );
+                $order->update_status( 'pending', __( 'GenPay: The transaction is being processed.', 'woocommerce-rakuten-pay' ) );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
                 $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
@@ -1087,7 +1087,7 @@ class WC_Rakuten_Pay_API {
                     sprintf( esc_html__( 'Order %1$s has been marked as pending payment, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'Rakuten Pay: The transaction is Pending for payment.', 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'GenPay: The transaction is Pending for payment.', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'authorized' :
@@ -1095,7 +1095,7 @@ class WC_Rakuten_Pay_API {
                     break;
                 }
 
-                $order->update_status( 'on-hold', __( 'Rakuten Pay: The transaction was authorized.', 'woocommerce-rakuten-pay' ) );
+                $order->update_status( 'on-hold', __( 'GenPay: The transaction was authorized.', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'approved' :
@@ -1103,7 +1103,7 @@ class WC_Rakuten_Pay_API {
                     break;
                 }
 
-                $order->add_order_note( __( 'Rakuten Pay: Transaction paid.', 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'GenPay: Transaction paid.', 'woocommerce-rakuten-pay' ) );
 
                 // Changing the order for processing and reduces the stock.
                 $order->payment_complete();
@@ -1125,15 +1125,15 @@ class WC_Rakuten_Pay_API {
                 $this->send_email(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled.', 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'GenPay: The transaction was cancelled.', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'failure' :
@@ -1146,10 +1146,10 @@ class WC_Rakuten_Pay_API {
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'Rakuten Pay: The transaction was cancelled because ' . $result_messages  , 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'GenPay: The transaction was cancelled because ' . $result_messages  , 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'declined' :
@@ -1162,10 +1162,10 @@ class WC_Rakuten_Pay_API {
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was declined', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as declined, because the transaction was declined on Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as declined, because the transaction was declined on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( 'Rakuten Pay: A transação foi declinada. <br /> ' . print_r($result_messages, true) );
+                $order->add_order_note( 'GenPay: A transação foi declinada. <br /> ' . print_r($result_messages, true) );
 
                 break;
             case 'refunded' :
@@ -1243,10 +1243,10 @@ class WC_Rakuten_Pay_API {
                 }
 
                 if ( (float) $order->get_total() === (float) $order->get_total_refunded() ) {
-                    $order->add_order_note( __( 'Rakuten Pay: The transaction fully refunded.', 'woocommerce-rakuten-pay' ) );
-                    // $order->update_status( 'refunded', __( 'Rakuten Pay: The transaction was fully refunded.', 'woocommerce-rakuten-pay' ) );
+                    $order->add_order_note( __( 'GenPay: The transaction fully refunded.', 'woocommerce-rakuten-pay' ) );
+                    // $order->update_status( 'refunded', __( 'GenPay: The transaction was fully refunded.', 'woocommerce-rakuten-pay' ) );
                 } else {
-                    $order->add_order_note( __( 'Rakuten Pay: The transaction received a partial refund.', 'woocommerce-rakuten-pay' ) );
+                    $order->add_order_note( __( 'GenPay: The transaction received a partial refund.', 'woocommerce-rakuten-pay' ) );
                 }
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
@@ -1254,7 +1254,7 @@ class WC_Rakuten_Pay_API {
                 $this->send_email(
                     sprintf( esc_html__( 'The transaction for order %s refunded', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction refunded', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as refunded by Rakuten Pay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as refunded by GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
                 break;

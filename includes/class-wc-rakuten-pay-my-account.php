@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Pay My Account actions
+ * GenPay My Account actions
  *
  * @package WooCommerce_Rakuten_Pay/Frontend
  */

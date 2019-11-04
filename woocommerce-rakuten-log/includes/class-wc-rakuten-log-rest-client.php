@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log REST client implementation
+ * GenLog REST client implementation
  *
  * @package WC_Rakuten_Log
  */
@@ -153,9 +153,9 @@ class WC_Rakuten_Log_REST_Client extends WC_Payment_Gateway {
             return 'Basic ' . base64_encode( $user_pass );
 
         } else {
-	        echo "<script>console.log('Configure as chaves da API e Assinatura Rakuten')</script>";
+	        echo "<script>console.log('Configure as chaves da API e Assinatura GenComm')</script>";
         }
-        return "<script>console.log('ERRO: Configure as chaves da API e Assinatura Rakuten')</script>";
+        return "<script>console.log('ERRO: Configure as chaves da API e Assinatura GenComm')</script>";
     }
 
 	public function get_batch( $batch_data, $order_id, $order_ids )

@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Pay Credit Card gateway
+ * GenPay Credit Card gateway
  *
  * @package WooCommerce_Rakuten_Pay/Gateway
  */
@@ -23,10 +23,10 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $this->id                   = 'rakuten-pay-credit-card';
     $this->icon                 = apply_filters( 'wc_rakuten_pay_credit_card_icon', false );
     $this->has_fields           = true;
-    $this->title                = __( 'Rakuten Pay - Credit Card', 'woocommerce-rakuten-pay' );
+    $this->title                = __( 'GenPay - Credit Card', 'woocommerce-rakuten-pay' );
     $this->description          = __( 'Pay with Credit Card', 'woocommerce-rakuten-pay' );
-    $this->method_title         = __( 'Rakuten Pay - Credit Card', 'woocommerce-rakuten-pay' );
-    $this->method_description   = __( 'Accept credit card payments using Rakuten Pay.', 'woocommerce-rakuten-pay' );
+    $this->method_title         = __( 'GenPay - Credit Card', 'woocommerce-rakuten-pay' );
+    $this->method_description   = __( 'Accept credit card payments using GenPay.', 'woocommerce-rakuten-pay' );
     $this->view_transaction_url = 'https://dashboard.rakutenpay.com.br/sales/%s';
     $this->supports             = array( 'products', 'refunds' );
 
@@ -113,7 +113,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       'enabled' => array(
         'title'   => __( 'Enable/Disable', 'woocommerce-rakuten-pay' ),
         'type'    => 'checkbox',
-        'label'   => __( 'Enable Rakuten Pay Credit Card', 'woocommerce-rakuten-pay' ),
+        'label'   => __( 'Enable GenPay Credit Card', 'woocommerce-rakuten-pay' ),
         'default' => 'no',
       ),
       'integration' => array(
@@ -122,27 +122,27 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'description' => '',
       ),
       'document' => array(
-        'title'             => __( 'Rakuten Pay Document', 'woocommerce-rakuten-pay' ),
+        'title'             => __( 'GenPay Document', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter the document of your store.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'Rakuten Pay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter the document of your store.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
         ),
       ),
       'api_key' => array(
-        'title'             => __( 'Rakuten Pay API Key', 'woocommerce-rakuten-pay' ),
+        'title'             => __( 'GenPay API Key', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter your Rakuten Pay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'Rakuten Pay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter your GenPay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
         ),
       ),
       'signature_key' => array(
-        'title'             => __( 'Rakuten Pay Signature Key', 'woocommerce-rakuten-pay' ),
+        'title'             => __( 'GenPay Signature Key', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter your Rakuten Pay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'Rakuten Pay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter your GenPay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
@@ -151,7 +151,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'environment' => array(
             'title'       => __( 'Environment', 'woocommerce-rakuten-pay' ),
             'type'        => 'select',
-            'description' => sprintf( __( 'Rakuten Pay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
+            'description' => sprintf( __( 'GenPay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
             'default'     => 'production',
             'options'     => array(
                 'production'  => sprintf( __( 'Production', 'woocommerce-rakuten-pay' ) ),
@@ -247,7 +247,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'type'        => 'checkbox',
         'label'       => __( 'Enable logging', 'woocommerce-rakuten-pay' ),
         'default'     => 'no',
-        'description' => sprintf( __( 'Log Rakuten Pay events, such as API requests. You can check the log in %s', 'woocommerce-rakuten-pay' ), '<a href="' . esc_url( admin_url( 'admin.php?page=wc-status&tab=logs&log_file=' . esc_attr( $this->id ) . '-' . sanitize_file_name( wp_hash( $this->id ) ) . '.log' ) ) . '">' . __( 'System Status &gt; Logs', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description' => sprintf( __( 'Log GenPay events, such as API requests. You can check the log in %s', 'woocommerce-rakuten-pay' ), '<a href="' . esc_url( admin_url( 'admin.php?page=wc-status&tab=logs&log_file=' . esc_attr( $this->id ) . '-' . sanitize_file_name( wp_hash( $this->id ) ) . '.log' ) ) . '">' . __( 'System Status &gt; Logs', 'woocommerce-rakuten-pay' ) . '</a>' ),
       ),
     );
   }
@@ -328,7 +328,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
    * @return array $result       Installments with free installments applied.
    */
   private function apply_free_installments( $installments ) {
-    return array_map( function( $inst ) { 
+    return array_map( function( $inst ) {
       if ( $inst['quantity'] > $this->free_installments ) {
         return $inst;
       }
@@ -648,7 +648,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     if ( $this->api->is_credit_card_payment_method( $order ) ) {
       $order->add_order_note(
-        __( 'Rakuten Pay: Credit Card Orders cannot be cancelled, you must wait the approve to proceed the refund.', 'woocommerce-rakuten-pay' )
+        __( 'GenPay: Credit Card Orders cannot be cancelled, you must wait the approve to proceed the refund.', 'woocommerce-rakuten-pay' )
       );
       return;
     }

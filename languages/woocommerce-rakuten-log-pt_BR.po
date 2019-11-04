@@ -18,11 +18,11 @@ msgid "Show all shipping methods"
 msgstr "Mostrar todos os métodos de entrega"
 
 #: includes/admin/class-wc-rakuten-log-admin-orders.php:102
-msgid "Create Rakuten Log batch"
-msgstr "Criar lote Rakuten Log"
+msgid "Create GenLog batch"
+msgstr "Criar lote GenLog"
 
-#: includes/admin/class-wc-rakuten-log-admin-orders.php:210 
-#: includes/admin/class-wc-rakuten-log-admin-orders.php:229 
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:210
+#: includes/admin/class-wc-rakuten-log-admin-orders.php:229
 #: includes/admin/views/html-metabox-shop-order.php:50
 msgid "Tracking Code"
 msgstr "Código de rastreio"
@@ -36,34 +36,34 @@ msgid "Batch already created for order"
 msgstr "Lote já criado para o pedido"
 
 #: includes/admin/class-wc-rakuten-log-admin-orders.php:281
-msgid "There has been an error creating a Rakuten Log Batch!"
-msgstr "Ocorreu um erro durante a geração de um lote Rakuten Log!"
+msgid "There has been an error creating a GenLog Batch!"
+msgstr "Ocorreu um erro durante a geração de um lote GenLog!"
 
 #: includes/admin/class-wc-rakuten-log-admin-orders.php:296
 msgid "Batch successfully created"
 msgstr "Lote gerado com sucesso"
 
-#: includes/admin/views/html-metabox-shop-order.php:25 
+#: includes/admin/views/html-metabox-shop-order.php:25
 #: includes/admin/views/html-metabox-shop-order.php:59
 msgid "Invoice Series"
 msgstr "Série da Nota Fiscal"
 
-#: includes/admin/views/html-metabox-shop-order.php:29 
+#: includes/admin/views/html-metabox-shop-order.php:29
 #: includes/admin/views/html-metabox-shop-order.php:65
 msgid "Invoice Number"
 msgstr "Número da Nota Fiscal"
 
-#: includes/admin/views/html-metabox-shop-order.php:33 
+#: includes/admin/views/html-metabox-shop-order.php:33
 #: includes/admin/views/html-metabox-shop-order.php:71
 msgid "Invoice Key"
 msgstr "Chave da Nota Fiscal"
 
-#: includes/admin/views/html-metabox-shop-order.php:37 
+#: includes/admin/views/html-metabox-shop-order.php:37
 #: includes/admin/views/html-metabox-shop-order.php:77
 msgid "Invoice CFOP"
 msgstr "CFOP (Código Fiscal de Operações e Prestações)"
 
-#: includes/admin/views/html-metabox-shop-order.php:41 
+#: includes/admin/views/html-metabox-shop-order.php:41
 #: includes/admin/views/html-metabox-shop-order.php:83
 msgid "Invoice Date"
 msgstr "Data da Nota Fiscal"
@@ -80,14 +80,14 @@ msgstr "Código de lote"
 msgid " Tracking code"
 msgstr "Código de Tracking"
 
-#: includes/admin/views/html-metabox-shop-order.php:54 
+#: includes/admin/views/html-metabox-shop-order.php:54
 #: includes/admin/views/html-metabox-shop-order.php:55
 msgid "Volume"
 msgstr "Volume"
 
 #: includes/admin/views/html-metabox-shop-order.php:89
-msgid "Rakuten Log actions"
-msgstr "Ações Rakuten Log"
+msgid "GenLog actions"
+msgstr "Ações GenLog"
 
 #: includes/admin/views/html-metabox-shop-order.php:90
 msgid "Print tag"
@@ -102,63 +102,63 @@ msgid "Follow order"
 msgstr "Rastrear pedido"
 
 #. Author of the plugin/theme
-msgid "Rakuten Log"
-msgstr "Rakuten Log"
+msgid "GenLog"
+msgstr "GenLog"
 
 #: includes/class-wc-rakuten-log-shipping.php:27
-msgid "%s is a shipping method from Rakuten Log."
-msgstr "%s é uma opção de entrega do Rakuten Log"
+msgid "%s is a shipping method from GenLog."
+msgstr "%s é uma opção de entrega do GenLog"
 
-#: includes/class-wc-rakuten-log-shipping.php:51 
-#: includes/emails/class-wc-rakuten-log-tracking-email.php:45 
+#: includes/class-wc-rakuten-log-shipping.php:51
+#: includes/emails/class-wc-rakuten-log-tracking-email.php:45
 #: tests/test-wc-rakuten-log-shipping.php:142
 msgid "Enable/Disable"
 msgstr "Habilitar/Desabilitar"
 
-#: includes/class-wc-rakuten-log-shipping.php:53 
+#: includes/class-wc-rakuten-log-shipping.php:53
 #: tests/test-wc-rakuten-log-shipping.php:144
 msgid "Enable this shipping method"
 msgstr "Habilitar este tipo de entrega"
 
-#: includes/class-wc-rakuten-log-shipping.php:57 
+#: includes/class-wc-rakuten-log-shipping.php:57
 #: tests/test-wc-rakuten-log-shipping.php:148
 msgid "Title"
 msgstr "Título"
 
-#: includes/class-wc-rakuten-log-shipping.php:59 
+#: includes/class-wc-rakuten-log-shipping.php:59
 #: tests/test-wc-rakuten-log-shipping.php:150
 msgid "This option controls what the customer will see during checkout"
 msgstr "Essa opção controla o que o consumidor vê durante o checkout"
 
-#: includes/class-wc-rakuten-log-shipping.php:64 
+#: includes/class-wc-rakuten-log-shipping.php:64
 #: tests/test-wc-rakuten-log-shipping.php:155
 msgid "Owner Document"
 msgstr "Documento do proprietário"
 
-#: includes/class-wc-rakuten-log-shipping.php:66 
+#: includes/class-wc-rakuten-log-shipping.php:66
 #: tests/test-wc-rakuten-log-shipping.php:157
-msgid "Document of the owner registered on Rakuten"
-msgstr "Documento do proprietário do plugin registrado na Rakuten"
+msgid "Document of the owner registered on GenComm"
+msgstr "Documento do proprietário do plugin registrado na GenComm"
 
-#: includes/class-wc-rakuten-log-shipping.php:71 
+#: includes/class-wc-rakuten-log-shipping.php:71
 #: tests/test-wc-rakuten-log-shipping.php:162
 msgid "API key"
 msgstr "Chave de API"
 
-#: includes/class-wc-rakuten-log-shipping.php:73 
+#: includes/class-wc-rakuten-log-shipping.php:73
 #: tests/test-wc-rakuten-log-shipping.php:164
-msgid "API key registered on Rakuten"
-msgstr "Chave de API registrada na Rakuten"
+msgid "API key registered on GenComm"
+msgstr "Chave de API registrada na GenComm"
 
-#: includes/class-wc-rakuten-log-shipping.php:78 
+#: includes/class-wc-rakuten-log-shipping.php:78
 #: tests/test-wc-rakuten-log-shipping.php:169
 msgid "Signature Key"
 msgstr "Chave de assinatura"
 
-#: includes/class-wc-rakuten-log-shipping.php:80 
+#: includes/class-wc-rakuten-log-shipping.php:80
 #: tests/test-wc-rakuten-log-shipping.php:171
-msgid "Signature key registered on Rakuten"
-msgstr "Chave de assinatura registrada na Rakuten"
+msgid "Signature key registered on GenComm"
+msgstr "Chave de assinatura registrada na GenComm"
 
 #: includes/class-wc-rakuten-log-shipping.php:85
 msgid "Environment"
@@ -166,10 +166,10 @@ msgstr "Ambiente"
 
 #: includes/class-wc-rakuten-log-shipping.php:87
 msgid ""
-"Rakuten Log has two environments, the Sandbox used to make test transactions,"
+"GenLog has two environments, the Sandbox used to make test transactions,"
 " and Production used for real transactions."
 msgstr ""
-"Rakuten Log possui dois ambientes. O de Sandbox é o ambiente usado para "
+"GenLog possui dois ambientes. O de Sandbox é o ambiente usado para "
 "testes e o de Produção para transações reais."
 
 #: includes/class-wc-rakuten-log-shipping.php:90
@@ -189,8 +189,8 @@ msgid "Complement"
 msgstr "Complemento"
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:24
-msgid "Rakuten Log Tracking Code"
-msgstr "Código de rastreio Rakuten Log"
+msgid "GenLog Tracking Code"
+msgstr "Código de rastreio GenLog"
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:26
 msgid "This email is sent when a batch is created for the order."
@@ -208,9 +208,9 @@ msgstr "[{site_title}]] Seu pedido {order_number} foi enviado"
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:29
 msgid ""
-"Hi there. Your recent order on {site_title} has been sent by Rakuten Log."
+"Hi there. Your recent order on {site_title} has been sent by GenLog."
 msgstr ""
-"Olá. O seu pedido realizado em {site_title} foi enviado pelo Rakuten Log."
+"Olá. O seu pedido realizado em {site_title} foi enviado pelo GenLog."
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:31
 msgid ""
@@ -280,15 +280,15 @@ msgstr "HTML"
 msgid "Multipart"
 msgstr "Multipart"
 
-#: templates/emails/plain/rakuten-log-tracking-code.php:21 
+#: templates/emails/plain/rakuten-log-tracking-code.php:21
 #: templates/emails/rakuten-log-tracking-code.php:25
 msgid "For your reference, your order details are shown below."
 msgstr ""
 "Para a sua comodidade, os detalhes de seu pedido estão disponíveis abaixo."
 
 #: templates/myaccount/tracking_link.php:21
-msgid "Rakuten Log delivery tracking"
-msgstr "Rastreio Rakuten Log"
+msgid "GenLog delivery tracking"
+msgstr "Rastreio GenLog"
 
 #: templates/myaccount/tracking_link.php:23
 msgid "Tracking Code:"
@@ -303,16 +303,16 @@ msgid "Link"
 msgstr "Link"
 
 #. Plugin Name of the plugin/theme
-msgid "WooCommerce Rakuten Log"
-msgstr "WooCommerce Rakuten Log"
+msgid "WooCommerce GenLog"
+msgstr "WooCommerce GenLog"
 
 #. Plugin URI of the plugin/theme
-msgid "http://github.com/RakutenBrasil/woocommerce-rakuten-log"
-msgstr "http://github.com/RakutenBrasil/woocommerce-rakuten-log"
+msgid "http://github.com/GenCommBrasil/woocommerce-rakuten-log"
+msgstr "http://github.com/GenCommBrasil/woocommerce-rakuten-log"
 
 #. Description of the plugin/theme
-msgid "Gateway de logística Rakuten Log para WooCommerce."
-msgstr "Gateway de logística Rakuten Log para WooCommerce."
+msgid "Gateway de logística GenLog para WooCommerce."
+msgstr "Gateway de logística GenLog para WooCommerce."
 
 #. Author URI of the plugin/theme
 msgid "https://rakuten.com.br/"

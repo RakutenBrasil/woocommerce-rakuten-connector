@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Pay Admin Customizations
+ * GenPay Admin Customizations
  *
  * @package WooCommerce_Rakuten_Pay/Frontend
  */
