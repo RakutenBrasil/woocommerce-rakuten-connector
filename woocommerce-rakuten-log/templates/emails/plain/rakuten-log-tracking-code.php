@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: WooCommerce Rakuten Log
- * Plugin URI: http://github.com/RakutenBrasil/woocommerce-rakuten-log
- * Description: Gateway de logística Rakuten Log para WooCommerce.
- * Author: Rakuten Log
- * Author URI: https://rakuten.com.br/
+ * Plugin Name: WooCommerce GenLog
+ * Plugin URI: http://github.com/GenCommBrasil/woocommerce-gencomm-log
+ * Description: Gateway de logística GenLog para WooCommerce.
+ * Author: GenLog
+ * Author URI: https://gencomm.com.br/
  * Version: 1.0.0
  * License: GPLv2 or later
- * Text Domain: woocommerce-rakuten-log
+ * Text Domain: woocommerce-gencomm-log
  * Domain Path: /languages/
  *
  * @package WC_Rakuten_Log

@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Admin Orders List
+ * GenLog Admin Orders List
  *
  * @package WC_Rakuten_Log
  */
@@ -32,7 +32,7 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
     public function register_metabox() {
         add_meta_box(
             'wc_rakuten_log',
-            'Rakuten Log',
+            'GenLog',
             array($this, 'metabox_content'),
             'shop_order',
             'advanced',
@@ -91,7 +91,7 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
     }
 
     public function admin_rakuten_log_batch($actions) {
-        $actions['rakuten-log-batch'] = __("Create Rakuten Log batch", "woocommerce-rakuten-log");
+        $actions['rakuten-log-batch'] = __("Create GenLog batch", "woocommerce-rakuten-log");
 
         return $actions;
     }
@@ -192,7 +192,7 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
 
             } else {
                 $errors[] = array(
-                    'message' => 'Failure on the communication with the Rakuten Log API'
+                    'message' => 'Failure on the communication with the GenLog API'
                 );
 
             }
@@ -281,7 +281,7 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
             $errors = $_REQUEST['errors'];
             ?>
             <div class="error notice">
-                <p><?php echo esc_html(__('There has been an error creating a Rakuten Log Batch!', 'woocommerce-rakuten-log')) ?></p>
+                <p><?php echo esc_html(__('There has been an error creating a GenLog Batch!', 'woocommerce-rakuten-log')) ?></p>
                 <ul>
                 <?php foreach ($errors as $error): ?>
                     <?php if(isset($error['order_id'])){ ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Helper Functions
+ * GenLog Helper Functions
  *
  * @package WC_Rakuten_Log
  */

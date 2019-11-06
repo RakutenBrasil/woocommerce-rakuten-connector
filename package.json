@@ -1,8 +1,8 @@
 {
   "name": "woocommerce-rakuten-pay",
   "version": "2.0.11",
-  "title": "WooCommerce Rakuten Pay",
-  "description": "WooCommerce Rakuten Pay payment gateway",
+  "title": "WooCommerce GenPay",
+  "description": "WooCommerce GenPay payment gateway",
   "homepage": "",
   "main": "Gruntfile.js",
   "repository": {

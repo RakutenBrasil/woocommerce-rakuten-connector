@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Shipping Method Settings HTML
+ * GenLog Shipping Method Settings HTML
  *
  * @package WC_Rakuten_Log
  */
@@ -78,7 +78,7 @@ if (!defined('ABSPATH')){
         <?php endif; ?>
 
         <p>
-            <h4><?php echo esc_html(__('Rakuten Log actions', 'woocommerce-rakuten-log')) ?></h4>
+            <h4><?php echo esc_html(__('GenLog actions', 'woocommerce-rakuten-log')) ?></h4>
             <a href="<?php echo esc_html($print_url) ?>" id="rkt-print-tag" class="button" target="_blank"><?php echo esc_html(__('Print tag', 'woocommerce-rakuten-log')) ?></a>
             <a href="<?php echo esc_html($print_batch_url) ?>" id="rkt-print-tag" class="button" target="_blank"><?php echo esc_html(__('Print batch tag', 'woocommerce-rakuten-log')) ?></a>
             <a href="<?php echo esc_html($tracking_url) ?>" id="rkt-follow-order-button" class="button" target="_blank"><?php echo esc_html(__('Follow order', 'woocommerce-rakuten-log')) ?></a>

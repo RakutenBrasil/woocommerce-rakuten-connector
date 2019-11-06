@@ -28,7 +28,7 @@
                     } else {
                         Swal.fire({
                             title: response + ' Erro',
-                            html: '<p>Verifique suas credenciais com o atendimento Rakuten Pay</p>' +
+                            html: '<p>Verifique suas credenciais com o atendimento GenPay</p>' +
                                 '<p>Ambiente: ' + '<strong>' + text + '</strong></p>',
                             type: 'error',
                             cancelButtonText: '<i class="fa fa-thumbs-down"></i> Fechar'

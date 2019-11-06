@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Pay Customer Order Details
+ * GenPay Customer Order Details
  *
  * @package WC_Rakuten_Pay
  */

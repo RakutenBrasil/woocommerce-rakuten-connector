@@ -2,7 +2,7 @@
 /**
  * Credit Card - HTML email instructions.
  *
- * @author  Rakuten Pay
+ * @author  GenPay
  * @package WooCommerce_Rakuten_Pay/Templates
  * @version 2.0.0
  */

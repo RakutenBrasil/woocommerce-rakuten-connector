@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Shipping Method
+ * GenLog Shipping Method
  *
  * @package WC_Rakuten_Log
  */
@@ -14,9 +14,9 @@ class WC_Rakuten_Log_Shipping extends WC_Shipping_Method {
     {
         $this->instance_id = absint( $instance_id );
         $this->id = 'rakuten-log';
-        $this->method_title = __('Rakuten Log', 'woocommerce-rakuten-log');
+        $this->method_title = __('GenLog', 'woocommerce-rakuten-log');
 
-        $this->method_description = sprintf( __('%s is a shipping method from Rakuten Log.', 'woocommerce-rakuten-log'), $this->method_title);
+        $this->method_description = sprintf( __('%s is a shipping method from GenLog.', 'woocommerce-rakuten-log'), $this->method_title);
         $this->supports           = array(
             'shipping-zones',
             'instance-settings',
@@ -55,28 +55,28 @@ class WC_Rakuten_Log_Shipping extends WC_Shipping_Method {
             'owner_document' => array (
                 'title'    => __('Owner Document', 'woocommerce-rakuten-log'),
                 'type'     => 'text',
-                'label'    => __('Document of the owner registered on Rakuten', 'woocommerce-rakuten-log'),
+                'label'    => __('Document of the owner registered on GenComm', 'woocommerce-rakuten-log'),
                 'desc_tip' => true,
                 'default'  => ''
             ),
             'api_key' => array(
                 'title'    =>  __('API key', 'woocommerce-rakuten-log'),
                 'type'     => 'text',
-                'label'    => __('API key registered on Rakuten', 'woocommerce-rakuten-log'),
+                'label'    => __('API key registered on GenComm', 'woocommerce-rakuten-log'),
                 'desc_tip' => true,
                 'default'  => ''
             ),
             'signature_key' => array(
                 'title'    => __('Signature Key', 'woocommerce-rakuten-log'),
                 'type'     => 'text',
-                'label'    => __('Signature key registered on Rakuten', 'woocommerce-rakuten-log'),
+                'label'    => __('Signature key registered on GenComm', 'woocommerce-rakuten-log'),
                 'desc_tip' => true,
                 'default'  => ''
             ),
             'environment' => array(
                 'title'       => __('Environment', 'woocommerce-rakuten-log'),
                 'type'        => 'select',
-                'description' => sprintf( __( 'Rakuten Log has two environments, the Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-log' ) ),
+                'description' => sprintf( __( 'GenLog has two environments, the Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-log' ) ),
                 'default'     => 'sandbox',
                 'options'     => array(
                     'production'  => sprintf( __( 'Production', 'woocommerce-rakuten-log' ) ),

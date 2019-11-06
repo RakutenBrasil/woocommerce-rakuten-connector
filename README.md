@@ -1,16 +1,16 @@
-# Extensão Woocommerce para [Rakuten Connector](https://digitalcommerce.rakuten.com.br/solucoes/rakuten-connector/) Payment Gateway (Wordpress/Woocommerce) 
+# Extensão Woocommerce para [GenComm](https://www.gencomm.com.br/solucoes/rakuten-connector/) Payment Gateway (Wordpress/Woocommerce)
 
-Bem vindo ao repositório da extensão Woocommerce para o Rakuten Connector
+Bem vindo ao repositório da extensão Woocommerce para o GenComm
 
 Esta extensão está pronta para integrar com os serviços:
 
-![Rakuten Pay](https://raw.githubusercontent.com/RakutenBrasil/magento1-rakuten-pay/master/images/logo-rakuten-pay.png)
-   
-   Conheça mais a respeito de nossa solução de pagamentos [Rakuten Pay](https://digitalcommerce.rakuten.com.br/produtos/pagamentos-rakuten-pay/) e sobre o programa de parceria para desenvolvedores e agências [Rakuten Pay para Devs](https://digitalcommerce.rakuten.com.br/rakuten-pay-dev/)
+![GenPay](https://raw.githubusercontent.com/GenCommBrasil/magento1-rakuten-pay/master/images/logo-rakuten-pay.png)
 
-![Rakuten Log](https://raw.githubusercontent.com/RakutenBrasil/magento1-rakuten-pay/master/images/logo-rakuten-log.png)
-   
-   Conheça mais a respeito de nossa solução de Logística [Rakuten Log](https://digitalcommerce.rakuten.com.br/rakuten-log/)
+   Conheça mais a respeito de nossa solução de pagamentos [GenPay](https://digitalcommerce.rakuten.com.br/produtos/pagamentos-rakuten-pay/) e sobre o programa de parceria para desenvolvedores e agências [GenPay para Devs](https://digitalcommerce.rakuten.com.br/rakuten-pay-dev/)
+
+![GenLog](https://raw.githubusercontent.com/GenCommBrasil/magento1-rakuten-pay/master/images/logo-rakuten-log.png)
+
+   Conheça mais a respeito de nossa solução de Logística [GenLog](https://www.gencomm.com.br/rakuten-log/)
 
 
 ## Requisitos
@@ -20,10 +20,10 @@ Esta extensão está pronta para integrar com os serviços:
 
 ## Instalação
 
-  Para instalar o Rakuten Connector [consulte nossa documentação](https://developers.rakuten.com.br/production/developer/plugins_and_extensions/woocommerce)
+  Para instalar o GenComm [consulte nossa documentação](https://www.gencomm.com.br/production/developer/plugins_and_extensions/woocommerce)
 
 
 ## Suporte
 
 
-Dúvidas ou deseja implementar  o serviço Rakuten Connector acesse [Rakuten Digital Commerce](https://digitalcommerce.rakuten.com.br)
+Dúvidas ou deseja implementar  o serviço GenComm acesse [GenComm Commerce](https://www.gencomm.com.br)

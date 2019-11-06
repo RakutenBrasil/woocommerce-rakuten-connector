@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: WooCommerce Rakuten Connector
+ * Plugin Name: WooCommerce GenComm
  * Plugin URI: http://github.com/RakutenBrasil/woocommerce-rakuten-pay
- * Description: Gateway de pagamento Rakuten Pay e Rakuten Logistics para WooCommerce.
- * Author: Rakuten Pay
+ * Description: Gateway de pagamento GenPay e GenLog para WooCommerce.
+ * Author: GenPay
  * Author URI: https://rakuten.com.br/
  * Version: 1.1.13
  * License: GPLv2 or later
@@ -49,10 +49,10 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
       add_action( "wp_ajax_nopriv_validate_credential", "validate_credential" );
 
       function rakuten_connector_menu() {
-        add_menu_page( 'Rakuten Connector Plugin','Rakuten Connector','manage_options','rakuten_connector','rakuten_connector_page_menu',plugins_url('rakuten-favicon.png', __FILE__) );
-        add_submenu_page( 'rakuten_connector', 'Rakuten Connector', 'Configurações','manage_options', 'rakuten_connector' );
-        add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'Rakuten Pay Boleto','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_banking_billet_gateway','rakuten_connector_page_menu' );
-        add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'Rakuten Pay Cartão de Crédito','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_credit_card_gateway','rakuten_connector_page_menu' );
+        add_menu_page( 'GenComm Plugin','GenComm','manage_options','rakuten_connector','rakuten_connector_page_menu',plugins_url('rakuten-favicon.png', __FILE__) );
+        add_submenu_page( 'rakuten_connector', 'GenComm', 'Configurações','manage_options', 'rakuten_connector' );
+        add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'GenPay Boleto','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_banking_billet_gateway','rakuten_connector_page_menu' );
+        add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'GenPay Cartão de Crédito','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_credit_card_gateway','rakuten_connector_page_menu' );
       }
 
       function rakuten_connector_page_menu() {
@@ -60,7 +60,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
         <style>
           a { color: #333; text-decoration: none; }
           a:hover { text-decoration: underline; }
-          
+
           .title {
             text-align: center;
             color: #c4c4c4;
@@ -89,14 +89,14 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
             border-radius: 5px;
             transition: .2s all ease-in-out;
           }
-          
+
           .box:hover {
             box-shadow: 2px 5px 20px rgba(0,0,0,0.3);
           }
           .box:hover h1 {
             color: #bf0000;
           }
-          
+
           .box-full:hover {
             box-shadow: 2px 5px 20px rgba(0,0,0,0.3);
           }
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
             transition: .2s all ease-in-out;
           }
           .submit { display: table; margin: 20px auto 5px }
-          
+
           @media screen and (max-width: 479px){
             .box {
               width: 72%;
@@ -131,10 +131,10 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
           <img src='" . plugins_url('rakuten-connector-logo.png', __FILE__) . "' />
           <hr>
         </div>
-        <!-- Rakuten Pay configuration admin menu page-->
+        <!-- GenPay configuration admin menu page-->
         <div class='wrap'>
           <div class='box'>
-            <h1 class='title'>Rakuten Pay</h1>
+            <h1 class='title'>GenPay</h1>
             <hr>
             <br />
             <h3><a href='" . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=wc_rakuten_pay_banking_billet_gateway' ) ) . "' >" . __( 'Bank Billet Settings', 'woocommerce-rakuten-pay' ) . "</a></h3>
@@ -142,16 +142,16 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
           </div>
         ";
         $query = $GLOBALS['wpdb']->get_results( "SELECT instance_id,method_id FROM {$GLOBALS['wpdb']->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'rakuten-log' " );
-        // get the Rakuten Log id
+        // get the GenLog id
         foreach ($query as $dado) {
           echo "
-            <!-- Rakuten Logistics configuration admin menu page -->
+            <!-- GenLog configuration admin menu page -->
             <div class='box'>
-              <h1 class='title'>Rakuten Log</h1>
+              <h1 class='title'>GenLog</h1>
               <hr>
               <br />
               <h3><a href='admin.php?page=wc-settings&tab=shipping&instance_id={$dado->instance_id}' >Configurações de Entrega</a></h3>
-              <h3><a href='http://logistics.rakuten.com.br/dashboard' target='_blank'>Painel Rakuten Logistics</a></h3>
+              <h3><a href='http://logistics.gencomm.com.br/dashboard' target='_blank'>Painel GenLog</a></h3>
             </div>
           </div>
           ";

@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Tracking code HTML
+ * GenLog Tracking code HTML
  *
  * @package WC_Rakuten_Log
  */
