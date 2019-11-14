@@ -17,12 +17,12 @@ class WC_Rakuten_Pay_API {
     /**
      * PRODUCTION API URL.
      */
-    const PRODUCTION_API_URL = 'https://api.rakuten.com.br/rpay/v1/';
+    const PRODUCTION_API_URL = 'https://api.gencomm.com.br/rpay/v1/';
 
     /**
      * SANDBOX API URL.
      */
-    const SANDBOX_API_URL = 'http://oneapi-sandbox.rakutenpay.com.br/rpay/v1/';
+    const SANDBOX_API_URL = 'http://oneapi-sandbox.genpay.com.br/rpay/v1/';
 
     /**
      * Gateway class.
@@ -34,12 +34,12 @@ class WC_Rakuten_Pay_API {
 	/**
 	 * PRODUCTION_JS_URL
 	 */
-	const PRODUCTION_JS_URL = 'https://static.rakutenpay.com.br/rpayjs/rpay-latest.min.js';
+	const PRODUCTION_JS_URL = 'https://static.genpay.com.br/rpayjs/rpay-latest.min.js';
 
 	/**
 	 * SANDBOX_JS_URL
 	 */
-    const SANDBOX_JS_URL = 'https://static.rakutenpay.com.br/rpayjs/rpay-latest.dev.min.js';
+    const SANDBOX_JS_URL = 'https://static.genpay.com.br/rpayjs/rpay-latest.dev.min.js';
 
     /**
      * Constructor.
@@ -102,7 +102,7 @@ class WC_Rakuten_Pay_API {
      * @return int
      */
     public function get_smallest_installment() {
-        return ( 5 > $this->gateway->smallest_installment ) ? 500 : wc_format_decimal( $this->gateway->smallest_installment );
+        return wc_format_decimal( $this->gateway->smallest_installment );
     }
 
     /**
@@ -180,15 +180,11 @@ class WC_Rakuten_Pay_API {
             'fingerprint' => $posted['rakuten_pay_fingerprint'],
             'payments'    => array(),
             'customer'    => array(
-                'document'      => $this->only_numbers($posted['billing_document']),
+                'document'      => $this->only_numbers($posted['billing_cpf']),
                 'name'          => $customer_name,
                 'business_name' => $posted['billing_company'] ?: $customer_name,
                 'email'         => $order->get_billing_email(),
-                'birth_date'    => preg_replace(
-                    '/(\d{2})\/(\d{2})\/(\d{4})/',
-                    '${3}-${2}-${1}',
-                    $posted['billing_birthdate']
-                ),
+                'birth_date'    => '1999-01-01',
                 'kind'          => 'personal',
                 'addresses'     => array(),
                 'phones'        => array(
@@ -268,11 +264,11 @@ class WC_Rakuten_Pay_API {
             );
 
             // Non-WooCommerce default address fields.
-            if ( ! empty( $posted['billing_address_number'] ) ) {
-                $billing_address['number'] = $posted['billing_address_number'];
+            if ( ! empty( $posted['billing_number'] ) ) {
+                $billing_address['number'] = $posted['billing_number'];
             }
-            if ( ! empty( $posted['billing_district'] ) ) {
-                $billing_address['district'] = $posted['billing_district'];
+            if ( ! empty( $posted['billing_neighborhood'] ) ) {
+                $billing_address['district'] = $posted['billing_neighborhood'];
             }
 
             $data['customer']['addresses'][] = $billing_address;
@@ -322,11 +318,11 @@ class WC_Rakuten_Pay_API {
             );
 
             // Non-WooCommerce default address fields.
-            if ( ! empty( $posted['shipping_address_number'] ) ) {
-                $shipping_address['number'] = $posted['shipping_address_number'];
+            if ( ! empty( $posted['shipping_number'] ) ) {
+                $shipping_address['number'] = $posted['shipping_number'];
             }
-            if ( ! empty( $posted['shipping_district'] ) ) {
-                $shipping_address['district'] = $posted['shipping_district'];
+            if ( ! empty( $posted['shipping_neighborhood'] ) ) {
+                $shipping_address['district'] = $posted['shipping_neighborhood'];
             }
 
             $data['customer']['addresses'][] = $shipping_address;
@@ -338,7 +334,8 @@ class WC_Rakuten_Pay_API {
 
         $current_user = wp_get_current_user();
         $current_user_id = $current_user->ID;
-        update_user_meta( $current_user_id, 'billing_birthdate', $posted['billing_birthdate']);
+        //TODO verificar
+//        update_user_meta( $current_user_id, 'billing_birthdate', $posted['billing_birthdate']);
 
         return $data;
     }
@@ -401,8 +398,8 @@ class WC_Rakuten_Pay_API {
      *
      * @return array Response data.
      *   array( 'result' => 'fail' ) for general request failures
-     *   array( 'result' => 'failure', 'errors' => errors[] ) for GenPay errors
-     *   array( 'result' => 'authorized', ... ) for authorized GenPay transactions
+     *   array( 'result' => 'failure', 'errors' => errors[] ) for Genpay errors
+     *   array( 'result' => 'authorized', ... ) for authorized Genpay transactions
      */
     public function charge_transaction( $order, $charge_data) {
         if ( 'yes' === $this->gateway->debug ) {
@@ -521,13 +518,14 @@ class WC_Rakuten_Pay_API {
             if ( 'yes' === $this->gateway->debug ) {
                 $this->gateway->log->add( $this->gateway->id, 'WP_Error in doing the transaction: ' . $response->get_error_message() );
             }
-            $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
+            $transaction_url = '<a href="https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
             $this->send_email(
                 sprintf( esc_html__( 'The cancel transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
                 sprintf( esc_html__( 'In order to cancel this transaction access the GenPay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
             );
             $order->add_order_note( __('GenPay: Order could not be cancelled due to an error. You must access the GenPay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
+
             return;
         }
 
@@ -580,13 +578,13 @@ class WC_Rakuten_Pay_API {
             if ( 'yes' === $this->gateway->debug ) {
                 $this->gateway->log->add( $this->gateway->id, 'WP_Error in doing the refund_transaction: ' . $response->get_error_message() );
             }
-            $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
+            $transaction_url = '<a href="https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
             $this->send_email(
                 sprintf( esc_html__( 'The refund transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
                 sprintf( esc_html__( 'In order to refund this transaction access the GenPay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
             );
-            $order->add_order_note( __('GenPay: Order could not be refunded due to an error. You must access the GenPay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
+            $order->add_order_note( __('Genpay: Order could not be refunded due to an error. You must access the Genpay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
             return false;
         }
 
@@ -632,7 +630,7 @@ class WC_Rakuten_Pay_API {
      *
      * @return array Response data.
      *   false for general request failures
-     *   array( 'result' => 'data', ... ) with data from GenPay transaction
+     *   array( 'result' => 'data', ... ) with data from Genpay transaction
      */
     public function get_transaction( $order ) {
         $transaction_id = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
@@ -831,10 +829,10 @@ class WC_Rakuten_Pay_API {
         }
 
         // Save customer data at database, CPF, birthdate and Phone
-	    update_post_meta( $order_id, '_billing_document', $data['customer']['document'] );
+	    update_post_meta( $order_id, '_billing_cpf', $data['customer']['document'] );
         $current_user = wp_get_current_user();
         $current_user_id = $current_user->ID;
-	    update_user_meta( $current_user_id, 'billing_document', $data['customer']['document'] );
+	    update_user_meta( $current_user_id, 'billing_cpf', $data['customer']['document'] );
 	    update_user_meta( $current_user_id, 'billing_phone', $order->get_billing_phone() );
 
         $transaction    = $this->charge_transaction( $order, $data );
@@ -940,7 +938,7 @@ class WC_Rakuten_Pay_API {
     }
 
     /**
-     * Check if GenPay response is valid.
+     * Check if Genpay response is valid.
      *
      * @param  string $body  IPN body.
      * @param  string $token IPN signature token
@@ -1030,7 +1028,7 @@ class WC_Rakuten_Pay_API {
     }
 
     protected function ipn_handler_fail() {
-        wp_die( esc_html__( 'GenPay Request Failure', 'woocommerce-rakuten-pay' ), '', array( 'response' => 401 ) );
+        wp_die( esc_html__( 'Genpay Request Failure', 'woocommerce-rakuten-pay' ), '', array( 'response' => 401 ) );
     }
 
     /**
@@ -1077,17 +1075,17 @@ class WC_Rakuten_Pay_API {
 
         switch ( $status ) {
             case 'pending' :
-                $order->update_status( 'pending', __( 'GenPay: The transaction is being processed.', 'woocommerce-rakuten-pay' ) );
+                $order->update_status( 'pending', __( 'Genpay: The transaction is being processed.', 'woocommerce-rakuten-pay' ) );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was recieved', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction recieved', 'woocommerce-rakuten-pay' ),
                     sprintf( esc_html__( 'Order %1$s has been marked as pending payment, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'GenPay: The transaction is Pending for payment.', 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'Genpay: The transaction is Pending for payment.', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'authorized' :
@@ -1095,7 +1093,7 @@ class WC_Rakuten_Pay_API {
                     break;
                 }
 
-                $order->update_status( 'on-hold', __( 'GenPay: The transaction was authorized.', 'woocommerce-rakuten-pay' ) );
+                $order->update_status( 'on-hold', __( 'Genpay: The transaction was authorized.', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'approved' :
@@ -1103,7 +1101,7 @@ class WC_Rakuten_Pay_API {
                     break;
                 }
 
-                $order->add_order_note( __( 'GenPay: Transaction paid.', 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'Genpay: Transaction paid.', 'woocommerce-rakuten-pay' ) );
 
                 // Changing the order for processing and reduces the stock.
                 $order->payment_complete();
@@ -1121,19 +1119,19 @@ class WC_Rakuten_Pay_API {
                 $order->update_status( 'cancelled' );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
                 $this->send_email(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Genpay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Genpay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'GenPay: The transaction was cancelled.', 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'Genpay: The transaction was cancelled.', 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'failure' :
@@ -1141,15 +1139,15 @@ class WC_Rakuten_Pay_API {
                 $order->update_status( 'cancelled' );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
 
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was cancelled', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as cancelled, because the transaction was cancelled on Genpay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( __( 'GenPay: The transaction was cancelled because ' . $result_messages  , 'woocommerce-rakuten-pay' ) );
+                $order->add_order_note( __( 'Genpay: The transaction was cancelled because ' . $result_messages  , 'woocommerce-rakuten-pay' ) );
 
                 break;
             case 'declined' :
@@ -1157,15 +1155,15 @@ class WC_Rakuten_Pay_API {
                 $order->update_status( 'failed' );
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
 
                 $this->send_email_customer(
                     sprintf( esc_html__( 'The transaction for order %s was declined', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as declined, because the transaction was declined on GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as declined, because the transaction was declined on Genpay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
-                $order->add_order_note( 'GenPay: A transação foi declinada. <br /> ' . print_r($result_messages, true) );
+                $order->add_order_note( 'Genpay: A transação foi declinada. <br /> ' . print_r($result_messages, true) );
 
                 break;
             case 'refunded' :
@@ -1243,18 +1241,18 @@ class WC_Rakuten_Pay_API {
                 }
 
                 if ( (float) $order->get_total() === (float) $order->get_total_refunded() ) {
-                    $order->add_order_note( __( 'GenPay: The transaction fully refunded.', 'woocommerce-rakuten-pay' ) );
-                    // $order->update_status( 'refunded', __( 'GenPay: The transaction was fully refunded.', 'woocommerce-rakuten-pay' ) );
+                    $order->add_order_note( __( 'Genpay: The transaction fully refunded.', 'woocommerce-rakuten-pay' ) );
+                    // $order->update_status( 'refunded', __( 'Genpay: The transaction was fully refunded.', 'woocommerce-rakuten-pay' ) );
                 } else {
-                    $order->add_order_note( __( 'GenPay: The transaction received a partial refund.', 'woocommerce-rakuten-pay' ) );
+                    $order->add_order_note( __( 'Genpay: The transaction received a partial refund.', 'woocommerce-rakuten-pay' ) );
                 }
 
                 $transaction_id  = get_post_meta( $order->get_id(), '_wc_rakuten_pay_transaction_id', true );
-                $transaction_url = '<a href="https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.rakutenpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
+                $transaction_url = '<a href="https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '">https://dashboard.genpay.com.br/sales/' . intval( $transaction_id ) . '</a>';
                 $this->send_email(
                     sprintf( esc_html__( 'The transaction for order %s refunded', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                     esc_html__( 'Transaction refunded', 'woocommerce-rakuten-pay' ),
-                    sprintf( esc_html__( 'Order %1$s has been marked as refunded by GenPay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
+                    sprintf( esc_html__( 'Order %1$s has been marked as refunded by Genpay, for more details, see %2$s.', 'woocommerce-rakuten-pay' ), $order->get_order_number(), $transaction_url )
                 );
 
                 break;
@@ -1508,15 +1506,15 @@ class WC_Rakuten_Pay_API {
 		}
 
 		return $item->get_product()->get_sku();
-	}
+  }
 
-	/**
+  	/**
 	 * Recieves an string and take off the accentuation
 	 *
 	 * @param $string
+     * @return string
 	 */
 	private function removeAccentuation($str) {
-
 		$map = [
 			'á' => 'a',
 			'à' => 'a',
@@ -1545,7 +1543,6 @@ class WC_Rakuten_Pay_API {
 			'Ü' => 'U',
 			'Ç' => 'C'
 		];
-
 		return strtr($str, $map);
 	}
 }

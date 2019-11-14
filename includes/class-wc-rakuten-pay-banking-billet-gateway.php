@@ -61,10 +61,10 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
     add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_scripts' ) );
     // A Hack to allow insert script tag of type text/template just for additional refund banking data.
     add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'refund_banking_data_fields' ) );
-    add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'generate_button_html' ) );
-    add_action( 'admin_enqueue_scripts', array( $this, 'load_validate_credential' ) );
+//    add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'generate_button_html' ) );
+//    add_action( 'admin_enqueue_scripts', array( $this, 'load_validate_credential' ) );
   }
-
+//TODO verificar
     public function load_validate_credential() {
       wp_register_script( 'sweetAlert', 'https://cdn.jsdelivr.net/npm/sweetalert2@8', null, null, true );
       wp_register_script(
@@ -115,7 +115,7 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
       'document' => array(
         'title'             => __( 'GenPay Document', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter the document of your store.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter the document of your store.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.genpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
@@ -124,7 +124,7 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
       'api_key' => array(
         'title'             => __( 'GenPay API Key', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter your GenPay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter your GenPay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.genpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
@@ -133,29 +133,22 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
       'signature_key' => array(
         'title'             => __( 'GenPay Signature Key', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter your GenPay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter your GenPay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.genpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
         ),
       ),
-        'environment' => array(
-            'title'       => __( 'Environment', 'woocommerce-rakuten-pay' ),
-            'type'        => 'select',
-            'description' => sprintf( __( 'GenPay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
-            'default'     => 'production',
-            'options'     => array(
-                'production'  => sprintf( __( 'Production', 'woocommerce-rakuten-pay' ) ),
-                'sandbox'     => sprintf( __( 'Sandbox', 'woocommerce-rakuten-pay' ) )
-            )
-        ),
-        'validate_credential' => array(
-            'title'             => __( 'Validate Credentials', 'woocommerce-rakuten-pay' ),
-            'type'              => 'button',
-            'id '               => 'validate_credential',
-            'description'       => __( 'After entering your credentials click to validate.', 'woocommerce-rakuten-pay' ),
-            'desc_tip'          => true,
-        ),
+			'environment' => array(
+				'title'       => __( 'Environment', 'woocommerce-rakuten-pay' ),
+				'type'        => 'select',
+				'description' => sprintf( __( 'GenPay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
+				'default'     => 'production',
+				'options'     => array(
+					'production'  => sprintf( __( 'Production', 'woocommerce-raktuten-pay' ) ),
+					'sandbox'     => sprintf( __( 'Sandbox', 'woocommerce-raktuten-pay' ) )
+				)
+			),
       'testing' => array(
         'title'       => __( 'Gateway Testing', 'woocommerce-rakuten-pay' ),
         'type'        => 'title',

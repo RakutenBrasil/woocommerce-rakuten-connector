@@ -7,7 +7,7 @@
             // Limpa valores do formulário de cep.
             $("#billing_address_1").val("");
             $("#billing_address_2").val("");
-            $("#billing_district").val("");
+            $("#billing_neighborhood").val("");
             $("#billing_city").val("");
             $("#billing_state").val("");
 
@@ -31,7 +31,7 @@
                     //Preenche os campos com "..." enquanto consulta webservice.
                     $("#billing_address_1").val("...");
                     $("#billing_address_2").val("");
-                    $("#billing_district").val("...");
+                    $("#billing_neighborhood").val("...");
                     $("#billing_city").val("...");
 
                     //Consulta o webservice viacep.com.br/
@@ -41,10 +41,10 @@
                             //Atualiza os campos com os valores da consulta.
                             $("#billing_address_1").val(dados.logradouro);
                             $("#billing_address_2").val("");
-                            $("#billing_district").val(dados.bairro);
+                            $("#billing_neighborhood").val(dados.bairro);
                             $("#billing_city").val(dados.localidade);
                             $("#billing_state").val(dados.uf).change();
-                            $("#billing_address_number").focus();
+                            $("#billing_number").focus();
 
                         } //end if.
                         else {
@@ -84,7 +84,7 @@
                     //Preenche os campos com "..." enquanto consulta webservice.
                     $("#shipping_address_1").val("...");
                     $("#shipping_address_2").val("");
-                    $("#shipping_district").val("...");
+                    $("#shipping_neighborhood").val("...");
                     $("#shipping_city").val("...");
 
                     //Consulta o webservice viacep.com.br/
@@ -94,10 +94,10 @@
                             //Atualiza os campos com os valores da consulta.
                             $("#shipping_address_1").val(dados.logradouro);
                             $("#shipping_address_2").val("");
-                            $("#shipping_district").val(dados.bairro);
+                            $("#shipping_neighborhood").val(dados.bairro);
                             $("#shipping_city").val(dados.localidade);
                             $("#shipping_state").val(dados.uf).change();
-                            $("#shipping_address_number").focus();
+                            $("#shipping_number").focus();
 
                         } //end if.
                         else {

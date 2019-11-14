@@ -110,9 +110,9 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
             $shipping_data = reset($shipping_methods);
             $errors = $this->valid_rakuten_log_batch_orders($order_ids);
 	        $charge_uuid = get_post_meta($order_id, '_wc_rakuten_pay_transaction_id');
-	        $document = get_post_meta($order->get_id(), '_billing_document');
+	        $document = get_post_meta($order->get_id(), '_billing_cpf');
 	        $total_value = (float) $order->get_shipping_total();
-	        $district = get_post_meta($order_id, '_shipping_district');
+	        $district = get_post_meta($order_id, '_shipping_neighborhood');
 
             if(empty($errors)){
                 $batch_item = array(
@@ -127,7 +127,7 @@ class WC_Rakuten_Log_Admin_Orders extends WC_Shipping_Method {
                             'first_name' => $order->get_shipping_first_name(),
                             'last_name' => $order->get_shipping_last_name(),
                             'street' => $order->get_shipping_address_1(),
-                            'number' => $order->get_meta('_shipping_address_number'),
+                            'number' => $order->get_meta('_shipping_number'),
                             'complement' => $order->get_shipping_address_2(),
                             'district' => $district[0],
                             'city' => $order->get_shipping_city(),

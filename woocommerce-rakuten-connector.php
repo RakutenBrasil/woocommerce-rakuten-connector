@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: WooCommerce GenComm
- * Plugin URI: http://github.com/RakutenBrasil/woocommerce-rakuten-pay
+ * Plugin URI: http://github.com/GenCommBrasil/woocommerce-rakuten-pay
  * Description: Gateway de pagamento GenPay e GenLog para WooCommerce.
- * Author: GenPay
- * Author URI: https://rakuten.com.br/
- * Version: 1.1.13
+ * Author: Rakuten Pay
+ * Author URI: https://gencomm.com.br/
+ * Version: 1.1.14
  * License: GPLv2 or later
  * Text Domain: woocommerce-rakuten-pay
  * Domain Path: /languages/
@@ -29,7 +29,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
      *
      * @var string
      */
-    const VERSION = '1.1.13';
+    const VERSION = '1.1.14';
 
     /**
      * Instance of this class.
@@ -45,11 +45,11 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
       // Load plugin text domain.
       add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
       add_action('admin_menu','rakuten_connector_menu');
-      add_action( "wp_ajax_validate_credential", "validate_credential" );
-      add_action( "wp_ajax_nopriv_validate_credential", "validate_credential" );
+//      add_action( "wp_ajax_validate_credential", "validate_credential" );
+//      add_action( "wp_ajax_nopriv_validate_credential", "validate_credential" );
 
       function rakuten_connector_menu() {
-        add_menu_page( 'GenComm Plugin','GenComm','manage_options','rakuten_connector','rakuten_connector_page_menu',plugins_url('rakuten-favicon.png', __FILE__) );
+        add_menu_page( 'GenPay Plugin','GenComm','manage_options','rakuten_connector','rakuten_connector_page_menu',plugins_url('rakuten-favicon.png', __FILE__) );
         add_submenu_page( 'rakuten_connector', 'GenComm', 'Configurações','manage_options', 'rakuten_connector' );
         add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'GenPay Boleto','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_banking_billet_gateway','rakuten_connector_page_menu' );
         add_submenu_page( 'rakuten_connector', 'Connector Submenu', 'GenPay Cartão de Crédito','manage_options', 'wc-settings&tab=checkout&section=wc_rakuten_pay_credit_card_gateway','rakuten_connector_page_menu' );
@@ -94,14 +94,14 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
             box-shadow: 2px 5px 20px rgba(0,0,0,0.3);
           }
           .box:hover h1 {
-            color: #bf0000;
+            color: #113182;
           }
 
           .box-full:hover {
             box-shadow: 2px 5px 20px rgba(0,0,0,0.3);
           }
           .box-full:hover h1 {
-            color: #bf0000;
+            color: #113182;
           }
           .box-logo {
             width: 95%;
@@ -128,7 +128,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
 
         <br />
         <div class='box-logo'>
-          <img src='" . plugins_url('rakuten-connector-logo.png', __FILE__) . "' />
+          <img width='300px' src='" . plugins_url('genpay-logo.svg', __FILE__) . "' />
           <hr>
         </div>
         <!-- GenPay configuration admin menu page-->
@@ -151,7 +151,7 @@ if ( ! class_exists( 'WC_Rakuten_Pay' ) ) :
               <hr>
               <br />
               <h3><a href='admin.php?page=wc-settings&tab=shipping&instance_id={$dado->instance_id}' >Configurações de Entrega</a></h3>
-              <h3><a href='http://logistics.gencomm.com.br/dashboard' target='_blank'>Painel GenLog</a></h3>
+              <h3><a href='http://genlog.com.br' target='_blank'>Painel GenLog</a></h3>
             </div>
           </div>
           ";
@@ -369,8 +369,8 @@ endif;
 
 define('WC_RAKUTEN_LOG_VERSION', '1.0.0');
 define('WC_RAKUTEN_LOG_PLUGIN_FILE', __FILE__);
-define('WC_RAKUTEN_LOG_SANDBOX_API_URL', 'https://oneapi-sandbox.rakutenpay.com.br/logistics/');
-define('WC_RAKUTEN_LOG_PRODUCTION_API_URL', 'https://api.rakuten.com.br/logistics/');
+define('WC_RAKUTEN_LOG_SANDBOX_API_URL', 'https://oneapi-sandbox.genpay.com.br/logistics/');
+define('WC_RAKUTEN_LOG_PRODUCTION_API_URL', 'https://api.gencomm.com.br/logistics/');
 
 if (!class_exists('WC_Rakuten_Log')) {
     include_once dirname(__FILE__) . '/woocommerce-rakuten-log/includes/class-wc-rakuten-log.php';
