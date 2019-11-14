@@ -39,10 +39,10 @@ class WC_Rakuten_Log
             }
 
             add_filter( 'woocommerce_shipping_methods', array( __CLASS__, 'include_shipping_methods' ) );
-            add_filter( 'woocommerce_checkout_fields', array(__CLASS__, 'add_address_fields') );
+            /* add_filter( 'woocommerce_checkout_fields', array(__CLASS__, 'add_address_fields') ); */
             add_filter( 'woocommerce_formatted_address_replacements', array(__CLASS__, 'add_address_replacement_fields'), 10, 2 );
-            add_filter( 'woocommerce_order_formatted_billing_address', array(__CLASS__, 'add_address_number_to_billing_address') , 10, 2 );
-            add_filter( 'woocommerce_order_formatted_shipping_address', array(__CLASS__, 'add_address_number_to_shipping_address'), 10, 2 );
+//            add_filter( 'woocommerce_order_formatted_billing_address', array(__CLASS__, 'add_address_number_to_billing_address') , 10, 2 );
+//            add_filter( 'woocommerce_order_formatted_shipping_address', array(__CLASS__, 'add_address_number_to_shipping_address'), 10, 2 );
             add_filter( 'woocommerce_email_classes', array(__CLASS__, 'include_emails'));
             add_filter( 'woocommerce_localisation_address_formats', array(__CLASS__, 'add_new_address_formats'), 10, 2 );
         }
@@ -130,14 +130,14 @@ class WC_Rakuten_Log
     }
 
     public static function add_address_fields( $fields ) {
-        $fields['billing']['billing_address_number'] = array(
+        $fields['billing']['billing_number'] = array(
             'label'       => __('Number', 'woocommerce-rakuten-log'),
             'placeholder' => _x('Number', 'placeholder', 'woocommerce-rakuten-log'),
             'required'    => true,
             'class'       => array('form-row-wide'),
             'clear'       => true
         );
-        $fields['billing']['billing_district'] = array(
+        $fields['billing']['billing_neighborhood'] = array(
             'label'       => __('District', 'woocommerce-rakuten-log'),
             'placeholder' => _x('District', 'placeholder', 'woocommerce-rakuten-log'),
             'required'    => true,
@@ -145,21 +145,21 @@ class WC_Rakuten_Log
             'clear'       => true
         );
 
-        $fields['shipping']['shipping_address_number'] = array(
+        $fields['shipping']['shipping_number'] = array(
             'label'       => __('Number', 'woocommerce-rakuten-log'),
             'placeholder' => _x('Number', 'placeholder', 'woocommerce-rakuten-log'),
             'required'    => true,
             'class'       => array('form-row-first'),
             'clear'       => true
         );
-        $fields['shipping']['shipping_district'] = array(
+        $fields['shipping']['shipping_neighborhood'] = array(
             'label'       => __('District', 'woocommerce-rakuten-log'),
             'placeholder' => _x('District', 'placeholder', 'woocommerce-rakuten-log'),
             'required'    => true,
             'class'       => array('form-row-first'),
             'clear'       => true
         );
-        $fields['shipping']['shipping_phone_number'] = array(
+        $fields['shipping']['shipping_number'] = array(
             'label'       => __('Phone number', 'woocommerce-rakuten-pay'),
             'placeholder' => _x('Número de telefone', 'placeholder', 'woocommerce-rakuten-pay'),
             'required'    => true,
@@ -180,8 +180,8 @@ class WC_Rakuten_Log
         $newfields['billing']['billing_phone']      = $fields['billing']['billing_phone'];
         $newfields['billing']['billing_country']    = $fields['billing']['billing_country'];
         $newfields['billing']['billing_address_1']  = $fields['billing']['billing_address_1'];
-        $newfields['billing']['billing_address_number']    = $fields['billing']['billing_address_number'];
-        $newfields['billing']['billing_district']  = $fields['billing']['billing_district'];
+        $newfields['billing']['billing_number']    = $fields['billing']['billing_number'];
+        $newfields['billing']['billing_neighborhood']  = $fields['billing']['billing_neighborhood'];
         $newfields['billing']['billing_address_2']  = $fields['billing']['billing_address_2'];
         $newfields['billing']['billing_city']       = $fields['billing']['billing_city'];
         $newfields['billing']['billing_postcode']   = $fields['billing']['billing_postcode'];
@@ -192,11 +192,11 @@ class WC_Rakuten_Log
         $newfields['shipping']['shipping_first_name'] = $fields['shipping']['shipping_first_name'];
         $newfields['shipping']['shipping_last_name']  = $fields['shipping']['shipping_last_name'];
         $newfields['shipping']['shipping_company']    = $fields['shipping']['shipping_company'];
-        $newfields['shipping']['shipping_phone_number']    = $fields['shipping']['shipping_phone_number'];
+        $newfields['shipping']['shipping_number']    = $fields['shipping']['shipping_number'];
         $newfields['shipping']['shipping_country']    = $fields['shipping']['shipping_country'];
         $newfields['shipping']['shipping_address_1']  = $fields['shipping']['shipping_address_1'];
-        $newfields['shipping']['shipping_address_number']    = $fields['shipping']['shipping_address_number'];
-        $newfields['shipping']['shipping_district']  = $fields['shipping']['shipping_district'];
+        $newfields['shipping']['shipping_number']    = $fields['shipping']['shipping_number'];
+        $newfields['shipping']['shipping_neighborhood']  = $fields['shipping']['shipping_neighborhood'];
         $newfields['shipping']['shipping_address_2']  = $fields['shipping']['shipping_address_2'];
         $newfields['shipping']['shipping_city']       = $fields['shipping']['shipping_city'];
         $newfields['shipping']['shipping_state']      = $fields['shipping']['shipping_state'];
@@ -207,29 +207,30 @@ class WC_Rakuten_Log
     }
 
     public static function add_address_number_to_billing_address( $fields, $order ){
-        $fields['billing_address_number'] = get_post_meta( $order->get_id(), '_billing_address_number', true );
-        $fields['billing_district'] = get_post_meta( $order->get_id(), '_billing_district', true );
+        $fields['billing_number'] = get_post_meta( $order->get_id(), '_billing_number', true );
+        $fields['billing_neighborhood'] = get_post_meta( $order->get_id(), '_billing_neighborhood', true );
         return $fields;
     }
 
     public static function add_address_number_to_shipping_address( $fields, $order ){
-        $fields['shipping_address_number'] = get_post_meta( $order->get_id(), '_shipping_address_number', true );
-        $fields['shipping_district'] = get_post_meta( $order->get_id(), '_shipping_district', true );
-        $fields['shipping_phone_number'] = get_post_meta( $order->get_id(), '_shipping_phone_number', true );
+        $fields['shipping_number'] = get_post_meta( $order->get_id(), '_shipping_number', true );
+        $fields['shipping_neighborhood'] = get_post_meta( $order->get_id(), '_shipping_neighborhood', true );
+        $fields['shipping_number'] = get_post_meta( $order->get_id(), '_shipping_number', true );
         return $fields;
     }
 
     public static function add_address_replacement_fields( $replacements, $address ){
-        $replacements['{billing_address_number}'] = isset($address['billing_address_number']) ? $address['billing_address_number'] : '';
-        $replacements['{billing_district}'] = isset($address['billing_district']) ? $address['billing_district'] : '';
-        $replacements['{shipping_address_number}'] = isset($address['shipping_address_number']) ? $address['shipping_address_number'] : '';
-        $replacements['{shipping_district}'] = isset($address['shipping_district']) ? $address['shipping_district'] : '';
-        $replacements['{shipping_phone_number}'] = isset($address['shipping_phone_number']) ? $address['shipping_phone_number'] : '';
+        $replacements['{billing_number}'] = isset($address['billing_number']) ? $address['billing_number'] : '';
+        $replacements['{billing_neighborhood}'] = isset($address['billing_neighborhood']) ? $address['billing_neighborhood'] : '';
+        $replacements['{shipping_number}'] = isset($address['shipping_number']) ? $address['shipping_number'] : '';
+        $replacements['{shipping_neighborhood}'] = isset($address['shipping_neighborhood']) ? $address['shipping_neighborhood'] : '';
+        $replacements['{shipping_number}'] = isset($address['shipping_number']) ? $address['shipping_number'] : '';
+
         return $replacements;
     }
 
     public static function add_new_address_formats( $formats ) {
-        $formats['BR'] = "{name}\n{address_1}\n{billing_address_number}\n{billing_district}\n{shipping_address_number}\n{shipping_district}\n{shipping_phone_number}\n{city}\n{state}\n{postcode}\n{country}";
+        $formats['BR'] = "{name}\n{address_1}\n{billing_number}\n{billing_neighborhood}\n{shipping_number}\n{shipping_neighborhood}\n{shipping_number}\n{city}\n{state}\n{postcode}\n{country}";
         return $formats;
     }
 }

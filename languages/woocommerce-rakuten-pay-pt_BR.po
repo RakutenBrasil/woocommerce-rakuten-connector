@@ -1,8 +1,8 @@
-# Copyright (C) 2018 Rakuten Pay
+# Copyright (C) 2018 Genpay
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Rakuten Pay 0.0.1\n"
+"Project-Id-Version: WooCommerce Genpay 0.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-rakuten-pay\n"
 "POT-Creation-Date: 2018-05-11 18:15:05+00:00\n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Language: pt_BR\n"
 
 #: includes/admin/views/html-notice-currency-not-supported.php:15
-msgid "Rakuten Pay Disabled"
-msgstr "Rakuten Pay desativado"
+msgid "Genpay Disabled"
+msgstr "Genpay desativado"
 
 #: includes/admin/views/html-notice-currency-not-supported.php:15
 msgid "Currency %s is not supported. Works only with Brazilian Real."
 msgstr "Não há suporte para a moeda %s. Apenas Real brasileiro."
 
 #. Plugin Name of the plugin/theme
-msgid "WooCommerce Rakuten Pay"
+msgid "WooCommerce Genpay"
 msgstr ""
 
 #: includes/admin/views/html-notice-missing-woocommerce.php:22
@@ -52,11 +52,11 @@ msgstr "Falha na transação"
 
 #: includes/class-wc-rakuten-pay-api.php:449
 msgid "In order to cancel this transaction access the rakuten pay dashboard:  %1$s."
-msgstr "Para cancelar essa transação, acesse o painel de pagamento Rakuten:%1$s."
+msgstr "Para cancelar essa transação, acesse o painel de pagamento GenComm:%1$s."
 
 #: includes/class-wc-rakuten-pay-api.php:451
-msgid "Rakuten Pay: Order could not be cancelled due to an error. You must access the Rakuten Pay Dashboard to complete the cancel operation"
-msgstr "Rakuten Pay: o pedido não pôde ser cancelada devido a um erro. Você deve acessar o Rakuten Pay Dashboard para concluir a operação de cancelamento"
+msgid "Genpay: Order could not be cancelled due to an error. You must access the Genpay Dashboard to complete the cancel operation"
+msgstr "Genpay: o pedido não pôde ser cancelada devido a um erro. Você deve acessar o Genpay Dashboard para concluir a operação de cancelamento"
 
 #: includes/class-wc-rakuten-pay-api.php:500
 msgid "The refund transaction for order %s has failed."
@@ -64,11 +64,11 @@ msgstr "Falha na transação de reembolso do pedido %s."
 
 #: includes/class-wc-rakuten-pay-api.php:502
 msgid "In order to refund this transaction access the rakuten pay dashboard:  %1$s."
-msgstr "Para restituir essa transação, acesse o Rakuten Pay Dashboard:%1$s."
+msgstr "Para restituir essa transação, acesse o Genpay Dashboard:%1$s."
 
 #: includes/class-wc-rakuten-pay-api.php:504
-msgid "Rakuten Pay: Order could not be refunded due to an error. You must access the Rakuten Pay Dashboard to complete the cancel operation"
-msgstr "Rakuten Pay: o pedido não pôde ser reembolsada devido a um erro. Você deve acessar o Rakuten Pay Dashboard para concluir a operação de cancelamento"
+msgid "Genpay: Order could not be refunded due to an error. You must access the Genpay Dashboard to complete the cancel operation"
+msgstr "Genpay: o pedido não pôde ser reembolsada devido a um erro. Você deve acessar o Genpay Dashboard para concluir a operação de cancelamento"
 
 #: includes/class-wc-rakuten-pay-api.php:604
 msgid "Visa"
@@ -125,20 +125,20 @@ msgid "Banking Ticket URL"
 msgstr "Url do boleto"
 
 #: includes/class-wc-rakuten-pay-api.php:857
-msgid "Rakuten Pay Request Failure"
-msgstr "Rakuten Pay Requisição Falhou"
+msgid "Genpay Request Failure"
+msgstr "Genpay Requisição Falhou"
 
 #: includes/class-wc-rakuten-pay-api.php:902
-msgid "Rakuten Pay: The transaction is being processed."
-msgstr "Rakuten Pay: A Transação está sendo processada."
+msgid "Genpay: The transaction is being processed."
+msgstr "Genpay: A Transação está sendo processada."
 
 #: includes/class-wc-rakuten-pay-api.php:910
-msgid "Rakuten Pay: The transaction was authorized."
-msgstr "Rakuten Pay: A transação foi autorizada."
+msgid "Genpay: The transaction was authorized."
+msgstr "Genpay: A transação foi autorizada."
 
 #: includes/class-wc-rakuten-pay-api.php:918
-msgid "Rakuten Pay: Transaction paid."
-msgstr "Rakuten Pay: Transação efetuada."
+msgid "Genpay: Transaction paid."
+msgstr "Genpay: Transação efetuada."
 
 #: includes/class-wc-rakuten-pay-api.php:941
 msgid "The transaction for order %s was cancelled"
@@ -149,32 +149,32 @@ msgid "The transaction for order %s was declined"
 msgstr "A transação para o pedido %s foi declinada"
 
 #: includes/class-wc-rakuten-pay-api.php:943
-msgid "Order %1$s has been marked as cancelled, because the transaction was cancelled on Rakuten Pay, for more details, see %2$s."
-msgstr "O pedido %1$s foi marcado como cancelado, devido ao cancelamento feito no Rakuten Pay, para mais detalhes acesse %2$s."
+msgid "Order %1$s has been marked as cancelled, because the transaction was cancelled on Genpay, for more details, see %2$s."
+msgstr "O pedido %1$s foi marcado como cancelado, devido ao cancelamento feito no Genpay, para mais detalhes acesse %2$s."
 
 #: includes/class-wc-rakuten-pay-api.php:1049
-msgid "Order %1$s has been marked as declined, because the transaction was declined on Rakuten Pay, for more details, see %2$s."
-msgstr "O pedido %1$s foi marcado como declinado, devido ao cancelamento feito no Rakuten Pay, para mais detalhes acesse %2$s."
+msgid "Order %1$s has been marked as declined, because the transaction was declined on Genpay, for more details, see %2$s."
+msgstr "O pedido %1$s foi marcado como declinado, devido ao cancelamento feito no Genpay, para mais detalhes acesse %2$s."
 
 #: includes/class-wc-rakuten-pay-api.php:946
-msgid "Rakuten Pay: The transaction was cancelled."
-msgstr "Rakuten Pay: A transação foi cancelada."
+msgid "Genpay: The transaction was cancelled."
+msgstr "Genpay: A transação foi cancelada."
 
 #: includes/class-wc-rakuten-pay-api.php:946
-msgid "Rakuten Pay: The transaction was declined."
-msgstr "Rakuten Pay: A transação foi declinada."
+msgid "Genpay: The transaction was declined."
+msgstr "Genpay: A transação foi declinada."
 
 #: includes/class-wc-rakuten-pay-api.php:1001
 msgid "Order fully refunded"
 msgstr "Pedido totalmente estornado"
 
 #: includes/class-wc-rakuten-pay-api.php:1024
-msgid "Rakuten Pay: The transaction fully refunded."
-msgstr "Rakuten Pay: A transação foi totalmente estornada."
+msgid "Genpay: The transaction fully refunded."
+msgstr "Genpay: A transação foi totalmente estornada."
 
 #: includes/class-wc-rakuten-pay-api.php:1027
-msgid "Rakuten Pay: The transaction received a partial refund."
-msgstr "Rakuten Pay: A transação foi parcialmente estornada."
+msgid "Genpay: The transaction received a partial refund."
+msgstr "Genpay: A transação foi parcialmente estornada."
 
 #: includes/class-wc-rakuten-pay-api.php:1033
 msgid "The transaction for order %s refunded"
@@ -189,8 +189,8 @@ msgid "Transaction refunded"
 msgstr "Transação estornada"
 
 #: includes/class-wc-rakuten-pay-api.php:1035
-msgid "Order %1$s has been marked as refunded by Rakuten Pay, for more details, see %2$s."
-msgstr "O pedido %1$s foi marcado como estornado pelo Rakuten Pay, para maiores detalhes, acesse %2$s."
+msgid "Order %1$s has been marked as refunded by Genpay, for more details, see %2$s."
+msgstr "O pedido %1$s foi marcado como estornado pelo Genpay, para maiores detalhes, acesse %2$s."
 
 #: includes/class-wc-rakuten-pay-api.php:1035
 msgid "Order %1$s has been marked as pending payment, for more details, see %2$s."
@@ -198,12 +198,12 @@ msgstr "O pedido %1$s foi marcado como pagamento pendente, para maiores detalhes
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:26
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:98
-msgid "Rakuten Pay - Banking Billet"
-msgstr "Rakuten Pay - Boleto"
+msgid "Genpay - Banking Billet"
+msgstr "Genpay - Boleto"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:27
-msgid "Accept banking billet payments using Rakuten Pay."
-msgstr "Aceite pagamentos via boleto usando o Rakuten Pay."
+msgid "Accept banking billet payments using Genpay."
+msgstr "Aceite pagamentos via boleto usando o Genpay."
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:88
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:96
@@ -211,8 +211,8 @@ msgid "Enable/Disable"
 msgstr "Habilitar/Desabilitar"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:90
-msgid "Enable Rakuten Pay Banking Billet"
-msgstr "Habilitar pagamentos de boletos via Rakuten Pay"
+msgid "Enable Genpay Banking Billet"
+msgstr "Habilitar pagamentos de boletos via Genpay"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:94
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:102
@@ -245,8 +245,8 @@ msgstr "Configurações de Integração"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:113
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:121
-msgid "Rakuten Pay Document"
-msgstr "Rakuten Pay Documento"
+msgid "Genpay Document"
+msgstr "Genpay Documento"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:115
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:123
@@ -259,28 +259,28 @@ msgstr "Por favor entre o documento (cnpj) de sua loja."
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:123
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:132
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:141
-msgid "Rakuten Pay Dashboard > My Account page"
-msgstr "Rakuten Pay Dashboard > Minha Conta"
+msgid "Genpay Dashboard > My Account page"
+msgstr "Genpay Dashboard > Minha Conta"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:122
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:130
-msgid "Rakuten Pay API Key"
-msgstr "Rakuten Pay, Chave de API"
+msgid "Genpay API Key"
+msgstr "Genpay, Chave de API"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:124
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:132
-msgid "Please enter your Rakuten Pay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s."
-msgstr "Por favor entre com a sua chave de API. Isso é necessário para processar os seus pagamentos via Rakuten Pay e receber notificações. É possível pegar essa Chave em %s."
+msgid "Please enter your Genpay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s."
+msgstr "Por favor entre com a sua chave de API. Isso é necessário para processar os seus pagamentos via Genpay e receber notificações. É possível pegar essa Chave em %s."
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:131
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:139
-msgid "Rakuten Pay Signature Key"
-msgstr "Rakuten Pay, Chave de assinatura"
+msgid "Genpay Signature Key"
+msgstr "Genpay, Chave de assinatura"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:133
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:141
-msgid "Please enter your Rakuten Pay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s."
-msgstr "Por favor entre com a sua chave de API. Isso é necessário para processar os seus pagamentos via Rakuten Pay e receber notificações. É possível pegar essa Chave em %s."
+msgid "Please enter your Genpay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s."
+msgstr "Por favor entre com a sua chave de API. Isso é necessário para processar os seus pagamentos via Genpay e receber notificações. É possível pegar essa Chave em %s."
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:140
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:148
@@ -289,8 +289,8 @@ msgstr "Ambiente"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:142
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:150
-msgid "Rakuten Pay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions."
-msgstr "Rakuten Pay tem dois ambientes, o ambiente de Homologação usado para fazer transações de testes e o ambiente de Produção usado para transações reais."
+msgid "Genpay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions."
+msgstr "Genpay tem dois ambientes, o ambiente de Homologação usado para fazer transações de testes e o ambiente de Produção usado para transações reais."
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:145
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:153
@@ -319,8 +319,8 @@ msgstr "Habilitar Log de depuração"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:159
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:231
-msgid "Log Rakuten Pay events, such as API requests. You can check the log in %s"
-msgstr "Logar eventos do Rakuten Pay, tais como chamadas de API, você pode verificar estes logo posteriormente em %s"
+msgid "Log Genpay events, such as API requests. You can check the log in %s"
+msgstr "Logar eventos do Genpay, tais como chamadas de API, você pode verificar estes logo posteriormente em %s"
 
 #: includes/class-wc-rakuten-pay-banking-billet-gateway.php:159
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:231
@@ -329,16 +329,16 @@ msgstr ""
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:26
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:106
-msgid "Rakuten Pay - Credit Card"
-msgstr "Rakuten Pay - Cartão de Crédito"
+msgid "Genpay - Credit Card"
+msgstr "Genpay - Cartão de Crédito"
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:27
-msgid "Accept credit card payments using Rakuten Pay."
-msgstr "Aceite pagamentos via cartão de crédito usando o Rakuten Pay."
+msgid "Accept credit card payments using Genpay."
+msgstr "Aceite pagamentos via cartão de crédito usando o Genpay."
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:98
-msgid "Enable Rakuten Pay Credit Card"
-msgstr "Habilitar pagamento através de Cartão de Crédito via Rakuten Pay"
+msgid "Enable Genpay Credit Card"
+msgstr "Habilitar pagamento através de Cartão de Crédito via Genpay"
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:113
 msgid "Pay with Credit Card"
@@ -425,8 +425,8 @@ msgid "District"
 msgstr "Bairro"
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:582
-msgid "Rakuten Pay: Credit Card Orders cannot be cancelled, you must wait the approve to proceed the refund."
-msgstr "Rakuten Pay: Pedidos pagos via Cartão de Crédito não podem ser cancelados, você deve esperar até que eles sejam aprovados para fazer um estorno."
+msgid "Genpay: Credit Card Orders cannot be cancelled, you must wait the approve to proceed the refund."
+msgstr "Genpay: Pedidos pagos via Cartão de Crédito não podem ser cancelados, você deve esperar até que eles sejam aprovados para fazer um estorno."
 
 #: includes/class-wc-rakuten-pay-credit-card-gateway.php:582
 msgid "PayVault tokenization error response"
@@ -583,15 +583,15 @@ msgid "Credit Card Settings"
 msgstr "Configurações de Cartão de Crédito"
 
 #. Plugin URI of the plugin/theme
-msgid "http://github.com/RakutenBrasil/woocommerce-rakuten-pay"
+msgid "http://github.com/GenCommBrasil/woocommerce-rakuten-pay"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Gateway de pagamento Rakuten Pay para WooCommerce."
+msgid "Gateway de pagamento Genpay para WooCommerce."
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Rakuten Pay"
+msgid "Genpay"
 msgstr ""
 
 #. Author URI of the plugin/theme

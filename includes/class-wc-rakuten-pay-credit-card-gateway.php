@@ -23,10 +23,10 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $this->id                   = 'rakuten-pay-credit-card';
     $this->icon                 = apply_filters( 'wc_rakuten_pay_credit_card_icon', false );
     $this->has_fields           = true;
-    $this->title                = __( 'Rakuten Pay - Credit Card', 'woocommerce-rakuten-pay' );
+    $this->title                = __( 'GenPay - Credit Card', 'woocommerce-rakuten-pay' );
     $this->description          = __( 'Pay with Credit Card', 'woocommerce-rakuten-pay' );
-    $this->method_title         = __( 'Rakuten Pay - Credit Card', 'woocommerce-rakuten-pay' );
-    $this->method_description   = __( 'Accept credit card payments using Rakuten Pay.', 'woocommerce-rakuten-pay' );
+    $this->method_title         = __( 'GenPay - Credit Card', 'woocommerce-rakuten-pay' );
+    $this->method_description   = __( 'Accept credit card payments using GenPay.', 'woocommerce-rakuten-pay' );
     $this->view_transaction_url = 'https://dashboard.rakutenpay.com.br/sales/%s';
     $this->supports             = array( 'products', 'refunds' );
 
@@ -64,9 +64,9 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     add_action( 'woocommerce_order_status_cancelled', array( $this, 'cancel_credit_card_transaction' ) );
 
     // Filters.
-    add_filter( 'woocommerce_checkout_fields', array( $this, 'custom_checkout_fields' ) );
-    add_filter( 'woocommerce_default_address_fields', array( $this, 'reorder_custom_default_address_fields' ) );
-    add_filter( 'woocommerce_checkout_get_value', array( $this, 'rk_populate_checkout_fields' ), 10, 2 );
+    /* add_filter( 'woocommerce_checkout_fields', array( $this, 'custom_checkout_fields' ) ); */
+    /* add_filter( 'woocommerce_default_address_fields', array( $this, 'reorder_custom_default_address_fields' ) ); */
+    /* add_filter( 'woocommerce_checkout_get_value', array( $this, 'rk_populate_checkout_fields' ), 10, 2 ); */
 
           // A Hack to allow insert script tag of type text/template just for additional refund banking data.
     add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'refund_banking_data_fields' ) );
@@ -96,7 +96,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       'enabled' => array(
         'title'   => __( 'Enable/Disable', 'woocommerce-rakuten-pay' ),
         'type'    => 'checkbox',
-        'label'   => __( 'Enable Rakuten Pay Credit Card', 'woocommerce-rakuten-pay' ),
+        'label'   => __( 'Enable GenPay Credit Card', 'woocommerce-rakuten-pay' ),
         'default' => 'no',
       ),
       'integration' => array(
@@ -105,27 +105,27 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'description' => '',
       ),
       'document' => array(
-        'title'             => __( 'Rakuten Pay Document', 'woocommerce-rakuten-pay' ),
+        'title'             => __( 'GenPay Document', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter the document of your store.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'Rakuten Pay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter the document of your store.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.genpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
         ),
       ),
       'api_key' => array(
-        'title'             => __( 'Rakuten Pay API Key', 'woocommerce-rakuten-pay' ),
+        'title'             => __( 'GenPay API Key', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter your Rakuten Pay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'Rakuten Pay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter your GenPay API Key. This is needed to process the payment and notifications. Is possible get your API Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.genpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
         ),
       ),
       'signature_key' => array(
-        'title'             => __( 'Rakuten Pay Signature Key', 'woocommerce-rakuten-pay' ),
+        'title'             => __( 'GenPay Signature Key', 'woocommerce-rakuten-pay' ),
         'type'              => 'text',
-        'description'       => sprintf( __( 'Please enter your Rakuten Pay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.rakutenpay.com.br/">' . __( 'Rakuten Pay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description'       => sprintf( __( 'Please enter your GenPay Signature key. This is needed to process the payment. Is possible get your Signature Key in %s.', 'woocommerce-rakuten-pay' ), '<a href="https://dashboard.genpay.com.br/">' . __( 'GenPay Dashboard > My Account page', 'woocommerce-rakuten-pay' ) . '</a>' ),
         'default'           => '',
         'custom_attributes' => array(
           'required' => 'required',
@@ -134,7 +134,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 			'environment' => array(
 				'title'       => __( 'Environment', 'woocommerce-rakuten-pay' ),
 				'type'        => 'select',
-				'description' => sprintf( __( 'Rakuten Pay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
+				'description' => sprintf( __( 'GenPay has two environemnts, th e Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-pay' ) ),
 				'default'     => 'production',
 				'options'     => array(
 					'production'  => sprintf( __( 'Production', 'woocommerce-raktuten-pay' ) ),
@@ -223,7 +223,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
         'type'        => 'checkbox',
         'label'       => __( 'Enable logging', 'woocommerce-rakuten-pay' ),
         'default'     => 'no',
-        'description' => sprintf( __( 'Log Rakuten Pay events, such as API requests. You can check the log in %s', 'woocommerce-rakuten-pay' ), '<a href="' . esc_url( admin_url( 'admin.php?page=wc-status&tab=logs&log_file=' . esc_attr( $this->id ) . '-' . sanitize_file_name( wp_hash( $this->id ) ) . '.log' ) ) . '">' . __( 'System Status &gt; Logs', 'woocommerce-rakuten-pay' ) . '</a>' ),
+        'description' => sprintf( __( 'Log GenPay events, such as API requests. You can check the log in %s', 'woocommerce-rakuten-pay' ), '<a href="' . esc_url( admin_url( 'admin.php?page=wc-status&tab=logs&log_file=' . esc_attr( $this->id ) . '-' . sanitize_file_name( wp_hash( $this->id ) ) . '.log' ) ) . '">' . __( 'System Status &gt; Logs', 'woocommerce-rakuten-pay' ) . '</a>' ),
       ),
     );
   }
@@ -304,7 +304,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
    * @return array $result       Installments with free installments applied.
    */
   private function apply_free_installments( $installments ) {
-    return array_map( function( $inst ) { 
+    return array_map( function( $inst ) {
       if ( $inst['quantity'] > $this->free_installments ) {
         return $inst;
       }
@@ -440,21 +440,21 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
         ),
-        'billing_document'  => array(
+        'billing_cpf'  => array(
           'label'           => __( 'Document', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Informe seu CPF', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
         ),
-        'billing_address_number'    => array(
+        'billing_number'    => array(
           'label'           => __( 'Number', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Number', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
         ),
-        'billing_district'  => array(
+        'billing_neighborhood'  => array(
           'label'           => __( 'District', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Bairro', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
@@ -467,9 +467,9 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $billing_fields['billing_birthdate']['priority'] = 40;
     $billing_fields['billing_phone']['priority'] = 50;
     $billing_fields['billing_email']['priority'] = 50;
-    $billing_fields['billing_document']['priority'] = 60;
-    $billing_fields['billing_address_number']['priority'] = 80;
-    $billing_fields['billing_district']['priority'] = 100;
+    $billing_fields['billing_cpf']['priority'] = 60;
+    $billing_fields['billing_number']['priority'] = 80;
+    $billing_fields['billing_neighborhood']['priority'] = 100;
 
     $billing_fields['billing_phone']['required'] = true;
 
@@ -484,21 +484,21 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
     $shipping_fields = array_merge(
       $shipping_fields,
       array(
-        'shipping_address_number'    => array(
+        'shipping_number'    => array(
           'label'           => __( 'Number', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Number', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-first' ),
           'clear'           => true
         ),
-        'shipping_district'    => array(
+        'shipping_neighborhood'    => array(
           'label'           => __( 'District', 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
           'class'           => array( 'form-row-wide' ),
           'clear'           => true
         ),
-        'shipping_phone_number'    => array(
+        'shipping_number'    => array(
           'label'           => __( 'Phone number' , 'woocommerce-rakuten-pay' ),
           'placeholder'     => __( 'Número de telefone' , 'placeholder', 'woocommerce-rakuten-pay' ),
           'required'        => true,
@@ -508,9 +508,9 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       )
     );
 
-    $shipping_fields['shipping_address_number']['priority'] = 100;
-    $shipping_fields['shipping_district']['priority'] = 110;
-    $shipping_fields['shipping_phone_number']['priority'] = 55;
+    $shipping_fields['shipping_number']['priority'] = 100;
+    $shipping_fields['shipping_neighborhood']['priority'] = 110;
+    $shipping_fields['shipping_number']['priority'] = 55;
 
     $fields['shipping'] = $shipping_fields;
 
@@ -535,14 +535,14 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       $fields['billing']['billing_company']['priority'] = 10;
       $fields['billing']['billing_first_name']['priority'] = 20;
       $fields['billing']['billing_last_name']['priority'] = 25;
-      $fields['billing']['billing_document']['priority'] = 30;
+      $fields['billing']['billing_cpf']['priority'] = 30;
 
     // Shipping Fields
     $fields['shipping']['shipping_address_1']['priority'] = 70;
     $fields['shipping']['shipping_address_2']['priority'] = 90;
-    $fields['shipping']['shipping_address_number']['priority'] = 100;
-    $fields['shipping_phone_number']['priority'] = 105;
-    $fields['shipping']['shipping_district']['priority'] = 110;
+    $fields['shipping']['shipping_number']['priority'] = 100;
+    $fields['shipping_number']['priority'] = 105;
+    $fields['shipping']['shipping_neighborhood']['priority'] = 110;
     $fields['shipping']['shipping_postcode']['priority'] = 120;
     $fields['shipping']['shipping_city']['priority'] = 130;
     $fields['shipping']['shipping_state']['priority'] = 140;
@@ -581,14 +581,14 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 //        )
 //      ) +
 //      array(
-//        'shipping_address_number'    => array(
+//        'shipping_number'    => array(
 //          'label'           => __( 'Number', 'woocommerce-rakuten-log' ),
 //          'placeholder'     => __( 'Number', 'placeholder', 'woocommerce' ),
 //          'required'        => true,
 //          'class'           => array( 'form-row-wide' ),
 //          'clear'           => true
 //        ),
-//        'shipping_district'  => array(
+//        'shipping_neighborhood'  => array(
 //          'label'           => __( 'District', 'woocommerce-rakuten-log' ),
 //          'placeholder'     => __( 'District', 'placeholder', 'woocommerce-rakuten-log' ),
 //          'required'        => true,
@@ -624,7 +624,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
 
     if ( $this->api->is_credit_card_payment_method( $order ) ) {
       $order->add_order_note(
-        __( 'Rakuten Pay: Credit Card Orders cannot be cancelled, you must wait the approve to proceed the refund.', 'woocommerce-rakuten-pay' )
+        __( 'GenPay: Credit Card Orders cannot be cancelled, you must wait the approve to proceed the refund.', 'woocommerce-rakuten-pay' )
       );
       return;
     }
@@ -647,7 +647,7 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
       $current_user_id = $current_user->ID;
       $document = get_user_meta( $current_user_id, '', true );
 
-      if ( isset($document['billing_document'][0]) ) {
+      if ( isset($document['billing_cpf'][0]) ) {
           switch ($key) :
               case 'billing_first_name':
               case 'shipping_first_name':
@@ -661,8 +661,8 @@ class WC_Rakuten_Pay_Credit_Card_Gateway extends WC_Payment_Gateway_CC {
               case 'billing_email':
                   return $current_user->user_email;
                   break;
-              case 'billing_document':
-                  return $document['billing_document'][0];
+              case 'billing_cpf':
+                  return $document['billing_cpf'][0];
                   break;
               case 'billing_birthdate':
                   return $document['billing_birthdate'][0];

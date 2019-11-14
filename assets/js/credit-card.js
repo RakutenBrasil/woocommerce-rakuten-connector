@@ -28,8 +28,7 @@ $form = null;
                   "expiration-month": creditCardFormElem.querySelector("[data-rkp='card-expiration-month']"),
                   "expiration-year": creditCardFormElem.querySelector("[data-rkp='card-expiration-year']")
                 },
-                buyerDocument       = document.getElementById('billing_document').value,
-                buyerBirthDate      = document.getElementById('billing_birthdate').value;
+                buyerDocument       = document.getElementById('billing_cpf').value;
 
 			// Lock the checkout form.
 			form.addClass( 'processing' );
@@ -121,29 +120,12 @@ $form = null;
                 return defer;
             }
 
-            if ( buyerDocument === "" && buyerBirthDate === "" ) {
+            if ( buyerDocument === '' ) {
 
                 console.log('Informe o CPF/CNPJ e data nascimento' + buyerDocument);
 
-                $('#billing_document').focus();
-                $('label[for=billing_document]').css({ color: '#a00' });
-                $('label[for=billing_birthdate]').css({ color: '#a00' });
-
-            } else if ( buyerDocument === "" ) {
-
-                console.log('Preencha a data de nascimento');
-
-                alert('Preencha a data de nascimento');
-                $('#billing_birthdate').focus();
-                $('label[for=billing_document]').css({ color: '#a00' });
-
-            } else if ( buyerBirthDate === "" ) {
-
-                console.log('Preencha a data de nascimento');
-
-                alert('Preencha a data de nascimento');
-                $('#billing_birthdate').focus();
-                $('label[for=billing_birthdate]').css({ color: '#a00' });
+                $('#billing_cpf').focus();
+                $('label[for=billing_cpf]').css({ color: '#a00' });
 
             } else {
                 $.when(tokenize(), fingerprintfy()).then(handleSuccess, handleErrors);
@@ -152,7 +134,7 @@ $form = null;
 			return false;
 		});
 
-        $( '#billing_document' ).blur(function(){
+        $( '#billing_cpf' ).blur(function(){
 
             // O CPF ou CNPJ
             var cpf_cnpj = $(this).val();
@@ -436,10 +418,9 @@ $form = null;
 
 	});
 
-  $( '#billing_birthdate' ).inputmask({"alias": "date"});
-  $( '#billing_document' ).inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
+  $( '#billing_cpf' ).inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
   $( '#rakuten-pay-card-holder-document' ).inputmask({mask: ['999.999.999-99', '99.999.999/9999-99']});
   $( '#billing_phone' ).inputmask('(99) 9999[9]-9999');
-  $( '#shipping_phone_number' ).inputmask('(99) 9999[9]-9999');
+  $( '#shipping_number' ).inputmask('(99) 9999[9]-9999');
 
 }( jQuery ));

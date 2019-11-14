@@ -14,9 +14,9 @@ class WC_Rakuten_Log_Shipping extends WC_Shipping_Method {
     {
         $this->instance_id = absint( $instance_id );
         $this->id = 'rakuten-log';
-        $this->method_title = __('Rakuten Log', 'woocommerce-rakuten-log');
+        $this->method_title = __('GenLog', 'woocommerce-rakuten-log');
 
-        $this->method_description = sprintf( __('%s is a shipping method from Rakuten Log.', 'woocommerce-rakuten-log'), $this->method_title);
+        $this->method_description = sprintf( __('%s is a shipping method from GenLog.', 'woocommerce-rakuten-log'), $this->method_title);
         $this->supports           = array(
             'shipping-zones',
             'instance-settings',
@@ -76,7 +76,7 @@ class WC_Rakuten_Log_Shipping extends WC_Shipping_Method {
             'environment' => array(
                 'title'       => __('Environment', 'woocommerce-rakuten-log'),
                 'type'        => 'select',
-                'description' => sprintf( __( 'Rakuten Log has two environments, the Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-log' ) ),
+                'description' => sprintf( __( 'GenLog has two environments, the Sandbox used to make test transactions, and Production used for real transactions.', 'woocommerce-rakuten-log' ) ),
                 'default'     => 'sandbox',
                 'options'     => array(
                     'production'  => sprintf( __( 'Production', 'woocommerce-rakuten-log' ) ),

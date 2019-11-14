@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: WooCommerce Rakuten Log
- * Plugin URI: http://github.com/RakutenBrasil/woocommerce-rakuten-log
- * Description: Gateway de logística Rakuten Log para WooCommerce.
- * Author: Rakuten Log
+ * Plugin Name: WooCommerce GenLog
+ * Plugin URI: http://github.com/GenCommBrasil/woocommerce-rakuten-log
+ * Description: Gateway de logística GenLog para WooCommerce.
+ * Author: GenLog
  * Author URI: https://rakuten.com.br/
  * Version: 1.0.0
  * License: GPLv2 or later

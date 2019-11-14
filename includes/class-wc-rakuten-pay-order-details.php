@@ -13,9 +13,9 @@ class WC_Rakuten_Pay_Order_Details {
     public function __construct()
     {
         // Account Edit Addresses: Remove and reorder addresses fields
-        add_filter( 'woocommerce_default_address_fields', array( $this, 'rk_myaccount_address_fields' ), 20, 1 );
+        //add_filter( 'woocommerce_default_address_fields', array( $this, 'rk_myaccount_address_fields' ), 20, 1 );
         // Account Edit Addresses: Reorder billing email and phone fields
-        add_filter( 'woocommerce_billing_fields', array( $this, 'rk_myaccount_billing_fields'), 20, 1 );
+        //add_filter( 'woocommerce_billing_fields', array( $this, 'rk_myaccount_billing_fields'), 20, 1 );
     }
 
     public function rk_myaccount_address_fields( $fields ) {
@@ -68,21 +68,21 @@ class WC_Rakuten_Pay_Order_Details {
                     'class'           => array( 'form-row-wide' ),
                     'clear'           => true
                 ),
-                'billing_document'  => array(
+                'billing_cpf'  => array(
                     'label'           => __( 'Document', 'woocommerce-rakuten-pay' ),
                     'placeholder'     => __( 'Informe seu CPF', 'placeholder', 'woocommerce-rakuten-pay' ),
                     'required'        => true,
                     'class'           => array( 'form-row-wide' ),
                     'clear'           => true
                 ),
-                'billing_address_number'    => array(
+                'billing_number'    => array(
                     'label'           => __( 'Number', 'woocommerce-rakuten-pay' ),
                     'placeholder'     => __( 'Number', 'placeholder', 'woocommerce-rakuten-pay' ),
                     'required'        => true,
                     'class'           => array( 'form-row-wide' ),
                     'clear'           => true
                 ),
-                'billing_district'  => array(
+                'billing_neighborhood'  => array(
                     'label'           => __( 'District', 'woocommerce-rakuten-pay' ),
                     'placeholder'     => __( 'Bairro', 'placeholder', 'woocommerce-rakuten-pay' ),
                     'required'        => true,
@@ -95,9 +95,9 @@ class WC_Rakuten_Pay_Order_Details {
         $billing_fields['billing_birthdate']['priority'] = 40;
         $billing_fields['billing_phone']['priority'] = 50;
         $billing_fields['billing_email']['priority'] = 50;
-        $billing_fields['billing_document']['priority'] = 50;
-        $billing_fields['billing_address_number']['priority'] = 80;
-        $billing_fields['billing_district']['priority'] = 100;
+        $billing_fields['billing_cpf']['priority'] = 50;
+        $billing_fields['billing_number']['priority'] = 80;
+        $billing_fields['billing_neighborhood']['priority'] = 100;
 
         $billing_fields['billing_phone']['required'] = true;
 

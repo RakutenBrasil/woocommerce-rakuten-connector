@@ -13,12 +13,12 @@ class WC_Rakuten_Log_Tracking_Email extends WC_Email {
     public function __construct()
     {
         $this->id               = 'rakuten_log_tracking';
-        $this->title            = __('Rakuten Log Tracking Code', 'woocommerce-rakuten-log');
+        $this->title            = __('GenLog Tracking Code', 'woocommerce-rakuten-log');
         $this->customer_email   = true;
         $this->description      = __('This email is sent when a batch is created for the order.', 'woocommerce-rakuten-log');
         $this->heading          = __('Your order has been sent', 'woocommerce-rakuten-log');
         $this->subject          = __('[{site_title}]] Your order {order_number} has been sent', 'woocommerce-rakuten-log');
-        $this->message          = __('Hi there. Your recent order on {site_title} has been sent by Rakuten Log.', 'woocommerce-rakuten-log')
+        $this->message          = __('Hi there. Your recent order on {site_title} has been sent by GenLog.', 'woocommerce-rakuten-log')
                                   . PHP_EOL . ' ' . PHP_EOL
                                   . __('To track your delivery, use this <a href="{tracking_url}">tracking link</a>.', 'woocommerce-rakuten-log');
         $this->tracking_message = $this->get_option( 'tracking_message', $this->message );

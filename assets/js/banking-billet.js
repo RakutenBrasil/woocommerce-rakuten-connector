@@ -20,7 +20,7 @@ $form = null;
 				rpay                = new RPay(),
 				errors              = null,
 				errorHtml           = '',
-                buyerDocument       = document.getElementById('billing_document').value,
+                buyerDocument       = document.getElementById('billing_cpf').value,
                 buyerBirthDate      = document.getElementById('billing_birthdate').value;
 
 			// Lock the checkout form.
@@ -62,8 +62,8 @@ $form = null;
 
                 console.log('Informe o CPF/CNPJ e data nascimento' + buyerDocument);
 
-                $('#billing_document').focus();
-                $('label[for=billing_document]').css({ color: '#a00' });
+                $('#billing_cpf').focus();
+                $('label[for=billing_cpf]').css({ color: '#a00' });
                 $('label[for=billing_birthdate]').css({ color: '#a00' });
 
             } else if ( buyerDocument === "" ) {
@@ -72,7 +72,7 @@ $form = null;
 
                 alert('Preencha a data de nascimento');
                 $('#billing_birthdate').focus();
-                $('label[for=billing_document]').css({ color: '#a00' });
+                $('label[for=billing_cpf]').css({ color: '#a00' });
 
             } else if ( buyerBirthDate === "" ) {
 

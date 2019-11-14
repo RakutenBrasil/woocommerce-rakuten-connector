@@ -1,10 +1,10 @@
-# Copyright (C) 2018 Rakuten Log
+# Copyright (C) 2018 GenLog
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Rakuten Log 1.0.0\n"
+"Project-Id-Version: WooCommerce GenLog 1.0.0\n"
 "Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/woocommerce-rakuten-log\n"
+"https://wordpress.org/support/plugin/woocommerce-genlog\n"
 "POT-Creation-Date: 2018-07-11 13:08:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -19,7 +19,7 @@ msgid "Show all shipping methods"
 msgstr ""
 
 #: includes/admin/class-wc-rakuten-log-admin-orders.php:102
-msgid "Create Rakuten Log batch"
+msgid "Create GenLog batch"
 msgstr ""
 
 #: includes/admin/class-wc-rakuten-log-admin-orders.php:210
@@ -37,7 +37,7 @@ msgid "Batch already created for order"
 msgstr ""
 
 #: includes/admin/class-wc-rakuten-log-admin-orders.php:281
-msgid "There has been an error creating a Rakuten Log Batch!"
+msgid "There has been an error creating a GenLog Batch!"
 msgstr ""
 
 #: includes/admin/class-wc-rakuten-log-admin-orders.php:296
@@ -87,7 +87,7 @@ msgid "Volume"
 msgstr ""
 
 #: includes/admin/views/html-metabox-shop-order.php:89
-msgid "Rakuten Log actions"
+msgid "GenLog actions"
 msgstr ""
 
 #: includes/admin/views/html-metabox-shop-order.php:90
@@ -103,11 +103,11 @@ msgid "Follow order"
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Rakuten Log"
+msgid "GenLog"
 msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:27
-msgid "%s is a shipping method from Rakuten Log."
+msgid "%s is a shipping method from GenLog."
 msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:51
@@ -138,7 +138,7 @@ msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:66
 #: tests/test-wc-rakuten-log-shipping.php:157
-msgid "Document of the owner registered on Rakuten"
+msgid "Document of the owner registered on GenComm"
 msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:71
@@ -148,7 +148,7 @@ msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:73
 #: tests/test-wc-rakuten-log-shipping.php:164
-msgid "API key registered on Rakuten"
+msgid "API key registered on GenComm"
 msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:78
@@ -158,7 +158,7 @@ msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:80
 #: tests/test-wc-rakuten-log-shipping.php:171
-msgid "Signature key registered on Rakuten"
+msgid "Signature key registered on GenComm"
 msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:85
@@ -167,7 +167,7 @@ msgstr ""
 
 #: includes/class-wc-rakuten-log-shipping.php:87
 msgid ""
-"Rakuten Log has two environments, the Sandbox used to make test "
+"GenLog has two environments, the Sandbox used to make test "
 "transactions, and Production used for real transactions."
 msgstr ""
 
@@ -188,7 +188,7 @@ msgid "Complement"
 msgstr ""
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:24
-msgid "Rakuten Log Tracking Code"
+msgid "GenLog Tracking Code"
 msgstr ""
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:26
@@ -204,7 +204,7 @@ msgid "[{site_title}]] Your order {order_number} has been sent"
 msgstr ""
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:29
-msgid "Hi there. Your recent order on {site_title} has been sent by Rakuten Log."
+msgid "Hi there. Your recent order on {site_title} has been sent by GenLog."
 msgstr ""
 
 #: includes/emails/class-wc-rakuten-log-tracking-email.php:31
@@ -273,7 +273,7 @@ msgid "For your reference, your order details are shown below."
 msgstr ""
 
 #: templates/myaccount/tracking_link.php:21
-msgid "Rakuten Log delivery tracking"
+msgid "GenLog delivery tracking"
 msgstr ""
 
 #: templates/myaccount/tracking_link.php:23
@@ -289,15 +289,15 @@ msgid "Link"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-msgid "WooCommerce Rakuten Log"
+msgid "WooCommerce GenLog"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://github.com/RakutenBrasil/woocommerce-rakuten-log"
+msgid "http://github.com/GenCommBrasil/woocommerce-genlog"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Gateway de logística Rakuten Log para WooCommerce."
+msgid "Gateway de logística GenLog para WooCommerce."
 msgstr ""
 
 #. Author URI of the plugin/theme
