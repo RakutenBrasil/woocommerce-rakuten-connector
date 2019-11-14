@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Pay Banking Billet gateway
+ * GenPay Banking Billet gateway
  *
  * @package WooCommerce_Rakuten_Pay/Gateway
  */
@@ -61,6 +61,23 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
     add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_scripts' ) );
     // A Hack to allow insert script tag of type text/template just for additional refund banking data.
     add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'refund_banking_data_fields' ) );
+//    add_action( 'woocommerce_order_item_add_action_buttons', array( $this, 'generate_button_html' ) );
+//    add_action( 'admin_enqueue_scripts', array( $this, 'load_validate_credential' ) );
+  }
+//TODO verificar
+    public function load_validate_credential() {
+      wp_register_script( 'sweetAlert', 'https://cdn.jsdelivr.net/npm/sweetalert2@8', null, null, true );
+      wp_register_script(
+          'ajaxHandle',
+          plugins_url( 'assets/js/validate-credential.js', plugin_dir_path( __FILE__ ) ), array( 'jquery' ), false, true
+      );
+      wp_enqueue_script( 'sweetAlert' );
+      wp_enqueue_script( 'ajaxHandle' );
+      wp_localize_script(
+          'ajaxHandle',
+          'ajax_object',
+          array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) )
+      );
   }
 
   /**
@@ -314,4 +331,45 @@ class WC_Rakuten_Pay_Banking_Billet_Gateway extends WC_Payment_Gateway {
 
     $this->api->cancel_transaction( $order );
   }
+
+    /**
+     * Generate Button HTML.
+     *
+     * @access public
+     * @param mixed $key
+     * @param mixed $data
+     * @since 1.0.0
+     * @return string
+     */
+    public function generate_button_html($key, $data) {
+        $field    = $this->plugin_id . $this->id . '_' . $key;
+        $defaults = array(
+            'class'             => 'button-secondary',
+            'css'               => '',
+            'custom_attributes' => array(),
+            'desc_tip'          => false,
+            'description'       => '',
+            'title'             => '',
+        );
+
+        $data = wp_parse_args( $data, $defaults );
+
+        ob_start();
+        ?>
+        <tr valign="top">
+            <th scope="row" class="titledesc">
+                <label for="<?php echo esc_attr( $field ); ?>"><?php echo wp_kses_post( $data['title'] ); ?></label>
+                <?php echo $this->get_tooltip_html( $data ); ?>
+            </th>
+            <td class="forminp">
+                <fieldset>
+                    <legend class="screen-reader-text"><span><?php echo wp_kses_post( $data['title'] ); ?></span></legend>
+                    <button class="<?php echo esc_attr( $data['class'] ); ?>" type="button" name="<?php echo esc_attr( $field ); ?>" id="<?php echo esc_attr( $field ); ?>" style="<?php echo esc_attr( $data['css'] ); ?>" <?php echo $this->get_custom_attribute_html( $data ); ?>><?php echo wp_kses_post( $data['title'] ); ?></button>
+                    <?php echo $this->get_description_html( $data ); ?>
+                </fieldset>
+            </td>
+        </tr>
+        <?php
+        return ob_get_clean();
+    }
 }

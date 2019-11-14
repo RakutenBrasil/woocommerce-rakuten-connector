@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Admin Orders List
+ * GenLog Admin Orders List
  *
  * @package WC_Rakuten_Log
  */

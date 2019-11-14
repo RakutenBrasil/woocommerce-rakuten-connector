@@ -1,6 +1,6 @@
 <?php
 /**
- * Genpay API
+ * GenPay API
  *
  * @package WooCommerce_Rakuten_Pay/API
  */
@@ -106,7 +106,7 @@ class WC_Rakuten_Pay_API {
     }
 
     /**
-     * Do POST requests in the Genpay API.
+     * Do POST requests in the GenPay API.
      *
      * @param  string $endpoint API Endpoint.
      * @param  array  $data     Request data.
@@ -132,7 +132,7 @@ class WC_Rakuten_Pay_API {
     }
 
     /**
-     * Do GET requests in the Genpay API.
+     * Do GET requests in the GenPay API.
      *
      * @param  string $endpoint API Endpoint.
      * @param  array  $headers  Request headers.
@@ -334,6 +334,7 @@ class WC_Rakuten_Pay_API {
 
         $current_user = wp_get_current_user();
         $current_user_id = $current_user->ID;
+        //TODO verificar
 //        update_user_meta( $current_user_id, 'billing_birthdate', $posted['billing_birthdate']);
 
         return $data;
@@ -459,6 +460,37 @@ class WC_Rakuten_Pay_API {
         return $response_body;
     }
 
+    public function charge_authorization( $api_key, $document, $environment ) {
+        if ( 'yes' === $this->gateway->debug ) {
+            $this->gateway->log->add( $this->gateway->id, 'Doing a charge charge_authorization' );
+        }
+
+        $endpoint = self::PRODUCTION_API_URL . 'charges';
+        if ( 'sandbox' === $environment ) {
+            $endpoint = self::SANDBOX_API_URL . 'charges';
+        }
+        $user_pass = $document . ':' . $api_key;
+
+        $headers  = array(
+            'Authorization' => 'Basic ' . base64_encode( $user_pass ),
+            'Cache-Control' => 'no-cache',
+            'Content-Type' => 'application/json'
+        );
+
+        $params = array(
+            'timeout' => 60,
+            'method'  => 'GET',
+            'headers' => $headers,
+        );
+
+        $response = wp_remote_get( $endpoint, $params );
+        if ( 'yes' === $this->gateway->debug ) {
+            $this->gateway->log->add( $this->gateway->id, 'Response HTTP Code: ' . $response['response']['code'] );
+        }
+
+        return $response['response']['code'];
+    }
+
     /**
      * Cancels the transaction.
      *
@@ -490,9 +522,10 @@ class WC_Rakuten_Pay_API {
             $this->send_email(
                 sprintf( esc_html__( 'The cancel transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                sprintf( esc_html__( 'In order to cancel this transaction access the rakuten pay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
+                sprintf( esc_html__( 'In order to cancel this transaction access the GenPay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
             );
-            $order->add_order_note( __('Genpay: Order could not be cancelled due to an error. You must access the Genpay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
+            $order->add_order_note( __('GenPay: Order could not be cancelled due to an error. You must access the GenPay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
+
             return;
         }
 
@@ -522,8 +555,8 @@ class WC_Rakuten_Pay_API {
      *
      * @return array Response data.
      *   array( 'result' => 'fail' ) for general request failures
-     *   array( 'result' => 'failure', 'errors' => errors[] ) for Genpay errors
-     *   array( 'result' => 'authorized', ... ) for authorized Genpay transactions
+     *   array( 'result' => 'failure', 'errors' => errors[] ) for GenPay errors
+     *   array( 'result' => 'authorized', ... ) for authorized GenPay transactions
      */
     public function refund_transaction( $order, $refund_kind, $refund_data ) {
         $body           = $this->getJson( $refund_data, JSON_PRESERVE_ZERO_FRACTION );
@@ -549,7 +582,7 @@ class WC_Rakuten_Pay_API {
             $this->send_email(
                 sprintf( esc_html__( 'The refund transaction for order %s has failed.', 'woocommerce-rakuten-pay' ), $order->get_order_number() ),
                 esc_html__( 'Transaction failed', 'woocommerce-rakuten-pay' ),
-                sprintf( esc_html__( 'In order to refund this transaction access the rakuten pay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
+                sprintf( esc_html__( 'In order to refund this transaction access the GenPay dashboard:  %1$s.', 'woocommerce-rakuten-pay' ), $transaction_url )
             );
             $order->add_order_note( __('Genpay: Order could not be refunded due to an error. You must access the Genpay Dashboard to complete the cancel operation', 'woocommerce-rakuten-pay' ) );
             return false;
@@ -1479,6 +1512,7 @@ class WC_Rakuten_Pay_API {
 	 * Recieves an string and take off the accentuation
 	 *
 	 * @param $string
+     * @return string
 	 */
 	private function removeAccentuation($str) {
 		$map = [

@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Email for Tracking
+ * GenLog Email for Tracking
  *
  * @package WC_Rakuten_Log
  */

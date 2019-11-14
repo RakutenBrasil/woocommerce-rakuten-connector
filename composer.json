@@ -1,6 +1,6 @@
 {
   "name": "RakutenBrasil/woocommerce-rakuten-pay",
-  "description": "Gateway de pagamento Rakuten Pay para WooCommerce.",
+  "description": "Gateway de pagamento GenPay para WooCommerce.",
   "homepage": "https://github.com/RakutenBrasil/woocommerce-rakuten-pay",
   "type": "wordpress-plugin",
   "license": "GPL-2.0+",

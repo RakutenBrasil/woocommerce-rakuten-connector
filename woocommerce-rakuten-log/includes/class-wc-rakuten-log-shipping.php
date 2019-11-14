@@ -1,6 +1,6 @@
 <?php
 /**
- * Rakuten Log Shipping Method
+ * GenLog Shipping Method
  *
  * @package WC_Rakuten_Log
  */
@@ -55,21 +55,21 @@ class WC_Rakuten_Log_Shipping extends WC_Shipping_Method {
             'owner_document' => array (
                 'title'    => __('Owner Document', 'woocommerce-rakuten-log'),
                 'type'     => 'text',
-                'label'    => __('Document of the owner registered on Rakuten', 'woocommerce-rakuten-log'),
+                'label'    => __('Document of the owner registered on GenComm', 'woocommerce-rakuten-log'),
                 'desc_tip' => true,
                 'default'  => ''
             ),
             'api_key' => array(
                 'title'    =>  __('API key', 'woocommerce-rakuten-log'),
                 'type'     => 'text',
-                'label'    => __('API key registered on Rakuten', 'woocommerce-rakuten-log'),
+                'label'    => __('API key registered on GenComm', 'woocommerce-rakuten-log'),
                 'desc_tip' => true,
                 'default'  => ''
             ),
             'signature_key' => array(
                 'title'    => __('Signature Key', 'woocommerce-rakuten-log'),
                 'type'     => 'text',
-                'label'    => __('Signature key registered on Rakuten', 'woocommerce-rakuten-log'),
+                'label'    => __('Signature key registered on GenComm', 'woocommerce-rakuten-log'),
                 'desc_tip' => true,
                 'default'  => ''
             ),

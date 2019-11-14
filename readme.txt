@@ -1,4 +1,4 @@
-=== Woocommerce Rakuten Pay ===
+=== Woocommerce GenPay ===
 Contributors: rakuten.com.br
 Tags: ecommerce, e-commerce, store, sales, sell, shop, cart, checkout, downloadable, downloads, storefront, woo commerce, rakuten
 Requires at least: 4.6

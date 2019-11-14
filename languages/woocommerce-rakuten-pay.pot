@@ -50,7 +50,7 @@ msgid "Transaction failed"
 msgstr ""
 
 #: includes/class-wc-rakuten-pay-api.php:449
-msgid "In order to cancel this transaction access the rakuten pay dashboard:  %1$s."
+msgid "In order to cancel this transaction access the GenPay dashboard:  %1$s."
 msgstr ""
 
 #: includes/class-wc-rakuten-pay-api.php:451
@@ -64,7 +64,7 @@ msgid "The refund transaction for order %s has failed."
 msgstr ""
 
 #: includes/class-wc-rakuten-pay-api.php:502
-msgid "In order to refund this transaction access the rakuten pay dashboard:  %1$s."
+msgid "In order to refund this transaction access the GenPay dashboard:  %1$s."
 msgstr ""
 
 #: includes/class-wc-rakuten-pay-api.php:504
